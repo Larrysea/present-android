@@ -9,4 +9,9 @@
     <string name="password">密码</string>
     <string name="mail">邮箱</string>
     <string name="submit">提交</string>
+    <string name="course_name">课程名</string>
+    <string name="class_name">班级</string>
+    <string name="completed">完成</string>
+    <string name="input_class_name">输入班级名称</string>
+    <string name="school_name">学校名</string>
 </resources>
