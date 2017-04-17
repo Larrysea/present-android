@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">present</string>
+    <string name="sign">签到</string>
+    <string name="history">历史</string>
+    <string name="start_sign">开始签到</string>
+    <string name="input_school_name">输入学校名</string>
+    <string name="select_schoole">选择学校</string>
+    <string name="name">姓名</string>
+    <string name="password">密码</string>
+    <string name="mail">邮箱</string>
+    <string name="submit">提交</string>
+</resources>
