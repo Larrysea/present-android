@@ -16,7 +16,7 @@ import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.KeyBoardUtil;
 import com.larry.present.config.Constants;
 import com.larry.present.loginregister.adapter.BaseFilterAdapter;
-import com.larry.present.loginregister.bean.School;
+import com.larry.present.bean.school.School;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.schoolapi.GetSchoolApi;

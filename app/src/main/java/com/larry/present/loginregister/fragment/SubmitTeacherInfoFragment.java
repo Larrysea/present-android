@@ -26,6 +26,7 @@ public class SubmitTeacherInfoFragment extends BaseFragment {
     @Override
     public void initViews() {
 
+
     }
 
     @Override

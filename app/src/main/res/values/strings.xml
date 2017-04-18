@@ -14,7 +14,7 @@
     <string name="completed">完成</string>
     <string name="input_class_name">输入班级名称</string>
     <string name="school_name">学校名</string>
-    <string name="teacher_name">老师名</>
+    <string name="teacher_name">老师名</string>
     <string name="phone">电话</string>
     <string name="male">男</string>
     <string name="female">女</string>
@@ -26,4 +26,6 @@
     <string name="set_portrait_tips">为了让老师认识你，只能上传自己的本人头像。</string>
     <string name="take_picture">拍照</string>
     <string name="sign_type">签到类型</string>
+    <string name="userName_cant_empty">用户名不能为空</string>
+    <string name="password_cant_empty">密码不能为空</string>
 </resources>

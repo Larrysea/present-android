@@ -1,6 +1,6 @@
 package com.larry.present.network.schoolapi;
 
-import com.larry.present.loginregister.bean.School;
+import com.larry.present.bean.school.School;
 import com.larry.present.network.base.ApiService;
 
 import java.util.List;

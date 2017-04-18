@@ -14,7 +14,16 @@ package com.larry.present.config;
 */
 public class Constants {
 
-    public final static String SCHOOLE_ID="schoole_id";                 //学校id
-    public final static String SCHOOLE_NAME="schoole_name";             //学校名称
+    //学校id
+    public final static String SCHOOLE_ID = "schoole_id";
+    //学校名称
+    public final static String SCHOOLE_NAME = "schoole_name";
+    //用户类型
+    public final static String USER_TYPE = "USER_TYPE";
+    //学生用户类型
+    public final static int STUDENT_TYPE = 0X1;
+    //老师用户类型
+    public final static int TEACHER_TYPE = 0X2;
+
 
 }

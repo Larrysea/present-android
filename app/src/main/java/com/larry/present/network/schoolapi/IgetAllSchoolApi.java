@@ -1,6 +1,6 @@
 package com.larry.present.network.schoolapi;
 
-import com.larry.present.loginregister.bean.School;
+import com.larry.present.bean.school.School;
 import com.larry.present.network.base.BaseCallModeal;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public interface IgetAllSchoolApi {
      * @return  返回学校list
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("getAllSchool")
+    @POST("userLogin")
     Observable<BaseCallModeal<List<School>>> getAllSchool(@Body RequestBody phone);
 
 }

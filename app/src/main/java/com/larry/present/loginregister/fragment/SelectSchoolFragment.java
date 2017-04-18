@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.larry.present.R;
 import com.larry.present.common.basetemplate.BaseFragment;
-import com.larry.present.loginregister.bean.School;
+import com.larry.present.bean.school.School;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 

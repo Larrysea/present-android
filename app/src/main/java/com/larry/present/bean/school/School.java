@@ -1,4 +1,4 @@
-package com.larry.present.loginregister.bean;
+package com.larry.present.bean.school;
 
 /*  
 *    
