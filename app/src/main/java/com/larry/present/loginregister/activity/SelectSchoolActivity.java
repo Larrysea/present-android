@@ -146,7 +146,7 @@ public class SelectSchoolActivity extends AppCompatActivity {
     * */
     public void initToolbar() {
         toolbarSelectSchoole.setTitle(R.string.select_schoole);
-        toolbarSelectSchoole.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_white_24dp);
+        toolbarSelectSchoole.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
 
         setSupportActionBar(toolbarSelectSchoole);
         toolbarSelectSchoole.setNavigationOnClickListener(new View.OnClickListener() {

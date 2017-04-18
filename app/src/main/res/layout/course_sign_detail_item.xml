@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_layout_setting_contact_us_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_generate_ripple_btn"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:textSize="28sp"
+        android:layout_centerVertical="true"
+        android:id="@+id/tv_couse_sign_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/id_layout_setting_version_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_couse_sign_times"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        tools:text="大学物理" />
+
+    <TextView
+        android:layout_toRightOf="@id/tv_couse_sign_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_layout_setting_version_title_tv"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="2017-9-21:10:00" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_launcher_round" />
+</RelativeLayout>

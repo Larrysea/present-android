@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">present</string>
+    <string name="app_name">我到</string>
     <string name="sign">签到</string>
     <string name="history">历史</string>
     <string name="start_sign">开始签到</string>
@@ -14,4 +14,16 @@
     <string name="completed">完成</string>
     <string name="input_class_name">输入班级名称</string>
     <string name="school_name">学校名</string>
+    <string name="teacher_name">老师名</>
+    <string name="phone">电话</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="student_nubmer">学号</string>
+    <string name="class_position">职位</string>
+    <string name="sexual">性别</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="set_portrait_tips">为了让老师认识你，只能上传自己的本人头像。</string>
+    <string name="take_picture">拍照</string>
+    <string name="sign_type">签到类型</string>
 </resources>
