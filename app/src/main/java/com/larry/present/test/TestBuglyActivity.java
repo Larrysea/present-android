@@ -44,6 +44,7 @@ public class TestBuglyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_bugly);
 
+
         ButterKnife.bind(this);
     }
 
