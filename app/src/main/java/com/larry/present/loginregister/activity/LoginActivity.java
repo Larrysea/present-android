@@ -6,15 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.larry.present.R;
 import com.larry.present.boot.MainActivity;
+import com.larry.present.common.subscribers.ProgressSubscriber;
+import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.CheckETEmptyUtil;
 import com.larry.present.config.Constants;
 import com.larry.present.loginregister.dto.LoginSuccessDto;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.login.LoginApi;
+import com.larry.present.network.register.RegisterApi;
 
 import java.util.HashMap;
 
@@ -24,7 +26,6 @@ import butterknife.OnClick;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
-import rx.Observer;
 
 /*
 *    
@@ -45,9 +46,13 @@ public class LoginActivity extends AppCompatActivity {
     EditText etLoginName;
     @BindView(R.id.et_login_password)
     EditText etLoginPassword;
-
-
     CheckETEmptyUtil mCheckEmptyUtil;
+
+    //用户登录的subscriber
+    ProgressSubscriber<LoginSuccessDto> loginSubscriber;
+
+    // 注册Subscriber
+    ProgressSubscriber<String> registerSubscriber;
 
     @OnClick(R.id.btn_login_login)
     void loginClick(View view) {
@@ -64,6 +69,48 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        initSbuscriber();
+
+    }
+
+
+    /**
+     * 初始化订阅者
+     */
+    public void initSbuscriber() {
+        SubscriberOnNextListener<LoginSuccessDto> loginOnNextListener
+                = new SubscriberOnNextListener<LoginSuccessDto>() {
+            @Override
+            public void onNext(LoginSuccessDto loginSuccessDto) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra(Constants.USER_TYPE, loginSuccessDto.getUserType());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        };
+
+        SubscriberOnNextListener<String> registerOnNextListener = new SubscriberOnNextListener<String>() {
+            @Override
+            public void onNext(String s) {
+                //TODO  做一些保存用唯一id的操作，以后好使用
+
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        };
+        loginSubscriber = new ProgressSubscriber<LoginSuccessDto>(loginOnNextListener, LoginActivity.this);
+
+        registerSubscriber = new ProgressSubscriber<String>(registerOnNextListener, LoginActivity.this);
+
+
+
     }
 
 
@@ -78,40 +125,16 @@ public class LoginActivity extends AppCompatActivity {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     @SuppressWarnings("unchecked")
                     HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-                    String country = (String) phoneMap.get("country");
                     String phone = (String) phoneMap.get("phone");
+                    RegisterApi registerApi = new RegisterApi(ApiService.getInstance(LoginActivity.this).getmRetrofit());
+                    registerApi.register(registerSubscriber, phone);
 
-                    // 提交用户信息（此方法可以不调用）
-                    Toast.makeText(LoginActivity.this, country + "   " + phone, Toast.LENGTH_SHORT).show();
                 }
             }
         });
         registerPage.show(LoginActivity.this);
     }
 
-
-    /**
-     * 登录事件的观察者
-     */
-    Observer<LoginSuccessDto> loginObserver = new Observer<LoginSuccessDto>() {
-        @Override
-        public void onCompleted() {
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onNext(LoginSuccessDto s) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra(Constants.USER_TYPE, s.getUserType());
-            startActivity(intent);
-
-        }
-    };
 
 
     /**
@@ -127,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean isEmpty = mCheckEmptyUtil.addView(etLoginName).addTip(R.string.userName_cant_empty).addView(etLoginPassword).addTip(R.string.password_cant_empty).check();
         if (!isEmpty) {
             LoginApi loginApi = new LoginApi(ApiService.getInstance(LoginActivity.this).getmRetrofit());
-            loginApi.userLogin(loginObserver, userName, password);
+            loginApi.userLogin(loginSubscriber, userName, password);
         }
 
     }
