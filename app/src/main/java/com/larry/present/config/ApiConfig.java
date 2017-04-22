@@ -14,8 +14,11 @@ package com.larry.present.config;
 */
 public class ApiConfig {
 
-    //服务器的基础url
-    public static String BASE_URL = "http://192.168.0.107:8080/present/externalservice/";
+    //宿舍服务器的基础url
+    public static String ROOM_BASE_URL = "http://192.168.0.107:8080/present/externalservice/";
+
+    //我的电脑局域网地址
+    public static String MY_COMPUTER_URL = "http://192.168.137.1:8080/present/externalservice/";
 
 
 

@@ -37,7 +37,7 @@ public class ApiService {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder()
                     .client(OkhttpClient.getCacheOkHttpClient(AppContext.getContext()))
-                    .baseUrl(ApiConfig.BASE_URL)
+                    .baseUrl(ApiConfig.ROOM_BASE_URL)
                     .addConverterFactory(ResponseConvertFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();

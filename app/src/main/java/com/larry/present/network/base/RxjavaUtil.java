@@ -9,7 +9,7 @@ import rx.schedulers.Schedulers;
 /*
 *    
 * 项目名称：present-android      
-* 类描述：  简化rxjava使用的一些工具方法
+* 类描述： 简化rxjava使用的一些工具方法
 * 创建人：Larry-sea   
 * 创建时间：2017/4/18 18:56   
 * 修改人：Larry-sea  
@@ -29,11 +29,13 @@ public class RxjavaUtil {
      * @param <T>
      */
     public static <T> Subscription subscribe(Observable<T> observable, Observer<T> observer) {
-        return   observable.subscribeOn(Schedulers.io())
+        return observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+
 
 
 }

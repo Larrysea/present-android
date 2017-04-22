@@ -1,7 +1,5 @@
 package com.larry.present.sign.fragment;
 
-import android.view.View;
-
 import com.larry.present.R;
 import com.larry.present.common.basetemplate.BaseFragment;
 
@@ -42,17 +40,9 @@ public class TeacherSignHitoryFragment extends BaseFragment {
     }
 
     @Override
-    public void initListener() {
+    public void initDatas() {
 
     }
 
-    @Override
-    public void initData() {
 
-    }
-
-    @Override
-    public void processClick(View v) {
-
-    }
 }

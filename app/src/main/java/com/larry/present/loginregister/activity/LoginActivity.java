@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onNext(String s) {
                 //TODO  做一些保存用唯一id的操作，以后好使用
-
+                startActivity(new Intent(LoginActivity.this,SelectSchoolActivity.class));
             }
 
             @Override
@@ -108,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
         loginSubscriber = new ProgressSubscriber<LoginSuccessDto>(loginOnNextListener, LoginActivity.this);
 
         registerSubscriber = new ProgressSubscriber<String>(registerOnNextListener, LoginActivity.this);
-
 
 
     }
@@ -136,12 +135,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     /**
-     * 用户登录aaaaaa
+     * 用户登录
      *
-     * @param userName
-     * @param password
+     * @param userName  用户名
+     * @param password  密码
      */
     public void login(String userName, String password) {
         if (mCheckEmptyUtil == null) {
@@ -152,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
             LoginApi loginApi = new LoginApi(ApiService.getInstance(LoginActivity.this).getmRetrofit());
             loginApi.userLogin(loginSubscriber, userName, password);
         }
-
     }
 
 }

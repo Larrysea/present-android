@@ -63,18 +63,9 @@ public class SelectSchoolFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void initListener() {
-
-    }
 
     @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void processClick(View v) {
+    public void initDatas() {
 
     }
 

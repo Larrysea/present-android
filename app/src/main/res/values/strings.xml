@@ -28,4 +28,11 @@
     <string name="sign_type">签到类型</string>
     <string name="userName_cant_empty">用户名不能为空</string>
     <string name="password_cant_empty">密码不能为空</string>
+    <string name="name_cant_empty">姓名不能为空</string>
+    <string name="student_number_cant_empty">学号不能为空</string>
+    <string name="class_cant_empty">班级不能为空</string>
+    <string name="position_cant_empty">职位不能为空</string>
+    <string name="mail_cant_empty">邮箱不能为空</string>
+    <string name="phone_cant_empty">手机号不能为空</string>
+
 </resources>

@@ -35,8 +35,8 @@ public class LoginApi {
      * @param observer 订阅者
      * @param password 用户注册手机号
      */
-    public void userLogin(Observer<LoginSuccessDto> observer, String userName, String password) {
-        Subscription subscription=RxjavaUtil.subscribe(mRetrofit.create(Ilogin.class)
+    public Subscription userLogin(Observer<LoginSuccessDto> observer, String userName, String password) {
+        return   RxjavaUtil.subscribe(mRetrofit.create(Ilogin.class)
                 .login(userName, password)
                 .map(new ApiService.HttpResultFunc<LoginSuccessDto>()), observer);
     }

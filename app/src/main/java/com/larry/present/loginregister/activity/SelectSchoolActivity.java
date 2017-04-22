@@ -175,24 +175,5 @@ public class SelectSchoolActivity extends AppCompatActivity {
         }
     }
 
-   /* Subscriber<List<School>> schoolSubscriber = new Subscriber<List<School>>() {
-        @Override
-        public void onCompleted() {
-            Toast.makeText(SelectSchoolActivity.this, "完成", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Toast.makeText(SelectSchoolActivity.this, "错误", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onNext(List<School> schools) {
-            if (schools != null) {
-                Toast.makeText(SelectSchoolActivity.this, " 学校" + schools.get(1).getSchoolName(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-*/
 
 }

@@ -2,35 +2,38 @@ package com.larry.present.common.basetemplate;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Subscription;
 
 /**
  * 所有类继承的基础fragment
  */
-public abstract class BaseFragment extends Fragment implements View.OnClickListener {
+public abstract class BaseFragment extends Fragment  {
 
     private boolean isVisible = false;
     private boolean isInitView = false;
     private boolean isFirstLoad = true;
     protected Subscription subscription;
+    //fragment的视图
+    View convertView;
 
-    private View convertView;
-    private SparseArray<View> mViews;
 
-    public abstract int getLayoutId();
+    Unbinder unbinder;
 
+
+    //初始化view
     public abstract void initViews();
 
-    public abstract void initListener();
+    //初始化数据
+    public abstract void initDatas();
 
-    public abstract void initData();
-
-    public abstract void processClick(View v);
+    //获取布局id
+    public abstract int getLayoutId();
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -45,31 +48,14 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mViews = new SparseArray<>();
-        convertView = inflater.inflate(getLayoutId(), container, false);
         initViews();
-
         isInitView = true;
         lazyLoad();
+        convertView = inflater.inflate(getLayoutId(), container, false);
+        unbinder = ButterKnife.bind(this, convertView);
         return convertView;
     }
 
-    @Override
-    public void onClick(View v) {
-        processClick(v);
-    }
-
-    public <E extends View> E findView(int viewId) {
-        if (convertView != null) {
-            E view = (E) mViews.get(viewId);
-            if (view == null) {
-                view = (E) convertView.findViewById(viewId);
-                mViews.put(viewId, view);
-            }
-            return view;
-        }
-        return null;
-    }
 
     private void lazyLoad() {
         if (!isFirstLoad || !isVisible || !isInitView) {
@@ -77,29 +63,20 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             return;
         }
         //加载数据
-        initListener();
-        initData();
+
 
         isFirstLoad = false;
 
     }
 
 
-    /**
-     * 设置监听方法
-     *
-     * @param view
-     * @param <E>
-     */
-    public <E extends View> void setOnClick(E view) {
-        view.setOnClickListener(this);
-    }
 
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unsubscribe();
+        unbinder.unbind();
     }
 
     protected void unsubscribe() {
@@ -107,5 +84,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             subscription.unsubscribe();
         }
     }
+
 
 }
