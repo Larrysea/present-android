@@ -19,7 +19,7 @@ import java.util.List;
 * 修改备注：重载addTip方法，修改check方法，添加context
 * @version
 *
-* usage example CheckEtEmptyUtil checkemptyUtil.addView().addTip().addView().check();
+* usage example CheckEtEmptyUtil checkemptyUtil.addView().addTip().addView().checkHasWifiHost();
 *    
 */
 public class CheckETEmptyUtil {
@@ -116,7 +116,7 @@ public class CheckETEmptyUtil {
          */
         public Builder addView(EditText editText) {
             if (editText == null) {
-                throw new NullPointerException("parm cant be null,check you parm ");
+                throw new NullPointerException("parm cant be null,checkHasWifiHost you parm ");
             }
             if (mViewList == null || mTipList == null) {
                 mViewList = new ArrayList<>();
@@ -137,7 +137,7 @@ public class CheckETEmptyUtil {
         public Builder addTip(String tip) {
 
             if (tip == null) {
-                throw new NullPointerException("tip cant be null,check you parm ");
+                throw new NullPointerException("tip cant be null,checkHasWifiHost you parm ");
             }
 
             if (mWRViewList == null || mWRTipList == null) {

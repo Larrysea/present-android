@@ -36,11 +36,24 @@ public class ClassApi {
      * @param className
      * @return
      */
-    private Subscription queryClassId(Observer<String> observer, String className) {
+    public Subscription queryClassId(Observer<String> observer, String className) {
         return RxjavaUtil.subscribe(mRetrofit.create(Iclasses.class)
                 .getClassId(className)
                 .map(new ApiService.HttpResultFunc<String>()), observer);
 
+    }
+
+    /**
+     * 添加班级信息
+     * @param observer      观察者
+     * @param className     班级名称
+     * @param schoolId      学校id
+     * @return
+     */
+    public Subscription addClasses(Observer<String> observer, String className, String schoolId) {
+        return RxjavaUtil.subscribe(mRetrofit.create(Iclasses.class)
+                .addClasses(className, schoolId)
+                .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 
 

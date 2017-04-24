@@ -15,7 +15,7 @@ package com.larry.present.config;
 public class Constants {
 
     //学校id
-    public final static String SCHOOLE_ID = "schoole_id";
+    public final static String SCHOOL_ID = "school_id";
     //学校名称
     public final static String SCHOOLE_NAME = "schoole_name";
     //用户类型

@@ -34,5 +34,6 @@
     <string name="position_cant_empty">职位不能为空</string>
     <string name="mail_cant_empty">邮箱不能为空</string>
     <string name="phone_cant_empty">手机号不能为空</string>
+    <string name="submit_info_succeed">提交信息成功</string>
 
 </resources>

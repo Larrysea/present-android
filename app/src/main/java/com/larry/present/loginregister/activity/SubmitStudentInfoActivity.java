@@ -6,13 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.larry.present.R;
 import com.larry.present.bean.student.Student;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.CheckETEmptyUtil;
+import com.larry.present.config.Constants;
 import com.larry.present.network.base.ApiService;
+import com.larry.present.network.classes.ClassApi;
 import com.larry.present.network.student.StudentApi;
 
 import butterknife.BindView;
@@ -54,24 +57,60 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     @BindView(R.id.et_student_phone)
     EditText etStudentPhone;
 
-    ProgressSubscriber<String> mSubmitInfoSubscriber;
 
-    SubscriberOnNextListener mSubscriberOnNextListener;
+    /**
+     * 提交信息的回调接口
+     */
+    SubscriberOnNextListener mSubmitInfoNextListener;
 
-    StudentApi mStudentApi;
+    /**
+     * 获取班级id的listener
+     */
+    SubscriberOnNextListener<String> getClassIdOnNextListener;
 
-    //获取班级的idsubscriber
+
+    /**
+     * 添加班级的监听器
+     */
+    SubscriberOnNextListener<String> addClassSubscriberListener;
+
+
+    /**
+     * 获取班级的idsubscriber
+     */
     ProgressSubscriber<String> getClassIdSubscriber;
 
 
-    //获取班级id的listener
-    SubscriberOnNextListener getClassIdOnNextListener;
+    /**
+     * 添加班级的订阅者
+     */
+    ProgressSubscriber<String> addClassSubscriber;
 
+
+    /**
+     * 提交个人信息的subscriber
+     */
+    ProgressSubscriber<String> submitInfoSubscriber;
+
+    /**
+     * 学生的接口api
+     */
+    StudentApi mStudentApi;
+
+    /**
+     * 班级api
+     */
+    ClassApi mClassApi;
 
     /*
     * 学生个人信息
     * */
     Student mStudent;
+
+    /**
+     * 学校id
+     */
+    String mSchoolId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,25 +122,16 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
 
 
     public void initData() {
+        if (getIntent() != null && getIntent().getStringExtra(Constants.SCHOOL_ID) != null) {
+            mSchoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
+            mStudentApi = new StudentApi(ApiService.getInstance(SubmitStudentInfoActivity.this).getmRetrofit());
+            initListener();
+            //获取班级id
+            getClassId(etStudentClass.getText().toString(), etStudentSchool.getText().toString());
 
-        mStudentApi = new StudentApi(ApiService.getInstance(SubmitStudentInfoActivity.this).getmRetrofit());
 
-        mSubscriberOnNextListener = new SubscriberOnNextListener() {
-            @Override
-            public void onNext(Object o) {
-
-            }
-
-            @Override
-            public void onCompleted() {
-
-            }
-        };
-        mSubmitInfoSubscriber = new ProgressSubscriber<String>(mSubscriberOnNextListener, SubmitStudentInfoActivity.this);
-        mStudent = initStudentInfo();
-        if (mStudent != null) {
-            mStudentApi.submitStudentInfo(mSubmitInfoSubscriber, mStudent);
         }
+
 
     }
 
@@ -109,9 +139,10 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     /**
      * 获取所有学生信息
      *
+     * @param classId 班级id
      * @return
      */
-    public Student initStudentInfo() {
+    public Student initStudentInfo(String classId) {
         CheckETEmptyUtil checkETEmptyUtil = new CheckETEmptyUtil(SubmitStudentInfoActivity.this);
         Student student = null;
         boolean result = checkETEmptyUtil.addView(etStudentName).addTip(R.string.name_cant_empty)
@@ -124,19 +155,71 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
             student = new Student();
             student.setName(etStudentName.getText().toString().trim());
             student.setStudentNumber(etStudentStudentNumber.getText().toString().trim());
-            //TODO 设置班级id
-            // student.setClassId();
+            student.setClassId(classId);
 
         }
         return student;
     }
 
 
-    public void getClassId(String className) {
+    /**
+     * 获取班级id
+     *
+     * @param className 班级名称
+     * @param schoolId  学校id
+     */
+    public void getClassId(String className, String schoolId) {
         getClassIdSubscriber = new ProgressSubscriber<String>(getClassIdOnNextListener, SubmitStudentInfoActivity.this);
+        mClassApi = new ClassApi(ApiService.getInstance(SubmitStudentInfoActivity.this).getmRetrofit());
+        mClassApi.queryClassId(getClassIdSubscriber, className);
+    }
+
+
+    /**
+     * 初始化Retrofit 回调监听器
+     */
+    public void initListener() {
+
+        //初始化提交信息的监听器
+        mSubmitInfoNextListener = new SubscriberOnNextListener() {
+            @Override
+            public void onNext(Object o) {
+                Toast.makeText(SubmitStudentInfoActivity.this, R.string.submit_info_succeed, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        };
+
+        //初始化获取班级id的回调监听器
+        getClassIdOnNextListener = new SubscriberOnNextListener<String>() {
+            @Override
+            public void onNext(String classId) {
+                //班级存在的情况下
+                if (classId != null) {
+                    initStudentInfo(classId);
+                    submitInfoSubscriber = new ProgressSubscriber<String>(mSubmitInfoNextListener, SubmitStudentInfoActivity.this);
+                    if (mStudent != null) {
+                        mStudentApi.submitStudentInfo(submitInfoSubscriber, mStudent);
+                    }
+                }
+                //班级不存在，添加班级信息
+                else {
+                    addClassSubscriber = new ProgressSubscriber<>(null, SubmitStudentInfoActivity.this);
+                    mClassApi.addClasses(addClassSubscriber, etStudentClass.getText().toString(), mSchoolId);
+                }
+
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        };
 
 
     }
-
 
 }

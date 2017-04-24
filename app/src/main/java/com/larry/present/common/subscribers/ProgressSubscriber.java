@@ -65,7 +65,9 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     @Override
     public void onCompleted() {
         dismissProgressDialog();
-        mSubscriberOnNextListener.onCompleted();
+        if (mSubscriberOnNextListener != null) {
+            mSubscriberOnNextListener.onCompleted();
+        }
         Toast.makeText(context, "Completed", Toast.LENGTH_SHORT).show();
     }
 
@@ -82,7 +84,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
         } else if (e instanceof ConnectException) {
             Toast.makeText(context, "网络中断，请检查您的网络状态", Toast.LENGTH_SHORT).show();
         } else {
-            Log.e(TAG, e.getStackTrace().toString() + "message" + e.getMessage()+"  "+e.getCause());
+            Log.e(TAG, e.getStackTrace().toString() + "message" + e.getMessage() + "  " + e.getCause());
             Toast.makeText(context, "error:" + e.getStackTrace() + "e message" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         dismissProgressDialog();

@@ -19,6 +19,18 @@ import rx.Observable;
 */
 public interface Iclasses {
 
+    /**
+     * 获取学校id
+     * @param className
+     * @return
+     */
     Observable<BaseCallModeal<String>>  getClassId(@Field("className")String className);
 
+    /**
+     * 添加班级
+     * @param className
+     * @param schoolId
+     * @return
+     */
+    Observable<BaseCallModeal<String>>  addClasses(@Field("className") String className,@Field("schoolId") String schoolId);
 }

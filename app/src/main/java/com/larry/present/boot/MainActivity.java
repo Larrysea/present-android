@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public void initView() {
         setSupportActionBar(toolbar);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mFragmentList = new ArrayList<>();
+        mFragmentList = new ArrayList<Fragment>();
         mFragmentList.add(new TeacherSignFragment());
         mFragmentList.add(new TeacherSignHitoryFragment());
         mFragmentPagerAdapter = new BaseFragmentPagerAdapter(MainActivity.this, fragmentManager, mFragmentList);

@@ -109,7 +109,7 @@ public class CameraController {
             File pictureFile = getOutputMediaFile();
 
             if(pictureFile == null){
-                Log.d("TEST", "Error creating media file, check storage permissions");
+                Log.d("TEST", "Error creating media file, checkHasWifiHost storage permissions");
                 return;
             }
 
@@ -127,7 +127,7 @@ public class CameraController {
     };
 
     private File getOutputMediaFile(){
-        // To be safe, you should check that the SDCard is mounted
+        // To be safe, you should checkHasWifiHost that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"MyCameraApp");
