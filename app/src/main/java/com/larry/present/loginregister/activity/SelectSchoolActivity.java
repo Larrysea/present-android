@@ -10,13 +10,13 @@ import android.widget.AutoCompleteTextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.larry.present.R;
+import com.larry.present.bean.school.School;
 import com.larry.present.boot.MainActivity;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.KeyBoardUtil;
 import com.larry.present.config.Constants;
 import com.larry.present.loginregister.adapter.BaseFilterAdapter;
-import com.larry.present.bean.school.School;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.schoolapi.GetSchoolApi;
@@ -27,6 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+//import com.larry.present.boot.MainActivity;
 
 
 /**

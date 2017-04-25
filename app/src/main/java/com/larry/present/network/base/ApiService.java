@@ -58,7 +58,7 @@ public class ApiService {
      *
      * @param <T> Subscriber真正需要的数据类型，也就是Data部分的数据类型
      */
-    public static  class HttpResultFunc<T> implements Func1<BaseCallModeal<T>, T> {
+    public static class HttpResultFunc<T> implements Func1<BaseCallModeal<T>, T> {
         @Override
         public T call(BaseCallModeal<T> httpResult) {
             if (httpResult.getCode() != 200) {
@@ -95,7 +95,7 @@ public class ApiService {
      * <p>
      * 如果不可用则直接返回
      */
-    public static  void checkNetWrokState(Context context) {
+    public static void checkNetWrokState(Context context) {
         if (!NetUtil.isConnected(context)) {
             Toast.makeText(context, CHECK_NETWORK_AVAILABLE, Toast.LENGTH_SHORT).show();
 

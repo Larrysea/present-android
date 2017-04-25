@@ -46,6 +46,15 @@ public class AppContext extends BaseApplication {
      */
     @Override
     public void initConfigs() {
+
+    }
+
+    /**
+     *
+     * 初始化腾讯bugly的配置
+     *
+     */
+    private void intBugly() {
         Context context = getApplicationContext();
         // 获取当前包名
         String packageName = context.getPackageName();
@@ -56,12 +65,7 @@ public class AppContext extends BaseApplication {
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         // 初始化Bugly
         CrashReport.initCrashReport(context, "9ecfa96fe9", true);
-
     }
-
-
-
-
 
 
     /**

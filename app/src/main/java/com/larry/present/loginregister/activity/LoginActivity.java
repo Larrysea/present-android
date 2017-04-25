@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onNext(String s) {
                 //TODO  做一些保存用唯一id的操作，以后好使用
-                startActivity(new Intent(LoginActivity.this,SelectSchoolActivity.class));
+                //startActivity(new Intent(LoginActivity.this,SelectSchoolActivity.class));
             }
 
             @Override

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".loginregister.activity.LoginActivity"
+            android:name=".loginregister.activity.SelectSchoolActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,9 +35,9 @@
             android:name=".loginregister.activity.SubmitTeacherInforActivity"
             android:exported="true" />
 
-        <activity
+       <!-- <activity
             android:name=".loginregister.activity.SelectSchoolActivity"
-            android:exported="true" />
+            android:exported="true" />-->
 
         <!--一些用来测试的activity,放在下面-->
         <activity
@@ -68,6 +68,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <!--改变wifi 状态的权限-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
 </manifest>

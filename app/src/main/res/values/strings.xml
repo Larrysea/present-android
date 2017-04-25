@@ -35,5 +35,6 @@
     <string name="mail_cant_empty">邮箱不能为空</string>
     <string name="phone_cant_empty">手机号不能为空</string>
     <string name="submit_info_succeed">提交信息成功</string>
+    <string name="not_find_the_host_in_nearby">附近没有发现签到信号</string>
 
 </resources>

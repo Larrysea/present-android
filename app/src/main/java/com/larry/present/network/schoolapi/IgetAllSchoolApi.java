@@ -30,7 +30,7 @@ public interface IgetAllSchoolApi {
      * @return  返回学校list
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("userLogin")
+    @POST("getAllSchool")
     Observable<BaseCallModeal<List<School>>> getAllSchool(@Body RequestBody phone);
 
 }

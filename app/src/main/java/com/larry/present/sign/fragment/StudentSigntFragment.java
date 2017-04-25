@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.larry.present.R;
 import com.larry.present.common.basetemplate.BaseFragment;
+import com.larry.present.common.util.WifiSignUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,10 +31,21 @@ import butterknife.Unbinder;
 */
 public class StudentSigntFragment extends BaseFragment {
 
+    //开始签到的id
+    String startSignId;
     @OnClick(R.id.btn_student_sign)
     void onClick(View view) {
         //todo 学生签到逻辑
-        //   WifiSignUtil.checkHasWifiHost();
+        startSignId=WifiSignUtil.checkHasWifiHost(getActivity().getApplicationContext());
+        if(startSignId!=null)
+        {
+
+        }
+        else
+        {
+            Toast.makeText(getActivity(),R.string.not_find_the_host_in_nearby, Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
