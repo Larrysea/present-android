@@ -32,4 +32,7 @@ public interface Ilogin {
     @POST("login")
     Observable<BaseCallModeal<LoginSuccessDto>> login(String userName, String password);
 
+
+
+
 }

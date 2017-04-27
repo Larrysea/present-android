@@ -1,7 +1,12 @@
 package com.larry.present.network.sign;
 
 import com.alibaba.fastjson.JSONArray;
+import com.larry.present.bean.sign.CourseSignInfoDto;
+import com.larry.present.bean.sign.StudentCourseSignDto;
+import com.larry.present.bean.sign.StudentSignInfoOfTermDto;
 import com.larry.present.network.base.BaseCallModeal;
+
+import java.util.List;
 
 import retrofit2.http.Field;
 import rx.Observable;
@@ -41,7 +46,7 @@ public interface IsignApi {
      * @param validOfTime   有效时间
      * @return
      */
-    Observable<BaseCallModeal<String>> selectCourseToSign(@Field("courseId") String courseId, @Field("signStartType") String signStartType, @Field("teacherId") String teacherId, @Field("validOfTime") int validOfTime);
+    Observable<BaseCallModeal<String>> selectClassesToSign(@Field("courseId") String courseId, @Field("signStartType") String signStartType, @Field("teacherId") String teacherId, @Field("validOfTime") int validOfTime);
 
 
     /**
@@ -52,5 +57,36 @@ public interface IsignApi {
      * @return
      */
     Observable<BaseCallModeal<String>> selectClassToSign(@Field("courseSignId") String courseSignId, @Field("classArray") JSONArray classArray);
+
+    /**
+     * 获取某个课程的一个学期的记录
+     *
+     * @param teacherId 老师id
+     * @param courseId  课程id
+     * @param classId   班级id
+     * @return
+     */
+    Observable<BaseCallModeal<List<StudentSignInfoOfTermDto>>> getCourseSignInfoInTerm(@Field("teacherId") String teacherId, @Field("courseId") String courseId, @Field("classId") String classId);
+
+
+    /**
+     * 返回某一次某个班级的所有学生的签到记录
+     *
+     * @param courseSignId 课程签到id
+     * @param classId      班级id
+     * @return
+     */
+    Observable<BaseCallModeal<List<StudentCourseSignDto>>> getCourseSignInfoOfOnce(@Field("courseSignId") String courseSignId, @Field("classId") String classId);
+
+
+
+    /**
+     * 学生获取某个磕碜的签到信息
+     *
+     * @param courseId      课程id
+     * @param studentId     学生id
+     * @return
+     */
+    Observable<BaseCallModeal<List<CourseSignInfoDto>>> studentGetCourseSignInfoDto(@Field("courseId") String courseId, @Field("studentId")String studentId);
 
 }
