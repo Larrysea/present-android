@@ -21,7 +21,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_select_schoole"
+        android:id="@+id/toolbar_select_identity"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorPrimary"

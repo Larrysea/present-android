@@ -33,10 +33,10 @@ public class CheckETEmptyUtil {
     private Context mContext;                          //设备上下文
 
     /**
-     * @return 如果其中有那个EditText 内容为空则返回false 否则返回true
+     * @return 如果其中有那个EditText 内容为空则返回true 否则返回false
      * @example 使用这个方法之前一定的先用addView 添加相应的editText 否则会报出异常
      */
-    public boolean check() {
+    public boolean isEmpty() {
 
         this.mViewList = mBuilder.mViewList;
         this.mTipList = mBuilder.mTipList;

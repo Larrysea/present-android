@@ -10,7 +10,7 @@ import rx.Subscription;
 /*
 *    
 * 项目名称：present-android      
-* 类描述：   
+* 类描述： 注册公用的api
 * 创建人：Larry-sea   
 * 创建时间：2017/4/19 7:36   
 * 修改人：Larry-sea  
@@ -35,7 +35,7 @@ public class RegisterApi {
      * @param phone    用户注册手机号
      */
     public Subscription register(Observer<String> observer, String phone) {
-        return   RxjavaUtil.subscribe(mRetrofit.create(Iregister.class)
+        return RxjavaUtil.subscribe(mRetrofit.create(Iregister.class)
                 .register(phone)
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }

@@ -11,7 +11,6 @@ import android.widget.AutoCompleteTextView;
 import com.alibaba.fastjson.JSONObject;
 import com.larry.present.R;
 import com.larry.present.bean.school.School;
-import com.larry.present.boot.MainActivity;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.KeyBoardUtil;
@@ -28,9 +27,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//import com.larry.present.boot.MainActivity;
-
-
 /**
  * Created by Larry-sea on 2016/11/24.
  * <p>
@@ -39,7 +35,7 @@ import butterknife.ButterKnife;
 public class SelectSchoolActivity extends AppCompatActivity {
 
     final static String TAG = SelectSchoolActivity.class.toString();
-    @BindView(R.id.toolbar_select_schoole)
+    @BindView(R.id.toolbar_select_identity)
     Toolbar toolbarSelectSchoole;
     //学校校名的autoTextVie
     @BindView(R.id.at_slect_school_name)
@@ -84,7 +80,7 @@ public class SelectSchoolActivity extends AppCompatActivity {
                 atSlectSchoolName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Intent registerIntent = new Intent(SelectSchoolActivity.this, MainActivity.class);
+                        Intent registerIntent = new Intent(SelectSchoolActivity.this, SelectIdentityActivity.class);
                         registerIntent.putExtra(Constants.SCHOOLE_NAME, (String) mAdapter.getItem(position));
                         registerIntent.putExtra(Constants.SCHOOL_ID, mSchooleNameMap.get(mAdapter.getItem(position)));
                         startActivity(registerIntent);

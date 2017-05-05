@@ -21,7 +21,8 @@ public class ApiConfig {
     public static String MY_COMPUTER_URL = "http://192.168.137.1:8080/present/externalservice/";
 
 
-    //
+    //宿舍wifi局域网地址
+    public static String MY_DORMITORY_URL = "http://192.168.1.107:8080/present/externalservice/";
 
 
 }

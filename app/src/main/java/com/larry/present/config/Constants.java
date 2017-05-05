@@ -25,5 +25,10 @@ public class Constants {
     //老师用户类型
     public final static int TEACHER_TYPE = 0X2;
 
+    /*
+    * 手机号
+    * */
+    public final static String PHONE = "phone";
+
 
 }

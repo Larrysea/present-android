@@ -35,16 +35,23 @@
             android:name=".loginregister.activity.SubmitTeacherInforActivity"
             android:exported="true" />
 
-       <!-- <activity
-            android:name=".loginregister.activity.SelectSchoolActivity"
-            android:exported="true" />-->
+        <!--学生选择学校activity-->
+        <!-- <activity
+             android:name=".loginregister.activity.SelectSchoolActivity"
+             android:exported="true" />-->
 
         <!--一些用来测试的activity,放在下面-->
         <activity
             android:name=".test.TestBuglyActivity"
             android:exported="true" />
+        <!--学生设置头像activity-->
         <activity
             android:name=".loginregister.activity.StudentSetPortraitActivity"
+            android:exported="true" />
+
+        <!--学生提交个人信息activity-->
+        <activity
+            android:name=".loginregister.activity.SubmitStudentInfoActivity"
             android:exported="true" />
 
     </application>

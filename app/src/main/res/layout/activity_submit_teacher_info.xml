@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/tv_teacher_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -18,8 +18,8 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText6"
-        app:layout_constraintVertical_bias="0.34"
+        app:layout_constraintTop_toBottomOf="@+id/tv_submit_teacher_password"
+        app:layout_constraintVertical_bias="0.68"
         android:layout_marginEnd="16dp" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:gravity="center_vertical|center"
         android:text="@string/mail"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText5"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_teacher_mail"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -45,13 +45,13 @@
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/password"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText6"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_submit_teacher_password"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_select_schoole"
+        android:id="@+id/toolbar_select_identity"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorPrimary"
@@ -73,13 +73,13 @@
         android:gravity="center_vertical|center"
         android:text="@string/name"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_teacher_info_name"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/tv_teacher_info_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
@@ -90,12 +90,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/editText6"
+        app:layout_constraintBottom_toTopOf="@+id/tv_submit_teacher_password"
         app:layout_constraintVertical_bias="0.876"
         android:layout_marginEnd="16dp" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/tv_submit_teacher_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -108,7 +108,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_teacher_submit"
         android:layout_width="199dp"
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"
@@ -118,7 +118,7 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_select_schoole"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_select_identity"
         app:layout_constraintVertical_bias="0.799"
         tools:text="@string/submit"
         tools:layout_constraintRight_creator="1"

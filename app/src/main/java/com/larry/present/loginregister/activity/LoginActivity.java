@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         if (mCheckEmptyUtil == null) {
             mCheckEmptyUtil = new CheckETEmptyUtil(LoginActivity.this);
         }
-        boolean isEmpty = mCheckEmptyUtil.addView(etLoginName).addTip(R.string.userName_cant_empty).addView(etLoginPassword).addTip(R.string.password_cant_empty).check();
+        boolean isEmpty = mCheckEmptyUtil.addView(etLoginName).addTip(R.string.userName_cant_empty).addView(etLoginPassword).addTip(R.string.password_cant_empty).isEmpty();
         if (!isEmpty) {
             LoginApi loginApi = new LoginApi(ApiService.getInstance(LoginActivity.this).getmRetrofit());
             loginApi.userLogin(loginSubscriber, userName, password);

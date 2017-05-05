@@ -1,7 +1,6 @@
 package com.larry.present.network.sign;
 
 import com.alibaba.fastjson.JSONArray;
-import com.larry.present.bean.school.School;
 import com.larry.present.bean.sign.CourseSignInfoDto;
 import com.larry.present.bean.sign.StudentCourseSignDto;
 import com.larry.present.bean.sign.StudentSignInfoOfTermDto;
@@ -44,10 +43,10 @@ public class SignApi {
      * @param date         日期
      * @param type         类型
      */
-    public Subscription studentSign(Observer<List<School>> observer, String courseSignId, String studentId, String date, String type) {
+    public Subscription studentSign(Observer<String> observer, String courseSignId, String studentId, String date, String type) {
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
                 .studentSign(courseSignId, studentId, date, type)
-                .map(new ApiService.HttpResultFunc<List<School>>()), observer);
+                .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 
 

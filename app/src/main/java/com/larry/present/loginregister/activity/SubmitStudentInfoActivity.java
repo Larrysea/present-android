@@ -150,8 +150,8 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
                 .addView(etStudentClass).addTip(R.string.class_cant_empty)
                 .addView(etStudentPosition).addTip(R.string.position_cant_empty)
                 .addView(etStudentMail).addTip(R.string.mail_cant_empty)
-                .addView(etStudentPhone).addTip(R.string.smssdk_write_mobile_phone).check();
-        if (result) {
+                .addView(etStudentPhone).addTip(R.string.smssdk_write_mobile_phone).isEmpty();
+        if (!result) {
             student = new Student();
             student.setName(etStudentName.getText().toString().trim());
             student.setStudentNumber(etStudentStudentNumber.getText().toString().trim());

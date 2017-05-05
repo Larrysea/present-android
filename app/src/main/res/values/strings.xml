@@ -36,5 +36,13 @@
     <string name="phone_cant_empty">手机号不能为空</string>
     <string name="submit_info_succeed">提交信息成功</string>
     <string name="not_find_the_host_in_nearby">附近没有发现签到信号</string>
+    <string name="i_am">我是</string>
+    <string name="teacher">老师</string>
+    <string name="student">学生</string>
+    <string name="bkuv">北京大学</string>
+    <string name="select_identity">选择身份</string>
+    <string name="name_cant_emty">姓名不能为空</string>
+    <string name="register_succeed">注册成功</string>
+
 
 </resources>

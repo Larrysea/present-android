@@ -33,7 +33,7 @@ public interface IsignApi {
      * @param signType     改变签到账户类型，1 代表是学生自己签到，2 代表是老师修改的学生签到状态
      * @return
      */
-    Observable<BaseCallModeal> studentSign(@Field("courseSignId") String courseSignId,
+    Observable<BaseCallModeal<String>> studentSign(@Field("courseSignId") String courseSignId,
                                            @Field("studentId") String studentId, @Field("date") String date, @Field("signType") String signType);
 
 
