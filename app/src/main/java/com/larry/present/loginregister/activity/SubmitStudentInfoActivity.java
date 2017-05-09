@@ -3,6 +3,12 @@ package com.larry.present.loginregister.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,6 +63,7 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     @BindView(R.id.et_student_phone)
     EditText etStudentPhone;
 
+    final static String TAG = SubmitStudentInfoActivity.class.toString();
 
     /**
      * 提交信息的回调接口
@@ -111,13 +118,37 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
      * 学校id
      */
     String mSchoolId;
+    @BindView(R.id.toolbar_student_info)
+    Toolbar toolbarStudentInfo;
+
+
+    /**
+     * 学校名称
+     */
+    private String schoolName;
+    /**
+     * 学校id
+     */
+    private String schoolId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_student_info);
         ButterKnife.bind(this);
+        toolbarStudentInfo.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
+        setSupportActionBar(toolbarStudentInfo);
+        toolbarStudentInfo.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         initData();
+        schoolName = getIntent().getStringExtra(Constants.SCHOOLE_NAME);
+        schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
+        Log.e(TAG, "启动 onCreate SubmitStudentInfoActivity");
+        initView();
     }
 
 
@@ -126,10 +157,6 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
             mSchoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
             mStudentApi = new StudentApi(ApiService.getInstance(SubmitStudentInfoActivity.this).getmRetrofit());
             initListener();
-            //获取班级id
-            getClassId(etStudentClass.getText().toString(), etStudentSchool.getText().toString());
-
-
         }
 
 
@@ -143,21 +170,22 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
      * @return
      */
     public Student initStudentInfo(String classId) {
-        CheckETEmptyUtil checkETEmptyUtil = new CheckETEmptyUtil(SubmitStudentInfoActivity.this);
-        Student student = null;
-        boolean result = checkETEmptyUtil.addView(etStudentName).addTip(R.string.name_cant_empty)
-                .addView(etStudentStudentNumber).addTip(R.string.student_number_cant_empty)
-                .addView(etStudentClass).addTip(R.string.class_cant_empty)
-                .addView(etStudentPosition).addTip(R.string.position_cant_empty)
-                .addView(etStudentMail).addTip(R.string.mail_cant_empty)
-                .addView(etStudentPhone).addTip(R.string.smssdk_write_mobile_phone).isEmpty();
-        if (!result) {
-            student = new Student();
-            student.setName(etStudentName.getText().toString().trim());
-            student.setStudentNumber(etStudentStudentNumber.getText().toString().trim());
-            student.setClassId(classId);
-
+        //todo 权限处理
+        String imel = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE)).getDeviceId();
+        Student student = new Student();
+        student.setName(etStudentName.getText().toString().trim());
+        student.setStudentNumber(etStudentStudentNumber.getText().toString().trim());
+        student.setImel(imel);
+        student.setClassId(classId);
+        student.setMail(etStudentMail.getText().toString().trim());
+        student.setPhone(etStudentPhone.getText().toString().trim());
+        student.setSchoolId(schoolId);
+        if (cbStudentMale.isChecked()) {
+            student.setSexual("男");
+        } else {
+            student.setSexual("女");
         }
+        student.setStudentNumber(etStudentStudentNumber.getText().toString().trim());
         return student;
     }
 
@@ -171,7 +199,7 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     public void getClassId(String className, String schoolId) {
         getClassIdSubscriber = new ProgressSubscriber<String>(getClassIdOnNextListener, SubmitStudentInfoActivity.this);
         mClassApi = new ClassApi(ApiService.getInstance(SubmitStudentInfoActivity.this).getmRetrofit());
-        mClassApi.queryClassId(getClassIdSubscriber, className);
+        mClassApi.queryClassId(getClassIdSubscriber, className, schoolId);
     }
 
 
@@ -199,11 +227,18 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
             public void onNext(String classId) {
                 //班级存在的情况下
                 if (classId != null) {
-                    initStudentInfo(classId);
-                    submitInfoSubscriber = new ProgressSubscriber<String>(mSubmitInfoNextListener, SubmitStudentInfoActivity.this);
-                    if (mStudent != null) {
-                        mStudentApi.submitStudentInfo(submitInfoSubscriber, mStudent);
-                    }
+                    SubmitStudentInfoActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(SubmitStudentInfoActivity.this, "测试toast", Toast.LENGTH_SHORT).show();
+                            mStudent = initStudentInfo(classId);
+                            submitInfoSubscriber = new ProgressSubscriber<String>(mSubmitInfoNextListener, SubmitStudentInfoActivity.this);
+                            if (mStudent != null) {
+                                mStudentApi.submitStudentInfo(submitInfoSubscriber, mStudent);
+                            }
+                        }
+                    });
+
                 }
                 //班级不存在，添加班级信息
                 else {
@@ -221,5 +256,42 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.storage_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.id_menu_save) {
+            CheckETEmptyUtil checkETEmptyUtil = new CheckETEmptyUtil(SubmitStudentInfoActivity.this);
+            Student student = null;
+            boolean result = checkETEmptyUtil.addView(etStudentName).addTip(R.string.name_cant_empty)
+                    .addView(etStudentStudentNumber).addTip(R.string.student_number_cant_empty)
+                    .addView(etStudentClass).addTip(R.string.class_cant_empty)
+                    .addView(etStudentPosition).addTip(R.string.position_cant_empty)
+                    .addView(etStudentMail).addTip(R.string.mail_cant_empty)
+                    .addView(etStudentPhone).addTip(R.string.smssdk_write_mobile_phone).isEmpty();
+
+            if (!result) {
+                getClassId(etStudentClass.getText().toString(), schoolId);
+
+            }
+
+        }
+        return false;
+    }
+
+
+    /**
+     * 初始化view
+     */
+    public void initView() {
+
+        etStudentSchool.setText(schoolName);
+    }
+
 
 }

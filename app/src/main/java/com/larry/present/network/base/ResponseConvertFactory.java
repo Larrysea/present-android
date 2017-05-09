@@ -11,11 +11,10 @@ import retrofit2.Retrofit;
 
 /**
  * Created by Charles on 2016/3/17.
- *
+ * <p>
  * json解析类
- *
  */
-public class ResponseConvertFactory extends Converter.Factory{
+public class ResponseConvertFactory extends Converter.Factory {
 
     /**
      * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
@@ -41,9 +40,8 @@ public class ResponseConvertFactory extends Converter.Factory{
     }
 
     @Override
-    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
-                                                            Retrofit retrofit) {
-        return new GsonResponseBodyConverter<>(gson,type);
+    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+        return new GsonResponseBodyConverter<>(gson, type);
     }
 
 }

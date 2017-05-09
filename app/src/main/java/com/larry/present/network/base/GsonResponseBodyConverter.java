@@ -20,20 +20,22 @@ import retrofit2.Converter;
 class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
     private final Type type;
+    ApiException apiException;
 
-    final static String TAG=GsonResponseBodyConverter.class.toString();
+    final static String TAG = GsonResponseBodyConverter.class.toString();
+
     GsonResponseBodyConverter(Gson gson, Type type) {
         this.gson = gson;
         this.type = type;
     }
 
     @Override
-    public T convert(ResponseBody value){
+    public T convert(ResponseBody value) {
         String response = null;
         try {
             response = value.string();
         } catch (IOException e) {
-            Log.e(TAG,e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
         Log.d("Network", "response>>" + response);
         //httpResult 只解析result字段
@@ -45,10 +47,6 @@ class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             saveUserIdAndSessionId(httpResult.getUser_id(), httpResult.getSession_id());
 
         }*/
-
-        if (httpResult.getCode() != 200) {
-            throw new ApiException(httpResult.getCode());
-        }
         return gson.fromJson(response, type);
     }
 

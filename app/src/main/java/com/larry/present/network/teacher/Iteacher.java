@@ -1,9 +1,9 @@
 package com.larry.present.network.teacher;
 
-import com.larry.present.bean.teacher.Teacher;
 import com.larry.present.network.base.BaseCallModeal;
 
-import retrofit2.http.FieldMap;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -28,5 +28,5 @@ public interface Iteacher {
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("submitTeacherInfo")
-    Observable<BaseCallModeal<String>> submitStudentInfo(@FieldMap Teacher teacher);
+    Observable<BaseCallModeal<String>> submitStudentInfo(@Body RequestBody teacher);
 }

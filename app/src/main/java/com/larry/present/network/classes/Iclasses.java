@@ -1,8 +1,14 @@
 package com.larry.present.network.classes;
 
+import com.larry.present.bean.classes.Classes;
 import com.larry.present.network.base.BaseCallModeal;
 
-import retrofit2.http.Field;
+import java.util.List;
+
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import rx.Observable;
 
 /*
@@ -20,17 +26,34 @@ import rx.Observable;
 public interface Iclasses {
 
     /**
-     * 获取学校id
-     * @param className
+     * 通过班级名称，和学校id获取班级id
+     *
+     * @param requestBody     包含className,和schoolId
      * @return
      */
-    Observable<BaseCallModeal<String>>  getClassId(@Field("className")String className);
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getClassId")
+    Observable<BaseCallModeal<String>> getClassId(@Body RequestBody requestBody);
 
     /**
      * 添加班级
-     * @param className
-     * @param schoolId
+     *
+     * @param body
      * @return
      */
-    Observable<BaseCallModeal<String>>  addClasses(@Field("className") String className,@Field("schoolId") String schoolId);
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("addClasses")
+    Observable<BaseCallModeal<String>> addClasses(@Body RequestBody body);
+
+
+    /**
+     * 老师获取某个班级下面的所有课程
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getClassesUnderCourse")
+    Observable<BaseCallModeal<List<Classes>>> getClassesUnderCourse(@Body RequestBody body);
+
 }

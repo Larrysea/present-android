@@ -1,13 +1,14 @@
-package com.larry.present.bean.student;
+package com.larry.present.loginregister.dto;
 
 
-import static com.google.gson.internal.bind.TypeAdapters.UUID;
 
 /**
- * @ClassName: Student
- * @Description: 数据库表student对应的entity
+ * Created by Larry-sea on 2017/3/28.
+ *
+ * 学生登录成功返回的dto
+ *
  */
-public class Student {
+public class StudentLoginSuccessDto {
     /**
      * 学生id
      */
@@ -18,10 +19,6 @@ public class Student {
      */
     private String name;
 
-    /**
-     * 密码
-     */
-    private String password;
 
     /**
      * 手机号
@@ -53,12 +50,6 @@ public class Student {
      */
     private String studentNumber;
 
-    /*
-    * 学校id
-    *
-    * */
-    private String schoolId;
-
 
     /**
      * 班级id
@@ -66,20 +57,10 @@ public class Student {
     private String classId;
 
 
-    /*
-    *
-    * 班级职位
-    *
-    * */
+    /**
+     * 班级职位
+     */
     private String classPosition;
-
-    public String getClassPosition() {
-        return classPosition;
-    }
-
-    public void setClassPosition(String classPosition) {
-        this.classPosition = classPosition;
-    }
 
     public String getClassId() {
         return classId;
@@ -89,6 +70,19 @@ public class Student {
         this.classId = classId;
     }
 
+    public String getClassPosition() {
+        return classPosition;
+    }
+
+    public void setClassPosition(String classPosition) {
+        this.classPosition = classPosition;
+    }
+
+    /*
+    *
+    * 学校id
+    *
+    * */
 
     public String getSchoolId() {
         return schoolId;
@@ -98,165 +92,153 @@ public class Student {
         this.schoolId = schoolId;
     }
 
+    private String schoolId;
+
     /**
      * 获取学生id
-     *
      * @return id 学生id
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
     /**
      * 设置学生id
-     *
      * @param id 学生id
      */
-    public void setId(String id) {
+    public void setId(String id)
+    {
         this.id = id;
     }
 
     /**
      * 获取学生名称
-     *
      * @return name 学生名称
      */
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
     /**
      * 设置学生名称
-     *
      * @param name 学生名称
      */
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    /**
-     * 获取密码
-     *
-     * @return password 密码
-     */
-    public String getPassword() {
-        return password;
-    }
 
-    /**
-     * 设置密码
-     *
-     * @param password 密码
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     /**
      * 获取手机号
-     *
      * @return phone 手机号
      */
-    public String getPhone() {
+    public String getPhone()
+    {
         return phone;
     }
 
     /**
      * 设置手机号
-     *
      * @param phone 手机号
      */
-    public void setPhone(String phone) {
+    public void setPhone(String phone)
+    {
         this.phone = phone;
     }
 
     /**
      * 获取性别
-     *
      * @return sexual 性别
      */
-    public String getSexual() {
+    public String getSexual()
+    {
         return sexual;
     }
 
     /**
      * 设置性别
-     *
      * @param sexual 性别
      */
-    public void setSexual(String sexual) {
+    public void setSexual(String sexual)
+    {
         this.sexual = sexual;
     }
 
     /**
      * 获取头像
-     *
      * @return portraitUrl 头像
      */
-    public String getPortraitUrl() {
+    public String getPortraitUrl()
+    {
         return portraitUrl;
     }
 
     /**
      * 设置头像
-     *
      * @param portraitUrl 头像
      */
-    public void setPortraitUrl(String portraitUrl) {
+    public void setPortraitUrl(String portraitUrl)
+    {
         this.portraitUrl = portraitUrl;
     }
 
     /**
      * 获取手机唯一标示
-     *
      * @return imel 手机唯一标示
      */
-    public String getImel() {
+    public String getImel()
+    {
         return imel;
     }
 
     /**
      * 设置手机唯一标示
-     *
      * @param imel 手机唯一标示
      */
-    public void setImel(String imel) {
+    public void setImel(String imel)
+    {
         this.imel = imel;
     }
 
     /**
      * 获取邮箱
-     *
      * @return mail 邮箱
      */
-    public String getMail() {
+    public String getMail()
+    {
         return mail;
     }
 
     /**
      * 设置邮箱
-     *
      * @param mail 邮箱
      */
-    public void setMail(String mail) {
+    public void setMail(String mail)
+    {
         this.mail = mail;
     }
 
     /**
      * 获取学号
-     *
      * @return studentNumber 学号
      */
-    public String getStudentNumber() {
+    public String getStudentNumber()
+    {
         return studentNumber;
     }
 
     /**
      * 设置学号
-     *
      * @param studentNumber 学号
      */
-    public void setStudentNumber(String studentNumber) {
+    public void setStudentNumber(String studentNumber)
+    {
         this.studentNumber = studentNumber;
     }
+
+
 }

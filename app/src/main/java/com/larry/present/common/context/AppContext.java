@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.larry.present.common.basetemplate.BaseApplication;
+import com.larry.present.common.subscribers.ProgressSubscriber;
+import com.larry.present.common.util.PresentExceptionHandler;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.BufferedReader;
@@ -39,6 +41,8 @@ public class AppContext extends BaseApplication {
         super.onCreate();
         context = this;
         SMSSDK.initSDK(this, "1cda9753bd63d", "c107a5e6412c2650b64d6185c3dcb292");
+        ProgressSubscriber.setProcessException(new PresentExceptionHandler());
+
     }
 
     /**

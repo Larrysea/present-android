@@ -5,7 +5,11 @@ import com.larry.present.network.base.BaseCallModeal;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import rx.Observable;
 
 /*
@@ -29,7 +33,9 @@ public interface Icourse {
      * @param teacherId 老师id
      * @return 返回老师所教学的课程
      */
-    Observable<BaseCallModeal<List<Course>>> teacherGetAllCourse(@Field("teacherId") String teacherId);
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("teacherGetAllCourse")
+    Observable<BaseCallModeal<List<Course>>> teacherGetAllCourse(@Body RequestBody teacherId);
 
 
     /**
@@ -38,7 +44,9 @@ public interface Icourse {
      * @param studentId 学生id
      * @return 返回学生所在班级的所有课程
      */
-    Observable<BaseCallModeal<List<Course>>> studentGetAllCourse(@Field("studentId") String studentId);
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("studentGetAllCourse")
+    Observable<BaseCallModeal<List<Course>>> studentGetAllCourse(@Body RequestBody studentId);
 
 
     /**
@@ -48,6 +56,8 @@ public interface Icourse {
      * @param teacherId  老师id
      * @return
      */
-    Observable<BaseCallModeal<String>> addCourse(@Field("courseName") String courseName, @Field("tacherId") String teacherId);
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("addCourse")
+    Observable<BaseCallModeal<String>> addCourse(@Body RequestBody body);
 
 }

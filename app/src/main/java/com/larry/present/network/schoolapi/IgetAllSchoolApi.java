@@ -6,6 +6,7 @@ import com.larry.present.network.base.BaseCallModeal;
 import java.util.List;
 
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -27,10 +28,18 @@ import rx.Observable;
 public interface IgetAllSchoolApi {
 
     /**
-     * @return  返回学校list
+     * @return 返回学校list
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("getAllSchool")
     Observable<BaseCallModeal<List<School>>> getAllSchool(@Body RequestBody phone);
+
+    /**
+     * @return 返回学校list
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getAllSchool")
+    Call<BaseCallModeal<List<School>>> getAllSchoolOldWay(@Body RequestBody phone);
+
 
 }

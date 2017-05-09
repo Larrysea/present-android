@@ -30,5 +30,28 @@ public class Constants {
     * */
     public final static String PHONE = "phone";
 
+    public final static String CLASS_NAME = "className";
+
+
+    /**
+     * wifi签到
+     */
+    public final static String WIFI_SIGN = "w";
+
+    /**
+     * 二维码签到
+     */
+    public final static String QR_CODE_SIGN = "q";
+
+    /**
+     * nfc签到
+     */
+    public final static String NFC_CODE_SIGN = "n";
+
+
+    /*
+    * wifi 密码
+    * */
+    public final static String WIFI_PASSWORD = "present123";
 
 }

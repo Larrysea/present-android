@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+        initConfig();
 
 
     }
@@ -52,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
 
 
     public void initView() {
@@ -66,5 +67,17 @@ public class MainActivity extends AppCompatActivity {
         appBarMainTl.setupWithViewPager(activityMainViewpagerVp);
     }
 
+
+    /**
+     * 应用启动的一些配置属性
+     */
+    public void initConfig() {
+    }
+
+    public void showClassFragment()
+    {
+
+
+    }
 
 }

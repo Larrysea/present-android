@@ -1,7 +1,9 @@
 package com.larry.present.network.student;
 
+import com.alibaba.fastjson.JSONObject;
 import com.larry.present.bean.student.Student;
 import com.larry.present.network.base.ApiService;
+import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.base.RxjavaUtil;
 
 import retrofit2.Retrofit;
@@ -32,12 +34,12 @@ public class StudentApi {
      * 提交学生信息
      */
     public void submitStudentInfo(Observer<String> observer, Student student) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("student", student);
         RxjavaUtil.subscribe(mRetrofit.create(Istudent.class)
-                .submitStudentInfo(student)
+                .submitStudentInfo(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }
-
-
 
 
 }

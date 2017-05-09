@@ -1,8 +1,12 @@
 package com.larry.present.network.login;
 
 import com.larry.present.loginregister.dto.LoginSuccessDto;
+import com.larry.present.loginregister.dto.StudentLoginSuccessDto;
+import com.larry.present.loginregister.dto.TeacherLoginSuccessDto;
 import com.larry.present.network.base.BaseCallModeal;
 
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -26,13 +30,32 @@ public interface Ilogin {
      *
      * @param userName
      * @param password
-     * @return  返回登录之后的唯一授权token
+     * @return 返回登录之后的唯一授权token
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("login")
     Observable<BaseCallModeal<LoginSuccessDto>> login(String userName, String password);
 
 
+    /**
+     * 学生通过手机号密码登录
+     *
+     * @param studentLoginBody
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("studentLogin")
+    Observable<BaseCallModeal<StudentLoginSuccessDto>> studentLogin(@Body RequestBody studentLoginBody);
+
+    /**
+     * 老师通过手机号和密码登录
+     *
+     * @param teacherLoginBody
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("teacherLogin")
+    Observable<BaseCallModeal<TeacherLoginSuccessDto>> teacherLogin(@Body RequestBody teacherLoginBody);
 
 
 }

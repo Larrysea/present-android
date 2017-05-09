@@ -2,7 +2,11 @@ package com.larry.present.loginregister.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,11 +17,11 @@ import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.CheckETEmptyUtil;
 import com.larry.present.config.Constants;
+import com.larry.present.network.base.ApiService;
 import com.larry.present.network.teacher.TeacherApi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Observer;
 
 /**
@@ -40,8 +44,7 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
     EditText tvTeacherMail;
     @BindView(R.id.tv_teacher_info_name)
     EditText tvTeacherInfoName;
-    @BindView(R.id.tv_submit_teacher_password)
-    EditText tvSubmitTeacherPassword;
+
 
     CheckETEmptyUtil checkETEmptyUtil = new CheckETEmptyUtil(SubmitTeacherInforActivity.this);
 
@@ -63,19 +66,16 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
     TeacherApi mTeacherApi;
 
     SubscriberOnNextListener<String> subscriberOnNextListener;
+    @BindView(R.id.toolbar_submit_teacher)
+    Toolbar toolbarSubmitTeacher;
 
-    @OnClick(R.id.btn_teacher_submit)
-    void onClick(View view) {
-        //是否为空
-        boolean isEmpty = checkETEmptyUtil.addView(tvTeacherInfoName).addTip(R.string.name_cant_empty)
-                .addView(tvSubmitTeacherPassword).addTip(R.string.password_cant_empty)
-                .addView(tvTeacherMail).addTip(R.string.mail_cant_empty).isEmpty();
+    @BindView(R.id.guideline4)
+    Guideline guideline4;
+    @BindView(R.id.guideline5)
+    Guideline guideline5;
+    @BindView(R.id.guideline6)
+    Guideline guideline6;
 
-        //内容不为空
-        if (!isEmpty) {
-            mTeacherApi.submitTeacherInfo(submitTeacherObserver, initTeacher());
-        }
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +84,7 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initIntentData();
         initObserver();
+        initToolbar();
 
     }
 
@@ -96,6 +97,7 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
             public void onNext(String s) {
 
             }
+
             @Override
             public void onCompleted() {
                 Toast.makeText(SubmitTeacherInforActivity.this, R.string.register_succeed, Toast.LENGTH_SHORT).show();
@@ -125,9 +127,53 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
         teacher.setSchoolId(schoolId);
         teacher.setPhone(phone);
         teacher.setMail(tvTeacherMail.getText().toString().trim());
-        teacher.setPassword(tvSubmitTeacherPassword.getText().toString().trim());
         return teacher;
     }
 
 
+    public void initToolbar() {
+
+        toolbarSubmitTeacher.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
+        setSupportActionBar(toolbarSubmitTeacher);
+        toolbarSubmitTeacher.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.storage_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.id_menu_save) {
+            submitTeacherInfo(initTeacher());
+        }
+        return true;
+    }
+
+
+    /**
+     * 提交老师信息
+     *
+     * @param teacher
+     */
+    public void submitTeacherInfo(Teacher teacher) {
+        mTeacherApi = new TeacherApi(ApiService.getInstance(SubmitTeacherInforActivity.this).getmRetrofit());
+        boolean isEmpty = checkETEmptyUtil.addView(tvTeacherInfoName).addTip(R.string.name_cant_empty)
+                .addView(tvTeacherMail).addTip(R.string.mail_cant_empty).isEmpty();
+        //内容不为空
+        if (!isEmpty) {
+            mTeacherApi.submitTeacherInfo(submitTeacherObserver, teacher);
+        }
+
+    }
 }

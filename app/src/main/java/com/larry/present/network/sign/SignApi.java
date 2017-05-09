@@ -1,10 +1,12 @@
 package com.larry.present.network.sign;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.larry.present.bean.sign.CourseSignInfoDto;
 import com.larry.present.bean.sign.StudentCourseSignDto;
 import com.larry.present.bean.sign.StudentSignInfoOfTermDto;
 import com.larry.present.network.base.ApiService;
+import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.base.RxjavaUtil;
 
 import java.util.List;
@@ -43,9 +45,15 @@ public class SignApi {
      * @param date         日期
      * @param type         类型
      */
+
     public Subscription studentSign(Observer<String> observer, String courseSignId, String studentId, String date, String type) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseSignId", courseSignId);
+        jsonObject.put("studentId", studentId);
+        jsonObject.put("date", date);
+        jsonObject.put("type", type);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
-                .studentSign(courseSignId, studentId, date, type)
+                .studentSign(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 
@@ -59,9 +67,15 @@ public class SignApi {
      * @param validOfTime 有效时间
      * @return
      */
+
     public Subscription selectCourseToSign(Observer<String> observer, String teacherId, String courseId, String signType, int validOfTime) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("teacherId", teacherId);
+        jsonObject.put("courseId", courseId);
+        jsonObject.put("signStartType", signType);
+        jsonObject.put("validOfTime", validOfTime);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
-                .selectClassesToSign(teacherId, courseId, signType, validOfTime)
+                .selectCourseToSign(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 
@@ -74,9 +88,13 @@ public class SignApi {
      * @param classArray   班级数组
      * @return
      */
+
     public Subscription selectClassToSign(Observer<String> observer, String courseSignId, JSONArray classArray) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseSignId", courseSignId);
+        jsonObject.put("classArray", classArray);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
-                .selectClassToSign(courseSignId, classArray)
+                .selectClassToSign(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 
@@ -90,9 +108,14 @@ public class SignApi {
      * @param classId   班级id
      * @return
      */
+
     public Subscription getCourseSignInfoInTerm(Observer<List<StudentSignInfoOfTermDto>> observer, String teacherId, String courseId, String classId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("teacherId", teacherId);
+        jsonObject.put("courseId", courseId);
+        jsonObject.put("classId", classId);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
-                .getCourseSignInfoInTerm(teacherId, courseId, classId)
+                .getCourseSignInfoInTerm(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<List<StudentSignInfoOfTermDto>>()), observer);
     }
 
@@ -105,9 +128,13 @@ public class SignApi {
      * @param classId      班级id
      * @return
      */
+
     public Subscription getCourseSignInfoOfOnce(Observer<List<StudentCourseSignDto>> observer, String courseSignId, String classId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseSignId", courseSignId);
+        jsonObject.put("classId", classId);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
-                .getCourseSignInfoOfOnce(courseSignId, classId)
+                .getCourseSignInfoOfOnce(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<List<StudentCourseSignDto>>()), observer);
 
     }
@@ -120,9 +147,13 @@ public class SignApi {
      * @param studentId 学生id
      * @return
      */
+
     public Subscription studentGetCourseSignInfoDto(Observer<List<CourseSignInfoDto>> observer, String courseId, String studentId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseId", courseId);
+        jsonObject.put("studentId", studentId);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
-                .studentGetCourseSignInfoDto(courseId, studentId)
+                .studentGetCourseSignInfoDto(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<List<CourseSignInfoDto>>()), observer);
 
     }

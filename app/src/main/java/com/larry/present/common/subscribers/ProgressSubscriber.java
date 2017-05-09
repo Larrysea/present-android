@@ -6,13 +6,12 @@ import android.widget.Toast;
 
 import com.larry.present.common.progress.ProgressCancelListener;
 import com.larry.present.common.progress.ProgressDialogHandler;
+import com.larry.present.common.util.ProcessException;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import rx.Subscriber;
-
-import static android.content.ContentValues.TAG;
 
 
 /**
@@ -23,12 +22,22 @@ import static android.content.ContentValues.TAG;
  */
 public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCancelListener {
 
+
+    private static String TAG = ProgressSubscriber.class.toString();
+
     private SubscriberOnNextListener mSubscriberOnNextListener;
 
 
     private ProgressDialogHandler mProgressDialogHandler;
 
     private Context context;
+
+    private static ProcessException processException;
+
+    public static void setProcessException(final ProcessException processException) {
+        ProgressSubscriber.processException = processException;
+    }
+
 
     public ProgressSubscriber(SubscriberOnNextListener mSubscriberOnNextListener, Context context) {
         this.mSubscriberOnNextListener = mSubscriberOnNextListener;
@@ -84,8 +93,10 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
         } else if (e instanceof ConnectException) {
             Toast.makeText(context, "网络中断，请检查您的网络状态", Toast.LENGTH_SHORT).show();
         } else {
-            Log.e(TAG, e.getStackTrace().toString() + "message" + e.getMessage() + "  " + e.getCause());
-            Toast.makeText(context, "error:" + e.getStackTrace() + "e message" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            processException.processException(context, e);
+            e.printStackTrace();
+            Toast.makeText(context, "error:" + e.getStackTrace() + "e message" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         dismissProgressDialog();
 
@@ -112,6 +123,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     public void onCancelProgress() {
         if (this.isUnsubscribed()) {
             this.unsubscribe();
+            Log.e(TAG, "解除绑定");
         }
     }
 

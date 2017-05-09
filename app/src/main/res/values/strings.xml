@@ -43,6 +43,12 @@
     <string name="select_identity">选择身份</string>
     <string name="name_cant_emty">姓名不能为空</string>
     <string name="register_succeed">注册成功</string>
+    <string name="save">保存</string>
+    <string name="classes">班级</string>
+    <string name="i_am_teacher">我是老师</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="if_denied_you_will_cant_use_wifi_sign_feature">如果拒绝你将不能使用wifi签到功能</string>
 
 
 </resources>

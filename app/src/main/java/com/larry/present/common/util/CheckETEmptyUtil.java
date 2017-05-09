@@ -67,7 +67,9 @@ public class CheckETEmptyUtil {
             mBuilder = new Builder();
             mWRBuilder = new WeakReference<>(mBuilder);
         }
-        mWRBuilder.get().addView(editText);
+        if (mWRBuilder.get() != null) {
+            mWRBuilder.get().addView(editText);
+        }
         return this;
     }
 
@@ -158,6 +160,26 @@ public class CheckETEmptyUtil {
             }
             return this;
         }
+    }
+
+
+    /**
+     * 当长时间没有停留在界面时需要判断是否被回收掉，如果被回收掉
+     * 则需要重新生成对象
+     *
+     * @return
+     */
+    public boolean isRecycler() {
+        if (mWRViewList == null || mWRViewList.get() == null) {
+            return true;
+        }
+        if (mWRTipList == null || mWRTipList.get() == null) {
+            return true;
+        }
+        if (mWRBuilder == null || mWRBuilder.get() == null) {
+            return true;
+        }
+        return false;
     }
 }
 

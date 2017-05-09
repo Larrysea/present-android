@@ -1,14 +1,16 @@
 package com.larry.present.network.schoolapi;
 
+import com.alibaba.fastjson.JSONObject;
 import com.larry.present.bean.school.School;
 import com.larry.present.network.base.ApiService;
+import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.base.RxjavaUtil;
 
 import java.util.List;
 
-import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import rx.Observer;
+import rx.Subscription;
 
 
 /*
@@ -38,9 +40,11 @@ public class GetSchoolApi {
      * @param observer 订阅者
      * @param phone    用户注册手机号
      */
-    public void getAllSchool(Observer<List<School>> observer, RequestBody phone) {
-        RxjavaUtil.subscribe(mRetrofit.create(IgetAllSchoolApi.class)
-                .getAllSchool(phone)
+    public Subscription getAllSchool(Observer<List<School>> observer, String phone) {
+        JSONObject phoneObject = new JSONObject();
+        phoneObject.put("phone", phone);
+        return RxjavaUtil.subscribe(mRetrofit.create(IgetAllSchoolApi.class)
+                .getAllSchool(JsonUtil.convertObjectToRequestBody(phoneObject))
                 .map(new ApiService.HttpResultFunc<List<School>>()), observer);
     }
 

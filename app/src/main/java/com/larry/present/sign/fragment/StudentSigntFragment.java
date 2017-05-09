@@ -1,6 +1,7 @@
 package com.larry.present.sign.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.larry.present.R;
-import com.larry.present.common.basetemplate.BaseFragment;
 import com.larry.present.common.util.WifiSignUtil;
+import com.larry.present.network.base.ApiService;
+import com.larry.present.network.sign.SignApi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,21 +31,19 @@ import butterknife.Unbinder;
 * @version    
 *    
 */
-public class StudentSigntFragment extends BaseFragment {
+public class StudentSigntFragment extends Fragment {
 
     //开始签到的id
     String startSignId;
+
     @OnClick(R.id.btn_student_sign)
     void onClick(View view) {
         //todo 学生签到逻辑
-        startSignId=WifiSignUtil.checkHasWifiHost(getActivity().getApplicationContext());
-        if(startSignId!=null)
-        {
+        startSignId = WifiSignUtil.checkHasWifiHost(getActivity().getApplicationContext());
+        if (startSignId != null) {
 
-        }
-        else
-        {
-            Toast.makeText(getActivity(),R.string.not_find_the_host_in_nearby, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), R.string.not_find_the_host_in_nearby, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -54,27 +54,14 @@ public class StudentSigntFragment extends BaseFragment {
     ImageView ivSignDefaullt;
     Unbinder unbinder;
 
-    @Override
-    public void initViews() {
-
-    }
-
-    @Override
-    public void initDatas() {
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_student_sign;
-    }
-
+    SignApi signApi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_student_sign, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        initData();
         return rootView;
     }
 
@@ -83,4 +70,10 @@ public class StudentSigntFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    public void initData() {
+        signApi = new SignApi(ApiService.getInstance(getActivity()).getmRetrofit());
+
+    }
+
 }

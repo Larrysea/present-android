@@ -44,16 +44,10 @@ public class SelectIdentityActivity extends AppCompatActivity {
     * */
     String schoolName;
 
-    /**
-     * 启动的intent
-     */
-    Intent intent;
 
     @OnClick(R.id.rb_identity_student)
     void studentOnClick(View view) {
-        if (intent == null) {
-            intent = new Intent(SelectIdentityActivity.this, SubmitStudentInfoActivity.class);
-        }
+        Intent intent = new Intent(SelectIdentityActivity.this, SubmitStudentInfoActivity.class);
         intent.putExtra(Constants.SCHOOL_ID, schoolId);
         intent.putExtra(Constants.SCHOOLE_NAME, schoolName);
         startActivity(intent);
@@ -62,9 +56,7 @@ public class SelectIdentityActivity extends AppCompatActivity {
 
     @OnClick(R.id.rb_identity_teacher)
     void teacherOnClick(View view) {
-        if (intent == null) {
-            intent = new Intent(SelectIdentityActivity.this, SubmitTeacherInforActivity.class);
-        }
+        Intent intent = new Intent(SelectIdentityActivity.this, SubmitTeacherInforActivity.class);
         intent.putExtra(Constants.SCHOOL_ID, schoolId);
         intent.putExtra(Constants.SCHOOLE_NAME, schoolName);
         startActivity(intent);
@@ -78,18 +70,20 @@ public class SelectIdentityActivity extends AppCompatActivity {
         initToolbar();
         schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
         schoolName = getIntent().getStringExtra(Constants.SCHOOLE_NAME);
+        tvIdentitySchool.setText(schoolName + "的");
     }
 
 
     private void initToolbar() {
-        setSupportActionBar(toolbarSelectSchoole);
         toolbarSelectSchoole.setTitle(R.string.select_identity);
         toolbarSelectSchoole.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
+        setSupportActionBar(toolbarSelectSchoole);
         toolbarSelectSchoole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
     }
 }

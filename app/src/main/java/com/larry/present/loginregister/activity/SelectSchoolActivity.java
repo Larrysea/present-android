@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.larry.present.R;
 import com.larry.present.bean.school.School;
 import com.larry.present.common.subscribers.ProgressSubscriber;
@@ -17,7 +16,6 @@ import com.larry.present.common.util.KeyBoardUtil;
 import com.larry.present.config.Constants;
 import com.larry.present.loginregister.adapter.BaseFilterAdapter;
 import com.larry.present.network.base.ApiService;
-import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.schoolapi.GetSchoolApi;
 
 import java.util.ArrayList;
@@ -51,6 +49,7 @@ public class SelectSchoolActivity extends AppCompatActivity {
     //监听器
     SubscriberOnNextListener<List<School>> subscriberOnNextListener;
 
+    String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +58,7 @@ public class SelectSchoolActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initData();
         initToolbar();
+        phone = getIntent().getStringExtra(Constants.PHONE);
 
     }
 
@@ -104,9 +104,8 @@ public class SelectSchoolActivity extends AppCompatActivity {
 
         GetSchoolApi getSchoolApi = new GetSchoolApi(ApiService.getInstance(SelectSchoolActivity.this).getmRetrofit());
 
-        JSONObject phoneObject = new JSONObject();
-        phoneObject.put("phone", "112312312312");
-        getSchoolApi.getAllSchool(progressSubscriber, JsonUtil.convertObjectToRequestBody(phoneObject));
+
+        getSchoolApi.getAllSchool(progressSubscriber, phone);
 
     }
 

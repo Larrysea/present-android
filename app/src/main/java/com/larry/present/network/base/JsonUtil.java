@@ -27,7 +27,6 @@ public class JsonUtil {
      */
     public static <T> RequestBody convertObjectToRequestBody(T object) {
         if (object != null) {
-
             String jsonString = JSON.toJSONString(object);
             return RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonString);
         } else {
