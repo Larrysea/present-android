@@ -1,5 +1,7 @@
 package com.larry.present.sign.fragment;
 
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,9 +12,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.larry.present.R;
+import com.larry.present.account.AccountManager;
+import com.larry.present.common.subscribers.ProgressSubscriber;
+import com.larry.present.common.subscribers.SubscriberOnNextListener;
+import com.larry.present.common.util.DateUtil;
+import com.larry.present.common.util.LocationUtil;
 import com.larry.present.common.util.WifiSignUtil;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.sign.SignApi;
+import com.tbruyelle.rxpermissions.RxPermissions;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,21 +43,11 @@ import butterknife.Unbinder;
 */
 public class StudentSigntFragment extends Fragment {
 
-    //开始签到的id
-    String startSignId;
+    //获取到的附近的wifi签到的签到课程id链表
+    List<String> courseSignIdList;
 
-    @OnClick(R.id.btn_student_sign)
-    void onClick(View view) {
-        //todo 学生签到逻辑
-        startSignId = WifiSignUtil.checkHasWifiHost(getActivity().getApplicationContext());
-        if (startSignId != null) {
-
-        } else {
-            Toast.makeText(getActivity(), R.string.not_find_the_host_in_nearby, Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
+    //监听学生签到回调
+    SubscriberOnNextListener<String> subscriberOnNextListener;
 
     Button btnStudentSign;
     @BindView(R.id.iv_sign_defaullt)
@@ -55,6 +55,40 @@ public class StudentSigntFragment extends Fragment {
     Unbinder unbinder;
 
     SignApi signApi;
+
+    RxPermissions rxPermissions;
+
+    @OnClick(R.id.btn_student_sign)
+    void onClick(View view) {
+        //如果操作系统大于android 6.0
+        if (Build.VERSION.SDK_INT >= 23) {
+            boolean isOpened = LocationUtil.isOPen(getActivity());
+            if (!isOpened) {
+                Toast.makeText(getActivity(), R.string.pleast_opne_location, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        rxPermissions = new RxPermissions(getActivity());
+        rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE).subscribe(grant -> {
+            if (grant) {
+                //todo 学生签到逻辑
+                courseSignIdList = WifiSignUtil.checkHasWifiHost(getActivity().getApplicationContext());
+                if (courseSignIdList != null) {
+                    signApi.studentSign(new ProgressSubscriber<String>(subscriberOnNextListener, getActivity()), courseSignIdList,
+                            AccountManager.getStudent().getId(), DateUtil.getDateTimeStr(), AccountManager.getStudent().getClassId());
+                } else {
+                    Toast.makeText(getActivity(), R.string.not_find_the_host_in_nearby, Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(getActivity(), R.string.if_denied_you_will_cant_use_wifi_sign_feature, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +107,7 @@ public class StudentSigntFragment extends Fragment {
 
     public void initData() {
         signApi = new SignApi(ApiService.getInstance(getActivity()).getmRetrofit());
-
     }
+
 
 }

@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.larry.present.R;
+import com.larry.present.account.AccountManager;
 import com.larry.present.boot.adapter.BaseFragmentPagerAdapter;
+import com.larry.present.sign.fragment.StudentSigntFragment;
 import com.larry.present.sign.fragment.TeacherSignFragment;
-import com.larry.present.sign.fragment.TeacherSignHitoryFragment;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    RxPermissions rxPermissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +63,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FragmentManager fragmentManager = getSupportFragmentManager();
         mFragmentList = new ArrayList<Fragment>();
-        mFragmentList.add(new TeacherSignFragment());
-        mFragmentList.add(new TeacherSignHitoryFragment());
+        //如果当前是学生实例登录存在
+        if (AccountManager.getStudent() != null) {
+            mFragmentList.add(new StudentSigntFragment());
+        }
+        //如果当前是老师实例登录则添加老师的fragment
+        else {
+            mFragmentList.add(new TeacherSignFragment());
+        }
         mFragmentPagerAdapter = new BaseFragmentPagerAdapter(MainActivity.this, fragmentManager, mFragmentList);
         activityMainViewpagerVp.setAdapter(mFragmentPagerAdapter);
         appBarMainTl.setupWithViewPager(activityMainViewpagerVp);
@@ -74,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public void initConfig() {
     }
 
-    public void showClassFragment()
-    {
+    public void showClassFragment() {
 
 
     }

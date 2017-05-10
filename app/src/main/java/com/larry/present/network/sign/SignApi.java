@@ -16,7 +16,7 @@ import rx.Observer;
 import rx.Subscription;
 
 /*
-*    
+*
 * 项目名称：present-android      
 * 类描述： 签到api的接口调用方法
 * 创建人：Larry-sea   
@@ -40,18 +40,19 @@ public class SignApi {
      * 学生开始签到
      *
      * @param observer     订阅者
-     * @param courseSignId 课程签到id
+     * @param courseSignId 所有发现的课程签到id
      * @param studentId    学生id
      * @param date         日期
-     * @param type         类型
+     * @param classId      学生所在的班级id
+     * @return
      */
 
-    public Subscription studentSign(Observer<String> observer, String courseSignId, String studentId, String date, String type) {
+    public Subscription studentSign(Observer<String> observer, List<String> courseSignId, String studentId, String date, String classId) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("courseSignId", courseSignId);
+        jsonObject.put("courseSignIdList", courseSignId);
         jsonObject.put("studentId", studentId);
-        jsonObject.put("date", date);
-        jsonObject.put("type", type);
+        jsonObject.put("signTime", date);
+        jsonObject.put("classId", classId);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
                 .studentSign(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
@@ -155,6 +156,25 @@ public class SignApi {
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
                 .studentGetCourseSignInfoDto(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<List<CourseSignInfoDto>>()), observer);
+
+    }
+
+
+    /**
+     * 判断学生是否加入了这门课程
+     *
+     * @param observer 回调观察者
+     * @param courseId 课程id
+     * @param classId  班级id
+     * @return
+     */
+    public Subscription isJoinTheCourse(Observer<String> observer, String courseId, String classId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseId", courseId);
+        jsonObject.put("classId", classId);
+        return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
+                .isJoinCourse(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<String>()), observer);
 
     }
 

@@ -32,7 +32,6 @@ import butterknife.OnClick;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
-import rx.Subscription;
 
 /*
 *    
@@ -192,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
             LoginApi loginApi = new LoginApi(ApiService.getInstance(LoginActivity.this).getmRetrofit());
 
             if (isTeacher) {
-                Subscription subscription = loginApi.teacherLogin(new ProgressSubscriber<TeacherLoginSuccessDto>(teacherLoginListener, LoginActivity.this), phone, password);
+                loginApi.teacherLogin(new ProgressSubscriber<TeacherLoginSuccessDto>(teacherLoginListener, LoginActivity.this), phone, password);
             } else {
                 loginApi.studentLogin(new ProgressSubscriber<StudentLoginSuccessDto>(studentLoginListener, LoginActivity.this), phone, password);
             }
@@ -233,6 +232,7 @@ public class LoginActivity extends AppCompatActivity {
         student.setImel(studentLoginSuccessDto.getImel());
         student.setMail(studentLoginSuccessDto.getMail());
         student.setSchoolId(studentLoginSuccessDto.getSchoolId());
+        student.setId(studentLoginSuccessDto.getId());
         return student;
     }
 

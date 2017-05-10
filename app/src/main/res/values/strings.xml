@@ -49,6 +49,6 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="if_denied_you_will_cant_use_wifi_sign_feature">如果拒绝你将不能使用wifi签到功能</string>
-
+    <string name="pleast_opne_location">请先打开定位功能</string>
 
 </resources>

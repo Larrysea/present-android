@@ -262,7 +262,7 @@ public class WifiAdmin {
      * @param macAddress 完整的mac地址
      * @return
      */
-    public String getLastThrMac(String macAddress) {
+    public static String getLastThrMac(String macAddress) {
         if (macAddress == null)
             throw new IllegalArgumentException("macAddress cant empty please checkHasWifiHost your macAddress again");
         String lastMac = String.valueOf((char) macAddress.getBytes()[13]);

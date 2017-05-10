@@ -52,6 +52,10 @@ public class Constants {
     /*
     * wifi 密码
     * */
-    public final static String WIFI_PASSWORD = "present123";
+    public final static String WIFI_PASSWORD = "god_war_peace_love";
+
+
+    //签到的wifi信号id长度是21  位 2位首部标示MD  + 3位mac地址，和十六位的课程签到id
+    public final static int WIFI_SIGN_BSSID_LENGTH=21;
 
 }

@@ -82,7 +82,7 @@ public interface IsignApi {
 
 
     /**
-     * 学生获取某个磕碜的签到信息
+     * 学生获取某个课程的签到信息
      *
      * @param body
      * @return
@@ -91,4 +91,22 @@ public interface IsignApi {
     @POST("getCourseSignInfo")
     Observable<BaseCallModeal<List<CourseSignInfoDto>>> studentGetCourseSignInfoDto(@Body RequestBody body);
 
+
+
+    /**
+     * 判断学生是否参加了这个课程
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("isJoinTheCourse")
+    Observable<BaseCallModeal<String>> isJoinCourse(@Body RequestBody body);
+
+
+
+
 }
+
+
+

@@ -23,6 +23,7 @@ import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.DividerItemDecoration;
 import com.larry.present.common.util.MD5EncipherUtil;
+import com.larry.present.common.util.WifiAdmin;
 import com.larry.present.common.util.WifiUtil;
 import com.larry.present.config.Constants;
 import com.larry.present.network.base.ApiService;
@@ -136,6 +137,8 @@ public class TeacherSignFragment extends Fragment {
 
     final static String TAG = TeacherSignFragment.class.toString();
 
+    WifiAdmin wifiAdmin;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -160,6 +163,7 @@ public class TeacherSignFragment extends Fragment {
         courseApi = new CourseApi(ApiService.getInstance(getActivity()).getmRetrofit());
         classApi = new ClassApi(ApiService.getInstance(getActivity()).getmRetrofit());
         classSet = new LinkedHashSet<>(6);
+        wifiAdmin = new WifiAdmin(getActivity());
     }
 
 
@@ -230,7 +234,7 @@ public class TeacherSignFragment extends Fragment {
                         classArray = JSON.parseArray(JSON.toJSONString(classSet));
                         RxPermissions rxPermissions = new RxPermissions(getActivity());
                         rxPermissions.setLogging(true);
-                        rxPermissions.request(Manifest.permission.CHANGE_NETWORK_STATE, Manifest.permission.CHANGE_WIFI_STATE,Manifest.permission.WRITE_SETTINGS).subscribe(granted -> {
+                        rxPermissions.request(Manifest.permission.CHANGE_NETWORK_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.WRITE_SETTINGS).subscribe(granted -> {
                             if (granted) {
                                 signApi.selectClassToSign(new ProgressSubscriber<String>(selectClassSignListener, getActivity()), courseStartSignId, classArray);
                             } else {
@@ -265,7 +269,7 @@ public class TeacherSignFragment extends Fragment {
             public void onNext(String s) {
                 if (s != null) {
                     selectClassSignId = s;
-                    String wifiName = "pl" + courseStartSignId;
+                    String wifiName = "MD" + wifiAdmin.getLastThreMac() + courseStartSignId;
                     //  APUtil.setApEnabled(getActivity(), wifiName, Constants.WIFI_PASSWORD, true);
                     WifiUtil.openWifi(getActivity(), wifiName, Constants.WIFI_PASSWORD);
                     WifiUtil.isWifiApEnabled(getActivity());

@@ -3,6 +3,11 @@ package com.larry.present.common.util;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 
+import com.larry.present.config.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
 *    
 * 项目名称：present-android      
@@ -22,34 +27,51 @@ public class WifiSignUtil {
 
     private final static String APP_TAG = "MD";
 
+    private static List<String> wifiList;
+
     /**
      * 检查周围是否有满足条件的wifi信号
      * 使用场景：学生开始签到，检查周围是否满足的点名wifi信号
      *
      * @return
      */
-    public static String checkHasWifiHost(Context context) {
-        if (mWifiAdmin == null) {
-            mWifiAdmin = new WifiAdmin(context);
+    public static List<String> checkHasWifiHost(Context context) {
+        if (wifiList == null) {
+            wifiList = new ArrayList<>();
+        } else {
+            wifiList.clear();
         }
 
-        for (ScanResult scanResult : mWifiAdmin.getWifiList()) {
-            //检查是否是老师签到点名的wifi
-            if (scanResult != null && scanResult.SSID.substring(0, 2).equals(APP_TAG)) {
-                //检查wifi名称中的mac地址是否和扫描到的wifi地址一样
-                if (scanResult.BSSID.substring(2, 5).equals(mWifiAdmin.getLastThrMac(scanResult.BSSID))) {
-                    return scanResult.SSID.substring(5);
+        if (mWifiAdmin == null) {
+            mWifiAdmin = new WifiAdmin(context);
+
+        }
+        mWifiAdmin.startScan();
+        List<ScanResult> scanResults = mWifiAdmin.getWifiList();
+        //扫描的wifi列表不为空才继续执行
+        if (scanResults != null) {
+            for (ScanResult scanResult : scanResults) {
+                //检查是否是老师签到点名的wifi
+                if (scanResult.SSID.length() == Constants.WIFI_SIGN_BSSID_LENGTH) {
+                    if (scanResult.SSID.substring(0, 2).equals(APP_TAG)) {
+                        //检查wifi名称中的mac地址是否和扫描到的wifi地址一样
+                        if (scanResult.SSID.substring(2, 5).equals(mWifiAdmin.getLastThrMac(scanResult.BSSID))) {
+                            wifiList.add(scanResult.SSID.substring(5));
+                        }
+                    }
                 }
-                //mac地址不满足，是假的点名wifi
-                else {
-                    return null;
-                }
+
             }
-            //周围没有符合条件的wifi列表
+            //如果有符合条件的wifi则返回这个wifi列表
+            if (wifiList != null && wifiList.size() > 0) {
+                return wifiList;
+            }
+            //如果没有搜索到符合条件的wifi则返回空
             else {
                 return null;
             }
         }
+        //没有扫描到任何wifi信号返回为空
         return null;
 
     }
