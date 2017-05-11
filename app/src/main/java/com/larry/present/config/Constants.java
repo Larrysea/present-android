@@ -56,6 +56,18 @@ public class Constants {
 
 
     //签到的wifi信号id长度是21  位 2位首部标示MD  + 3位mac地址，和十六位的课程签到id
-    public final static int WIFI_SIGN_BSSID_LENGTH=21;
+    public final static int WIFI_SIGN_BSSID_LENGTH = 21;
+
+    //学生签到
+    public final static String STUDENT_SIGN = "1";
+
+    //学生病假
+    public final static String SICK_LEAVE = "2";
+
+    /*
+   * 学生缺勤
+   * */
+    public final static String ABSENCE = "3";
+
 
 }

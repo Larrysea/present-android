@@ -76,7 +76,7 @@ public class StudentSigntFragment extends Fragment {
                 courseSignIdList = WifiSignUtil.checkHasWifiHost(getActivity().getApplicationContext());
                 if (courseSignIdList != null) {
                     signApi.studentSign(new ProgressSubscriber<String>(subscriberOnNextListener, getActivity()), courseSignIdList,
-                            AccountManager.getStudent().getId(), DateUtil.getDateTimeStr(), AccountManager.getStudent().getClassId());
+                            AccountManager.getStudent().getId(), String.valueOf(DateUtil.getDateTimeStap()), AccountManager.getStudent().getClassId());
                 } else {
                     Toast.makeText(getActivity(), R.string.not_find_the_host_in_nearby, Toast.LENGTH_SHORT).show();
                 }

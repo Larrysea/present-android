@@ -179,4 +179,36 @@ public class SignApi {
     }
 
 
+    /**
+     * 获取某一次的课程签到状况,是获取所有学生的
+     *
+     * @param observer
+     * @param courseSignId
+     * @return
+     */
+    public Subscription getCourseSignInfoOnceByCourseSignId(Observer<List<StudentCourseSignDto>> observer, String courseSignId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseSignId", courseSignId);
+        return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
+                .getCourseSignInfoOfOnceByCourseSignId(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<List<StudentCourseSignDto>>()), observer);
+
+    }
+
+
+    /**
+     * 获取某次签到课程中缺勤的人清单
+     *
+     * @param observer
+     * @param courseSignId
+     * @return
+     */
+    public Subscription getAbsenceStudentInfo(Observer<List<StudentCourseSignDto>> observer, String courseSignId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseSignId", courseSignId);
+        return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
+                .getAbsenceStudentList(JsonUtil.convertObjectToRequestBody(jsonObject)).map(new ApiService.HttpResultFunc<List<StudentCourseSignDto>>()), observer);
+
+    }
+
 }

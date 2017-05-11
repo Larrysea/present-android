@@ -105,6 +105,29 @@ public interface IsignApi {
 
 
 
+    /**
+     * 获取某一次签到的所有学生信息
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getCourseSignInfoOfOnceByCourseSignId")
+    Observable<BaseCallModeal<List<StudentCourseSignDto>>> getCourseSignInfoOfOnceByCourseSignId(@Body RequestBody body);
+
+
+    /**
+     * 获取某一次签到的所有学生信息
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getAbsenceStudentList")
+    Observable<BaseCallModeal<List<StudentCourseSignDto>>> getAbsenceStudentList(@Body RequestBody body);
+
+
+
 
 }
 

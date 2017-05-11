@@ -7,6 +7,7 @@
     android:weightSum="1">
 
     <TextView
+        android:id="@+id/tv_student_state_number"
         android:gravity="center"
         android:text="132056201"
         android:layout_width="0dp"
@@ -15,6 +16,7 @@
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/tv_student_state_name"
         android:gravity="center"
         android:text="刘正海"
         android:layout_width="0dp"
@@ -23,6 +25,7 @@
         android:textSize="18sp" />
 
     <ImageView
+        android:id="@+id/iv_student_state"
         android:gravity="center"
         android:src="@drawable/ic_check"
         android:layout_width="0dp"

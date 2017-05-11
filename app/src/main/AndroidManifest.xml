@@ -72,6 +72,10 @@
             android:name=".test.TestCallPhonePermission"
             android:exported="true" />
 
+        <activity
+            android:name=".sign.activity.TeacherSignActivity"
+            android:exported="true" />
+
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />

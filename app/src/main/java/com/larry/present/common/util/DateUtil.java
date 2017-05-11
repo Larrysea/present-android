@@ -526,11 +526,12 @@ public class DateUtil {
     }
 
     /**
-     * 获取日期格式化输出解析配置
+     * 获取当前的时间戳
      *
      * @return secondsFormatConfig
-     *//*
-    public static SerializeConfig getSecondsFormatConfig() {
-        return secondsFormatConfig;
-    }*/
+     */
+    public static long getDateTimeStap() {
+        Date date = new Date();
+        return date.getTime();
+    }
 }

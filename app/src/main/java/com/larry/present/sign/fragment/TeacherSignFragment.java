@@ -22,7 +22,6 @@ import com.larry.present.bean.course.Course;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.DividerItemDecoration;
-import com.larry.present.common.util.MD5EncipherUtil;
 import com.larry.present.common.util.WifiAdmin;
 import com.larry.present.common.util.WifiUtil;
 import com.larry.present.config.Constants;
@@ -89,7 +88,7 @@ public class TeacherSignFragment extends Fragment {
     @BindView(R.id.viewStub_teacher_sign)
     ViewStub viewStubTeacherSign;
 
-    @BindView(R.id.btn_teacher_sign)
+    @BindView(R.id.btn_teacher_stop_sign)
     Button startSignBtn;
 
 
@@ -106,7 +105,7 @@ public class TeacherSignFragment extends Fragment {
     @BindView(R.id.iv_teacher_sign_icon)
     ImageView ivTeacherSignIcon;
 
-    @OnClick(R.id.btn_teacher_sign)
+    @OnClick(R.id.btn_teacher_stop_sign)
     public void startSign(View view) {
         courseApi.teacherGetAllCourse(new ProgressSubscriber<List<Course>>(getAllCourseListener, getActivity()), AccountManager.getTeacher().getId());
 
@@ -253,7 +252,7 @@ public class TeacherSignFragment extends Fragment {
             @Override
             public void onNext(String s) {
                 if (s != null) {
-                    courseStartSignId = MD5EncipherUtil.md516(s);
+                    courseStartSignId = s;
                 }
             }
 

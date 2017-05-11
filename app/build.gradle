@@ -32,7 +32,7 @@ android {
 }
 
 repositories {
-    flatDir{
+    flatDir {
         dirs 'libs'
     }
 }
@@ -70,4 +70,8 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:2.5.0'
     //rxpermission
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+
+    //图片载入控件
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:25.3.1'
 }
