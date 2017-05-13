@@ -17,7 +17,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/sr_teacher_sign"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/toolbar_teacher_sign">
 
         <include layout="@layout/base_recyclerview" />
@@ -25,7 +25,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <Button
-        android:id="@+id/btn_teacher_stop_sign"
+        android:id="@+id/btn_teacher_stop_and__start_sign"
         android:layout_width="113dp"
         android:layout_height="49dp"
         android:layout_alignLeft="@+id/iv_teacher_sign_icon"

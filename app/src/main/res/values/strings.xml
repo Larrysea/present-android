@@ -51,4 +51,7 @@
     <string name="if_denied_you_will_cant_use_wifi_sign_feature">如果拒绝你将不能使用wifi签到功能</string>
     <string name="pleast_opne_location">请先打开定位功能</string>
     <string name="stop_sign">结束签到</string>
+    <string name="check_sign_result">检查签到结果</string>
+    <string name="add_course">添加课程</string>
+    <string name="select_class">选择班级</string>
 </resources>

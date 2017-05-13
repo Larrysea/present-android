@@ -88,7 +88,7 @@ public class TeacherSignFragment extends Fragment {
     @BindView(R.id.viewStub_teacher_sign)
     ViewStub viewStubTeacherSign;
 
-    @BindView(R.id.btn_teacher_stop_sign)
+    @BindView(R.id.btn_teacher_stop_and__start_sign)
     Button startSignBtn;
 
 
@@ -105,10 +105,10 @@ public class TeacherSignFragment extends Fragment {
     @BindView(R.id.iv_teacher_sign_icon)
     ImageView ivTeacherSignIcon;
 
-    @OnClick(R.id.btn_teacher_stop_sign)
+    @OnClick(R.id.btn_teacher_stop_and__start_sign)
     public void startSign(View view) {
         courseApi.teacherGetAllCourse(new ProgressSubscriber<List<Course>>(getAllCourseListener, getActivity()), AccountManager.getTeacher().getId());
-
+//        startActivity(new Intent(getActivity(), TeacherSignActivity.class));
     }
 
     Unbinder unbinder;
@@ -171,7 +171,7 @@ public class TeacherSignFragment extends Fragment {
             @Override
             public void onNext(List<Course> courseList) {
                 viewStubTeacherSign.setVisibility(View.VISIBLE);
-                startSignBtn.setVisibility(View.GONE);
+               // startSignBtn.setVisibility(View.INVISIBLE);
                 ivTeacherSignIcon.setVisibility(View.GONE);
                 courseRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_bases);
                 courseRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -226,7 +226,7 @@ public class TeacherSignFragment extends Fragment {
 
             @Override
             public void onCompleted() {
-                startSignBtn.setVisibility(View.VISIBLE);
+               // startSignBtn.setVisibility(View.VISIBLE);
                 startSignBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -9,20 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.larry.present.R;
+import com.larry.present.adapter.StudentAbsenceAdapter;
 import com.larry.present.bean.sign.StudentCourseSignDto;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
-import com.larry.present.common.util.APUtil;
 import com.larry.present.common.util.DividerItemDecoration;
 import com.larry.present.config.Constants;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.sign.SignApi;
-import com.zhy.adapter.recyclerview.CommonAdapter;
-import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.List;
 
@@ -54,7 +50,8 @@ public class TeacherSignActivity extends AppCompatActivity {
     @BindView(R.id.rv_bases)
     RecyclerView rvBases;
 
-    CommonAdapter<StudentCourseSignDto> studentSignAdapter;
+
+    StudentAbsenceAdapter studentSignAdapter;
 
     SubscriberOnNextListener<List<StudentCourseSignDto>> studentCourseListener;
 
@@ -69,14 +66,14 @@ public class TeacherSignActivity extends AppCompatActivity {
     /**
      * 课程签到id
      */
-    private String courseSignId;
+    private String courseSignId = "39bd95bceb49bd45";
 
-    @BindView(R.id.btn_teacher_stop_sign)
+    @BindView(R.id.btn_teacher_stop_and__start_sign)
     Button stopSignBtn;
 
-    @OnClick(R.id.btn_teacher_stop_sign)
+    @OnClick(R.id.btn_teacher_stop_and__start_sign)
     public void stopSign(View view) {
-        APUtil.setApEnabled(this, "fasdfasdfasd", "fasfasdfasdf", false);
+        // APUtil.setApEnabled(this, "fasdfasdfasd", "fasfasdfasdf", false);
         //查看签到的汇总信息
         signApi.getAbsenceStudentInfo(new ProgressSubscriber<List<StudentCourseSignDto>>(studentAbsenceListener, TeacherSignActivity.this), courseSignId);
         stopSignBtn.setVisibility(View.GONE);
@@ -87,6 +84,7 @@ public class TeacherSignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_sign);
         ButterKnife.bind(this);
+        initView();
         initListener();
         initData();
 
@@ -106,26 +104,19 @@ public class TeacherSignActivity extends AppCompatActivity {
         studentAbsenceListener = new SubscriberOnNextListener<List<StudentCourseSignDto>>() {
             @Override
             public void onNext(List<StudentCourseSignDto> studentCourseSignDtos) {
+                stopSignBtn.setVisibility(View.VISIBLE);
                 //更新数据，显示缺勤的学生信息
+
                 studentCourseSignDtoList = studentCourseSignDtos;
+                studentSignAdapter.setData(studentCourseSignDtoList);
                 studentSignAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCompleted() {
-
+                srTeacherSign.setRefreshing(false);
             }
         };
-
-    }
-
-
-    public void initData() {
-        courseSignId = getIntent().getStringExtra("courseSignId");
-        signApi = new SignApi(ApiService.getInstance(this).getmRetrofit());
-
-        //获取所有学生的签到信息
-        signApi.getCourseSignInfoOnceByCourseSignId(new ProgressSubscriber<List<StudentCourseSignDto>>(studentCourseListener, this), courseSignId);
 
         studentCourseListener = new SubscriberOnNextListener<List<StudentCourseSignDto>>() {
             @Override
@@ -135,20 +126,34 @@ public class TeacherSignActivity extends AppCompatActivity {
                     //刷新数据
                     studentSignAdapter.notifyDataSetChanged();
                 } else {
+                    studentSignAdapter = new StudentAbsenceAdapter(TeacherSignActivity.this, studentCourseSignDtoList);
                     //初始化数据
-                    initAdapter(studentCourseSignDtos);
+                    // initAdapter(studentCourseSignDtoList);
+                    //获取所有学生的签到信息
+                    rvBases.setLayoutManager(new LinearLayoutManager(TeacherSignActivity.this));
+                    rvBases.addItemDecoration(new DividerItemDecoration(TeacherSignActivity.this, DividerItemDecoration.VERTICAL_LIST));
+                    rvBases.setAdapter(studentSignAdapter);
                 }
 
             }
 
             @Override
             public void onCompleted() {
-
+                srTeacherSign.setRefreshing(false);
             }
         };
-        rvBases.setAdapter(studentSignAdapter);
-        rvBases.setLayoutManager(new LinearLayoutManager(this));
-        rvBases.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+
+
+    }
+
+
+    public void initData() {
+        // courseSignId = getIntent().getStringExtra("courseSignId");
+        courseSignId = "39bd95bceb49bd45";
+        signApi = new SignApi(ApiService.getInstance(this).getmRetrofit());
+        signApi.getCourseSignInfoOnceByCourseSignId(new ProgressSubscriber<List<StudentCourseSignDto>>(studentCourseListener, TeacherSignActivity.this), courseSignId);
+
+
     }
 
     public int initStateDrawable(String state) {
@@ -169,16 +174,17 @@ public class TeacherSignActivity extends AppCompatActivity {
     }
 
 
-    public void initAdapter(List<StudentCourseSignDto> studentCourseSignDtos) {
-        studentSignAdapter = new CommonAdapter<StudentCourseSignDto>(TeacherSignActivity.this, R.layout.student_sign_state_item, studentCourseSignDtos) {
+    public void initView() {
+        toolbarTeacherSign.setTitle(R.string.check_sign_result);
+        toolbarTeacherSign.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
+        setSupportActionBar(toolbarTeacherSign);
+        toolbarTeacherSign.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            protected void convert(ViewHolder holder, StudentCourseSignDto studentCourseSignDto, int position) {
-                holder.setText(R.id.tv_student_state_number, studentCourseSignDto.getStudentNumber());
-                holder.setText(R.id.tv_student_state_name, studentCourseSignDto.getName());
-                ImageView imageView = holder.getView(R.id.iv_student_state);
-                Glide.with(TeacherSignActivity.this).load(initStateDrawable(studentCourseSignDto.getSignState())).into(imageView);
+            public void onClick(View v) {
+
+                onBackPressed();
             }
-        };
+        });
     }
 
 

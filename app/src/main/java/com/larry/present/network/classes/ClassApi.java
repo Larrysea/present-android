@@ -90,5 +90,20 @@ public class ClassApi {
                 .map(new ApiService.HttpResultFunc<List<Classes>>()), observer);
     }
 
+    /**
+     * @param observer
+     * @param className 班级名称
+     * @param schoolId  学校id
+     * @return
+     */
+    public Subscription getClassesInfo(Observer<Classes> observer, String className, String schoolId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("className", className);
+        jsonObject.put("schoolId", schoolId);
+        return RxjavaUtil.subscribe(mRetrofit.create(Iclasses.class)
+                .getClassesInfo(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<Classes>()), observer);
+    }
+
 
 }

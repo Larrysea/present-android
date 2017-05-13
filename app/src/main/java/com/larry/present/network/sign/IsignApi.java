@@ -112,7 +112,7 @@ public interface IsignApi {
      * @return
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("getCourseSignInfoOfOnceByCourseSignId")
+    @POST("getCourseSignInfoOnce")
     Observable<BaseCallModeal<List<StudentCourseSignDto>>> getCourseSignInfoOfOnceByCourseSignId(@Body RequestBody body);
 
 

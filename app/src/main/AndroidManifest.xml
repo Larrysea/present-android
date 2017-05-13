@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".loginregister.activity.LoginActivity"
+            android:name=".sign.activity.TeacherSignActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,9 +72,9 @@
             android:name=".test.TestCallPhonePermission"
             android:exported="true" />
 
-        <activity
+       <!-- <activity
             android:name=".sign.activity.TeacherSignActivity"
-            android:exported="true" />
+            android:exported="true" />-->
 
     </application>
 

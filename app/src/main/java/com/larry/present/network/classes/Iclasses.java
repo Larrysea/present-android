@@ -28,7 +28,7 @@ public interface Iclasses {
     /**
      * 通过班级名称，和学校id获取班级id
      *
-     * @param requestBody     包含className,和schoolId
+     * @param requestBody 包含className,和schoolId
      * @return
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
@@ -55,5 +55,17 @@ public interface Iclasses {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("getClassesUnderCourse")
     Observable<BaseCallModeal<List<Classes>>> getClassesUnderCourse(@Body RequestBody body);
+
+
+    /**
+     * 获取班级信息
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getClassInfo")
+    Observable<BaseCallModeal<Classes>> getClassesInfo(@Body RequestBody body);
+
 
 }

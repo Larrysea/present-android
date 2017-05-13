@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cl_fragment_container"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,50 +10,36 @@
     <ImageView
         android:id="@+id/iv_teacher_sign_icon"
         android:layout_width="107dp"
-
         android:layout_height="109dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_teacher_stop_sign"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round"
-        app:layout_constraintVertical_bias="0.604" />
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
 
     <Button
-        android:id="@+id/btn_teacher_stop_sign"
-        android:layout_width="113dp"
-        android:layout_height="49dp"
-        android:layout_alignLeft="@+id/iv_teacher_sign_icon"
+        android:id="@+id/btn_teacher_stop_and__start_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/iv_teacher_sign_icon"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="87dp"
         android:background="@drawable/start_sign_btn_shape"
         android:elevation="8dp"
-        android:gravity="center"
         android:outlineProvider="background"
         android:padding="@dimen/activity_horizontal_margin"
         android:text="@string/start_sign"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:textColor="@android:color/white" />
 
     <ViewStub
         android:id="@+id/viewStub_teacher_sign"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout="@layout/base_recyclerview"
-        app:layout_constraintBottom_toTopOf="@+id/btn_teacher_stop_sign"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_teacher_sign_icon" />
+        android:layout_centerVertical="true"
+        android:layout="@layout/base_recyclerview" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

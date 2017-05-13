@@ -1,6 +1,7 @@
 package com.larry.present.network.course;
 
 import com.alibaba.fastjson.JSONObject;
+import com.larry.present.bean.classes.Classes;
 import com.larry.present.bean.course.Course;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.base.JsonUtil;
@@ -11,8 +12,6 @@ import java.util.List;
 import retrofit2.Retrofit;
 import rx.Observer;
 import rx.Subscription;
-
-import static com.tencent.bugly.crashreport.common.strategy.StrategyBean.c;
 
 /*
 *    
@@ -81,6 +80,22 @@ public class CourseApi {
         jsonObject.put("courseName", courseName);
         return RxjavaUtil.subscribe(mRetrofit.create(Icourse.class)
                 .addCourse(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<String>()), observer);
+    }
+
+
+    /**
+     * @param observer
+     * @param courseId   课程id
+     * @param classArray 班级数组
+     * @return
+     */
+    public Subscription addClassesToCourse(Observer<String> observer, String courseId, List<Classes> classArray) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseId", courseId);
+        jsonObject.put("classIdArray", classArray);
+        return RxjavaUtil.subscribe(mRetrofit.create(Icourse.class)
+                .addClassesToCourse(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 

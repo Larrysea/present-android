@@ -60,4 +60,14 @@ public interface Icourse {
     @POST("addCourse")
     Observable<BaseCallModeal<String>> addCourse(@Body RequestBody body);
 
+
+    /**
+     * 添加课程接口
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("addClassesToCourse")
+    Observable<BaseCallModeal<String>> addClassesToCourse(@Body RequestBody body);
 }
