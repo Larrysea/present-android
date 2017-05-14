@@ -5,7 +5,9 @@ import com.larry.present.network.base.BaseCallModeal;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import rx.Observable;
 
 /*
@@ -24,4 +26,19 @@ public interface Istudent {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("submitStudentInfo")
     Observable<BaseCallModeal<String>> submitStudentInfo(@Body RequestBody student);
+
+
+    //todo 接口签名需要更改，具体代码看ApiService 和ChangePortraitImpl 这两个的实现
+
+    /**
+     * 学生上传头像
+     *
+     * @param portrait
+     * @param student
+     * @return
+     */
+    @Multipart
+    @POST("studentUploadPortrait")
+    Observable<BaseCallModeal<String>> studentUploadPortrait(@Part("portrait") RequestBody portrait, @Part RequestBody student);
+
 }

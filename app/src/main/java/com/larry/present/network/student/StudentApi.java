@@ -42,4 +42,12 @@ public class StudentApi {
     }
 
 
+    /*public Subscription studentUploadPortrait(Observer<String> observer,String studentId)
+    {
+
+
+
+    }
+*/
+
 }

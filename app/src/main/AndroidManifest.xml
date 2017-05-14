@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".sign.activity.TeacherSignActivity"
+            android:name=".loginregister.activity.StudentSetPortraitActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,9 +42,9 @@
             android:name=".test.TestBuglyActivity"
             android:exported="true" />
         <!--学生设置头像activity-->
-        <activity
-            android:name=".loginregister.activity.StudentSetPortraitActivity"
-            android:exported="true" />
+        <!-- <activity
+             android:name=".loginregister.activity.StudentSetPortraitActivity"
+             android:exported="true" />-->
 
         <!--学生提交个人信息activity-->
         <activity
@@ -72,10 +72,14 @@
             android:name=".test.TestCallPhonePermission"
             android:exported="true" />
 
-       <!-- <activity
-            android:name=".sign.activity.TeacherSignActivity"
-            android:exported="true" />-->
+        <!-- <activity
+             android:name=".sign.activity.TeacherSignActivity"
+             android:exported="true" />-->
 
+
+        <activity
+            android:name=".test.AndroidCameraExample"
+            android:exported="true" />
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -96,6 +100,7 @@
 
     <!--摄像头使用权限-->
     <uses-permission android:name="android.permission.CAMERA" />
+
 
     <!--改变wifi 状态的权限-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
