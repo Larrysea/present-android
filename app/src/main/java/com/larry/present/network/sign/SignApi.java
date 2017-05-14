@@ -2,6 +2,7 @@ package com.larry.present.network.sign;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.larry.present.bean.sign.CourseSign;
 import com.larry.present.bean.sign.CourseSignInfoDto;
 import com.larry.present.bean.sign.StudentCourseSignDto;
 import com.larry.present.bean.sign.StudentSignInfoOfTermDto;
@@ -209,6 +210,21 @@ public class SignApi {
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
                 .getAbsenceStudentList(JsonUtil.convertObjectToRequestBody(jsonObject)).map(new ApiService.HttpResultFunc<List<StudentCourseSignDto>>()), observer);
 
+    }
+
+
+    /**
+     * 获取某个课程的所有发起的签到记录
+     *
+     * @param observer
+     * @param courseId
+     * @return
+     */
+    public Subscription getCourseAllSignInfo(Observer<List<CourseSign>> observer, String courseId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseId", courseId);
+        return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
+                .getCourseAllSignInfo(JsonUtil.convertObjectToRequestBody(jsonObject)).map(new ApiService.HttpResultFunc<List<CourseSign>>()), observer);
     }
 
 }

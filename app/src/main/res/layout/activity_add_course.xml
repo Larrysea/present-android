@@ -18,7 +18,7 @@
         tools:text="@string/course_name" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_select_identity"
+        android:id="@+id/toolbar_course_info"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorPrimary"

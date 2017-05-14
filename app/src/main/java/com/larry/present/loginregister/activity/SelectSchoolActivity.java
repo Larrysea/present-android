@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 public class SelectSchoolActivity extends AppCompatActivity {
 
     final static String TAG = SelectSchoolActivity.class.toString();
-    @BindView(R.id.toolbar_select_identity)
+    @BindView(R.id.toolbar_course_info)
     Toolbar toolbarSelectSchoole;
     //学校校名的autoTextVie
     @BindView(R.id.at_slect_school_name)

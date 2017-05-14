@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:id="@+id/toolbar_select_identity">
+        android:id="@+id/toolbar_course_info">
     </android.support.v7.widget.Toolbar>
     <AutoCompleteTextView
         android:layout_marginLeft="@dimen/activity_horizontal_margin"

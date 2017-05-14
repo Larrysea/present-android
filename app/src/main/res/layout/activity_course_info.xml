@@ -6,22 +6,22 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tv_course_info_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="114dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textSize="20sp"
-        tools:text="计算机基础"
-        app:layout_constraintTop_toTopOf="@+id/guideline11"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
         app:layout_constraintVertical_bias="0.117"
-        android:layout_marginRight="114dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        tools:text="计算机基础" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_select_identity"
+        android:id="@+id/toolbar_course_info"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="@color/colorPrimary"
@@ -31,118 +31,119 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginTop="0dp" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textSize="20sp"
-        tools:text="@string/course_name"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView12"
-        android:layout_marginRight="8dp"
-        app:layout_constraintTop_toTopOf="@+id/guideline11"
-        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView14"
         app:layout_constraintHorizontal_bias="0.506"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView14" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_course_info_name"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        tools:text="@string/course_name" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="58dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/teacher_name"
         android:textSize="20sp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView15"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="58dp"
         app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintHorizontal_bias="0.454" />
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_course_info_teacher_name" />
 
     <TextView
-        tools:text="刘玉萍"
-        android:id="@+id/textView15"
+        android:id="@+id/tv_course_info_teacher_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="150dp"
+        android:layout_marginTop="134dp"
         android:text="TextView"
         android:textSize="20sp"
-        android:layout_marginRight="150dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline11"
-        android:layout_marginTop="134dp" />
+        tools:text="刘玉萍" />
 
     <TextView
-        android:text="@string/phone"
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView17"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.372"
         android:layout_marginBottom="53dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView18" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/phone"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView18"
+        app:layout_constraintHorizontal_bias="0.372"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_course_info_phone" />
 
     <TextView
 
-        android:id="@+id/textView17"
+        android:id="@+id/tv_course_info_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="1312312312"
-        android:textSize="20sp"
         android:layout_marginRight="101dp"
+        android:layout_marginTop="215dp"
+        android:textSize="20sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline11"
-        android:layout_marginTop="215dp" />
+        tools:text="1312312312" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="124dp"
+        android:layout_marginLeft="43dp"
         android:text="@string/mail"
         android:textSize="20sp"
-        android:layout_marginLeft="43dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="124dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline12" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/tv_course_info_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="lzh@12312312.com"
-        android:textSize="20sp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/textView18"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintTop_toTopOf="@+id/guideline11"
-        android:layout_marginTop="292dp"
-        app:layout_constraintHorizontal_bias="0.679"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="292dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.679"
+        app:layout_constraintLeft_toRightOf="@+id/textView18"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="lzh@12312312.com" />
 
     <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/guideline11"
-        app:layout_constraintGuide_begin="56dp"
-        android:orientation="horizontal" />
-
-    <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="56dp" />
+
+    <android.support.constraint.Guideline
         android:id="@+id/guideline12"
-        app:layout_constraintGuide_begin="496dp"
-        android:orientation="horizontal" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="496dp" />
 
 
 </android.support.constraint.ConstraintLayout>

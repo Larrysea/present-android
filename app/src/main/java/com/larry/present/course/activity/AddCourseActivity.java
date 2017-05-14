@@ -47,7 +47,7 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
 
     CourseApi courseApi;
     ClassApi classApi;
-    @BindView(R.id.toolbar_select_identity)
+    @BindView(R.id.toolbar_course_info)
     Toolbar toolbarSelectIdentity;
     @BindView(R.id.tv_add_course_name)
     EditText tvAddCourseName;

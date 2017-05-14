@@ -1,5 +1,6 @@
 package com.larry.present.network.sign;
 
+import com.larry.present.bean.sign.CourseSign;
 import com.larry.present.bean.sign.CourseSignInfoDto;
 import com.larry.present.bean.sign.StudentCourseSignDto;
 import com.larry.present.bean.sign.StudentSignInfoOfTermDto;
@@ -92,7 +93,6 @@ public interface IsignApi {
     Observable<BaseCallModeal<List<CourseSignInfoDto>>> studentGetCourseSignInfoDto(@Body RequestBody body);
 
 
-
     /**
      * 判断学生是否参加了这个课程
      *
@@ -102,7 +102,6 @@ public interface IsignApi {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("isJoinTheCourse")
     Observable<BaseCallModeal<String>> isJoinCourse(@Body RequestBody body);
-
 
 
     /**
@@ -127,6 +126,15 @@ public interface IsignApi {
     Observable<BaseCallModeal<List<StudentCourseSignDto>>> getAbsenceStudentList(@Body RequestBody body);
 
 
+    /**
+     * 获取某个课程的所有考勤发起记录
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getCourseAllSignInfo")
+    Observable<BaseCallModeal<List<CourseSign>>> getCourseAllSignInfo(@Body RequestBody body);
 
 
 }

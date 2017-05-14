@@ -28,7 +28,7 @@ import butterknife.OnClick;
 *    
 */
 public class SelectIdentityActivity extends AppCompatActivity {
-    @BindView(R.id.toolbar_select_identity)
+    @BindView(R.id.toolbar_course_info)
     Toolbar toolbarSelectSchoole;
     @BindView(R.id.tv_identity_school)
     TextView tvIdentitySchool;

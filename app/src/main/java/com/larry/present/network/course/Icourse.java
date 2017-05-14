@@ -1,6 +1,7 @@
 package com.larry.present.network.course;
 
 import com.larry.present.bean.course.Course;
+import com.larry.present.bean.course.CourseAndTeacherDto;
 import com.larry.present.network.base.BaseCallModeal;
 
 import java.util.List;
@@ -70,4 +71,17 @@ public interface Icourse {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("addClassesToCourse")
     Observable<BaseCallModeal<String>> addClassesToCourse(@Body RequestBody body);
+
+
+    /**
+     * 获取某个课程的老师信息和课程信息
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getTeacherAndCourseInfo")
+    Observable<BaseCallModeal<CourseAndTeacherDto>> getTeacherAndCourseInfo(@Body RequestBody body);
+
+
 }

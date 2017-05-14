@@ -3,6 +3,7 @@ package com.larry.present.network.course;
 import com.alibaba.fastjson.JSONObject;
 import com.larry.present.bean.classes.Classes;
 import com.larry.present.bean.course.Course;
+import com.larry.present.bean.course.CourseAndTeacherDto;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.base.RxjavaUtil;
@@ -98,6 +99,24 @@ public class CourseApi {
                 .addClassesToCourse(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }
+
+
+    /**
+     * 获取老师的和课程信息
+     *
+     * @param observer
+     * @param courseId 课程id
+     * @return
+     */
+    public Subscription getTeacherAndCourseInfo(Observer<CourseAndTeacherDto> observer, String courseId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseId", courseId);
+        return RxjavaUtil.subscribe(mRetrofit.create(Icourse.class)
+                .getTeacherAndCourseInfo(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<CourseAndTeacherDto>()), observer);
+    }
+
+
 
 
 }
