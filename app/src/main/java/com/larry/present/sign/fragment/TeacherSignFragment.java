@@ -101,9 +101,13 @@ public class TeacherSignFragment extends Fragment {
     View rootView;
 
 
-    List<Course> courseList;
     @BindView(R.id.iv_teacher_sign_icon)
     ImageView ivTeacherSignIcon;
+
+    CommonAdapter<Course> courseCommonAdapter;
+
+
+    CommonAdapter<Classes> classesCommonAdapter;
 
     @OnClick(R.id.btn_teacher_stop_and__start_sign)
     public void startSign(View view) {
@@ -138,6 +142,7 @@ public class TeacherSignFragment extends Fragment {
 
     WifiAdmin wifiAdmin;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -145,6 +150,7 @@ public class TeacherSignFragment extends Fragment {
         unbinder = ButterKnife.bind(this, rootView);
         initData();
         initListener();
+
         // getFragmentManager().beginTransaction().add(R.id.cl_fragment_container, new HelloFragment()).commit();
 
         return rootView;
@@ -171,27 +177,14 @@ public class TeacherSignFragment extends Fragment {
             @Override
             public void onNext(List<Course> courseList) {
                 viewStubTeacherSign.setVisibility(View.VISIBLE);
-               // startSignBtn.setVisibility(View.INVISIBLE);
+                // startSignBtn.setVisibility(View.INVISIBLE);
                 ivTeacherSignIcon.setVisibility(View.GONE);
                 courseRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_bases);
                 courseRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 courseRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
                 if (courseRecyclerView.getVisibility() == View.VISIBLE) {
-                    courseRecyclerView.setAdapter(new CommonAdapter<Course>(getActivity(), R.layout.course_item, courseList) {
-                        @Override
-                        protected void convert(ViewHolder holder, Course course, int position) {
-                            holder.setText(R.id.tv_course_item_number, String.valueOf(position));
-                            holder.setText(R.id.tv_course_item_name, course.getCourseName() == null ? "" : course.getCourseName());
-                            holder.setOnClickListener(R.id.ll_course_item, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
-                                    signApi.selectCourseToSign(new ProgressSubscriber<String>(selectCourseSignListener, getActivity()), AccountManager.getTeacher().getId(), course.getId(), Constants.WIFI_SIGN, 2);
-                                    classApi.getClassesUnderCourse(new ProgressSubscriber<List<Classes>>(getClassesListener, getActivity()), AccountManager.getTeacher().getId(), course.getId());
-                                }
-                            });
-                        }
-                    });
+                    initCourseAdapter(courseList);
+                    courseRecyclerView.setAdapter(courseCommonAdapter);
                 }
             }
 
@@ -204,29 +197,13 @@ public class TeacherSignFragment extends Fragment {
         getClassesListener = new SubscriberOnNextListener<List<Classes>>() {
             @Override
             public void onNext(List<Classes> classes) {
-                courseRecyclerView.setAdapter(new CommonAdapter<Classes>(getActivity(), R.layout.classes_item, classes) {
-                    @Override
-                    protected void convert(ViewHolder holder, Classes classes, int position) {
-                        holder.setText(R.id.tv_classes_item_number, String.valueOf(position + 1));
-                        holder.setText(R.id.tv_classes_item_name, classes.getClassName());
-                        holder.setOnClickListener(R.id.cb_classes, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (classSet.contains(classes.getId())) {
-                                    classSet.remove(classes.getId());
-                                } else {
-                                    classSet.add(classes.getId());
-                                }
-
-                            }
-                        });
-                    }
-                });
+                initClassesAdapter(classes);
+                courseRecyclerView.setAdapter(classesCommonAdapter);
             }
 
             @Override
             public void onCompleted() {
-               // startSignBtn.setVisibility(View.VISIBLE);
+                // startSignBtn.setVisibility(View.VISIBLE);
                 startSignBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -283,6 +260,46 @@ public class TeacherSignFragment extends Fragment {
 
     }
 
+
+    public void initCourseAdapter(final List<Course> courseList) {
+        courseCommonAdapter = new CommonAdapter<Course>(getActivity(), R.layout.course_item, courseList) {
+            @Override
+            protected void convert(ViewHolder holder, Course course, int position) {
+                holder.setText(R.id.tv_course_item_number, String.valueOf(position));
+                holder.setText(R.id.tv_course_item_name, course.getCourseName() == null ? "" : course.getCourseName());
+                holder.setOnClickListener(R.id.ll_course_item, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                        signApi.selectCourseToSign(new ProgressSubscriber<String>(selectCourseSignListener, getActivity()), AccountManager.getTeacher().getId(), course.getId(), Constants.WIFI_SIGN, 2);
+                        classApi.getClassesUnderCourse(new ProgressSubscriber<List<Classes>>(getClassesListener, getActivity()), AccountManager.getTeacher().getId(), course.getId());
+                    }
+                });
+            }
+        };
+    }
+
+
+    public void initClassesAdapter(final List<Classes> classesList) {
+        classesCommonAdapter = new CommonAdapter<Classes>(getActivity(), R.layout.classes_item, classesList) {
+            @Override
+            protected void convert(ViewHolder holder, Classes classes, int position) {
+                holder.setText(R.id.tv_classes_item_number, String.valueOf(position + 1));
+                holder.setText(R.id.tv_classes_item_name, classes.getClassName());
+                holder.setOnClickListener(R.id.cb_classes, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (classSet.contains(classes.getId())) {
+                            classSet.remove(classes.getId());
+                        } else {
+                            classSet.add(classes.getId());
+                        }
+
+                    }
+                });
+            }
+        };
+    }
 
 }
 

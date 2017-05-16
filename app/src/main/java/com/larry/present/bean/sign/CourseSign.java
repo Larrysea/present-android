@@ -8,8 +8,6 @@
 package com.larry.present.bean.sign;
 
 
-import java.util.Date;
-
 /**
  * @ClassName: CourseSign
  * @Description: 数据库表course_sign对应的entity
@@ -29,7 +27,7 @@ public class CourseSign {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
 
     /**
      * 签到类型
@@ -92,7 +90,7 @@ public class CourseSign {
      *
      * @return createTime 创建时间
      */
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
@@ -101,7 +99,7 @@ public class CourseSign {
      *
      * @param createTime 创建时间
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

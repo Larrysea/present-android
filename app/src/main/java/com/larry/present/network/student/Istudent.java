@@ -2,6 +2,7 @@ package com.larry.present.network.student;
 
 import com.larry.present.network.base.BaseCallModeal;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
@@ -33,12 +34,12 @@ public interface Istudent {
     /**
      * 学生上传头像
      *
-     * @param portrait
-     * @param student
+     * @param portrait  头像
+     * @param studentId 学生id
      * @return
      */
     @Multipart
     @POST("studentUploadPortrait")
-    Observable<BaseCallModeal<String>> studentUploadPortrait(@Part("portrait") RequestBody portrait, @Part RequestBody student);
+    Observable<BaseCallModeal<String>> studentUploadPortrait(@Part MultipartBody.Part portrait, @Part("studentId") RequestBody studentId);
 
 }

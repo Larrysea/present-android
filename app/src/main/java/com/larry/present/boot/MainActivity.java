@@ -8,11 +8,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.larry.present.R;
 import com.larry.present.account.AccountManager;
 import com.larry.present.boot.adapter.BaseFragmentPagerAdapter;
 import com.larry.present.sign.fragment.StudentSigntFragment;
+import com.larry.present.sign.fragment.TeacherCheckSignFragment;
 import com.larry.present.sign.fragment.TeacherSignFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         //如果当前是老师实例登录则添加老师的fragment
         else {
             mFragmentList.add(new TeacherSignFragment());
+            mFragmentList.add(new TeacherCheckSignFragment());
         }
         mFragmentPagerAdapter = new BaseFragmentPagerAdapter(MainActivity.this, fragmentManager, mFragmentList);
         activityMainViewpagerVp.setAdapter(mFragmentPagerAdapter);
@@ -88,4 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(this, "返回了", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
 }

@@ -14,6 +14,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.larry.present.R;
+import com.larry.present.account.AccountManager;
+import com.larry.present.bean.student.Student;
+import com.larry.present.common.subscribers.ProgressSubscriber;
+import com.larry.present.common.subscribers.SubscriberOnNextListener;
+import com.larry.present.network.base.ApiService;
+import com.larry.present.network.student.StudentApi;
 
 import java.io.File;
 
@@ -47,6 +53,10 @@ public class StudentSetPortraitActivity extends AppCompatActivity {
     //调用拍照结果结果以后
     boolean resultAfter = false;
 
+    StudentApi studentApi;
+
+    SubscriberOnNextListener<String> studentUploadListener;
+
     @OnClick(R.id.btn_portrait_take_picture)
     void takePicture(View view) {
         if (resultAfter) {
@@ -75,6 +85,8 @@ public class StudentSetPortraitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_set_portrait);
         ButterKnife.bind(this);
+        initData();
+
     }
 
 
@@ -88,5 +100,26 @@ public class StudentSetPortraitActivity extends AppCompatActivity {
                 resultAfter = true;
             }
         }
+        studentApi.studentUploadPortrait(new ProgressSubscriber<String>(studentUploadListener, this), AccountManager.getStudent().getId(), file);
+    }
+
+
+    public void initData() {
+        Student student = new Student();
+        student.setId("1");
+        AccountManager.setStudent(student);
+        studentApi = new StudentApi(ApiService.getInstance(this).getmRetrofit());
+        studentUploadListener = new SubscriberOnNextListener<String>() {
+            @Override
+            public void onNext(String s) {
+                Toast.makeText(StudentSetPortraitActivity.this, R.string.upload_success, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        };
+
     }
 }

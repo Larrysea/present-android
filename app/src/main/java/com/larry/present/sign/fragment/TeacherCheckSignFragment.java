@@ -17,6 +17,7 @@ import com.larry.present.bean.sign.CourseSign;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.DividerItemDecoration;
+import com.larry.present.network.base.ApiService;
 import com.larry.present.network.course.CourseApi;
 import com.larry.present.network.sign.SignApi;
 import com.larry.present.sign.activity.TeacherSignActivity;
@@ -60,6 +61,10 @@ public class TeacherCheckSignFragment extends Fragment {
     //课程名
     String courseName;
 
+
+    //显示是否是显示课程层级，还是显示班级层级
+    boolean isCourseShow = true;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,7 +84,9 @@ public class TeacherCheckSignFragment extends Fragment {
 
 
     public void initData() {
+        courseApi = new CourseApi(ApiService.getInstance(getActivity()).getmRetrofit());
         courseApi.teacherGetAllCourse(new ProgressSubscriber<List<Course>>(teacherGetCourseListener, getActivity()), AccountManager.getTeacher().getId());
+        signApi = new SignApi(ApiService.getInstance(getActivity()).getmRetrofit());
     }
 
 
@@ -93,11 +100,15 @@ public class TeacherCheckSignFragment extends Fragment {
                 rvBases.setAdapter(new CommonAdapter<CourseSign>(getActivity(), R.layout.course_sign_detail_item, courseSigns) {
                     @Override
                     protected void convert(ViewHolder holder, CourseSign courseSign, int position) {
+                        holder.setText(R.id.tv_course_sign_detail_times, String.valueOf(position + 1));
+                        holder.setText(R.id.tv_course_sign_detail_name, courseName);
+                        holder.setText(R.id.tv_course_sign_detail_date, courseSign.getCreateTime());
                         holder.setOnClickListener(R.id.rl_course_sign, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(getActivity(), TeacherSignActivity.class);
                                 intent.putExtra("courseSignId", courseSign.getId());
+                                intent.putExtra("hiddenStopBtn", true);
                                 startActivity(intent);
                             }
                         });
@@ -120,9 +131,11 @@ public class TeacherCheckSignFragment extends Fragment {
                     @Override
                     protected void convert(ViewHolder holder, Course course, int position) {
                         holder.setText(R.id.tv_course_item_name, course.getCourseName());
+                        holder.setText(R.id.tv_course_item_number, String.valueOf(position + 1));
                         holder.setOnClickListener(R.id.ll_course_item, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                courseName = course.getCourseName();
                                 signApi.getCourseAllSignInfo(new ProgressSubscriber<List<CourseSign>>(courseGetAllListener, getActivity()), course.getId());
                             }
                         });

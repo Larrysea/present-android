@@ -6,8 +6,14 @@ import com.larry.present.network.base.ApiService;
 import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.base.RxjavaUtil;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import rx.Observer;
+import rx.Subscription;
 
 /*
 *    
@@ -42,12 +48,15 @@ public class StudentApi {
     }
 
 
-    /*public Subscription studentUploadPortrait(Observer<String> observer,String studentId)
-    {
-
-
-
+    public Subscription studentUploadPortrait(Observer<String> observer, String studentId, File portrait) {
+        RequestBody headBody = RequestBody.create(MediaType.parse("multipart/form-data"), portrait);
+        MultipartBody.Part portraitPart = MultipartBody.Part.createFormData("portrait", portrait.getName(), headBody);
+        // MultipartBody.Part studentIdPat = MultipartBody.Part.createFormData("studentId", studentId);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), studentId);
+        return RxjavaUtil.subscribe(mRetrofit.create(Istudent.class)
+                .studentUploadPortrait(portraitPart, requestBody)
+                .map(new ApiService.HttpResultFunc<String>()), observer);
     }
-*/
+
 
 }

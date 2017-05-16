@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /*
 *    
 * 项目名称：present-android      
-* 类描述：  老师查看签到结果activity
+* 类描述：  老师查看签到结果activity,和老师查看签到历史记录activity(如果是查看历史签到记录activitiy则不显示停止按钮)
 * 创建人：Larry-sea   
 * 创建时间：2017/5/11 16:14   
 * 修改人：Larry-sea  
@@ -70,6 +70,9 @@ public class TeacherSignActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_teacher_stop_and__start_sign)
     Button stopSignBtn;
+
+
+    boolean hiddenStopBtn;
 
     @OnClick(R.id.btn_teacher_stop_and__start_sign)
     public void stopSign(View view) {
@@ -148,8 +151,11 @@ public class TeacherSignActivity extends AppCompatActivity {
 
 
     public void initData() {
-        // courseSignId = getIntent().getStringExtra("courseSignId");
-        courseSignId = "39bd95bceb49bd45";
+        courseSignId = getIntent().getStringExtra("courseSignId");
+        hiddenStopBtn = getIntent().getBooleanExtra("hiddenStopBtn", false);
+        if (hiddenStopBtn) {
+            stopSignBtn.setVisibility(View.INVISIBLE);
+        }
         signApi = new SignApi(ApiService.getInstance(this).getmRetrofit());
         signApi.getCourseSignInfoOnceByCourseSignId(new ProgressSubscriber<List<StudentCourseSignDto>>(studentCourseListener, TeacherSignActivity.this), courseSignId);
 

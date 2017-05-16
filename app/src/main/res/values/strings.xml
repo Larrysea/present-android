@@ -58,4 +58,9 @@
     <string name="absence">缺勤</string>
     <string name="sick_leave">病假</string>
     <string name="sign_info_count">签到信息汇总</string>
+    <string name="upload_success">上传成功</string>
+    <string name="sure_password">确认密码</string>
+    <string name="input_password_again">请再次输入密码</string>
+    <string name="input_password">输入密码</string>
+
 </resources>
