@@ -1,5 +1,6 @@
 package com.larry.present.boot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,11 +10,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.larry.present.R;
 import com.larry.present.account.AccountManager;
 import com.larry.present.boot.adapter.BaseFragmentPagerAdapter;
+import com.larry.present.course.activity.AddCourseActivity;
+import com.larry.present.listener.onBackPressedClickListener;
 import com.larry.present.sign.fragment.StudentSigntFragment;
 import com.larry.present.sign.fragment.TeacherCheckSignFragment;
 import com.larry.present.sign.fragment.TeacherSignFragment;
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     RxPermissions rxPermissions;
+
+    int pagePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +102,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            pagePosition = activityMainViewpagerVp.getCurrentItem();
+            if (pagePosition == 0) {
+                //通知第一个fragment的返回
+                ((onBackPressedClickListener) mFragmentList.get(0)).onBackPressed(keyCode, event);
+            } else {
+                //通知第二个fragment的返回
+                ((onBackPressedClickListener) mFragmentList.get(1)).onBackPressed(keyCode, event);
+            }
             Toast.makeText(this, "返回了", Toast.LENGTH_SHORT).show();
         }
         return true;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (AccountManager.getTeacher() != null) {
+            getMenuInflater().inflate(R.menu.teacher_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.student_menu, menu);
+        }
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.id_menu_teacher_add_course:
+                Intent intent = new Intent(this, AddCourseActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_menu_teacher_setting:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

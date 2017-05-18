@@ -1,5 +1,6 @@
 package com.larry.present.network.student;
 
+import com.larry.present.loginregister.dto.StudentLoginSuccessDto;
 import com.larry.present.network.base.BaseCallModeal;
 
 import okhttp3.MultipartBody;
@@ -41,5 +42,16 @@ public interface Istudent {
     @Multipart
     @POST("studentUploadPortrait")
     Observable<BaseCallModeal<String>> studentUploadPortrait(@Part MultipartBody.Part portrait, @Part("studentId") RequestBody studentId);
+
+    /**
+     * 获取学生信息
+     *
+     * @param student
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getStudentInfo")
+    Observable<BaseCallModeal<StudentLoginSuccessDto>> getStudentInfo(@Body RequestBody student);
+
 
 }

@@ -14,11 +14,14 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ActionMenuWhiteTitle" />
 
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/sr_teacher_sign"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar_teacher_sign">
+
+        <include layout="@layout/attendance_infor_header" />
 
         <include layout="@layout/base_recyclerview" />
 

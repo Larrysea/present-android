@@ -1,10 +1,12 @@
 package com.larry.present.sign.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +27,12 @@ import com.larry.present.common.util.DividerItemDecoration;
 import com.larry.present.common.util.WifiAdmin;
 import com.larry.present.common.util.WifiUtil;
 import com.larry.present.config.Constants;
+import com.larry.present.listener.onBackPressedClickListener;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.classes.ClassApi;
 import com.larry.present.network.course.CourseApi;
 import com.larry.present.network.sign.SignApi;
+import com.larry.present.sign.activity.TeacherSignResultActivity;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -55,7 +59,7 @@ import butterknife.Unbinder;
 * @version    
 *    
 */
-public class TeacherSignFragment extends Fragment {
+public class TeacherSignFragment extends Fragment implements onBackPressedClickListener {
 
 
     SignApi signApi;
@@ -112,7 +116,7 @@ public class TeacherSignFragment extends Fragment {
     @OnClick(R.id.btn_teacher_stop_and__start_sign)
     public void startSign(View view) {
         courseApi.teacherGetAllCourse(new ProgressSubscriber<List<Course>>(getAllCourseListener, getActivity()), AccountManager.getTeacher().getId());
-//        startActivity(new Intent(getActivity(), TeacherSignActivity.class));
+//        startActivity(new Intent(getActivity(), TeacherSignResultActivity.class));
     }
 
     Unbinder unbinder;
@@ -142,17 +146,15 @@ public class TeacherSignFragment extends Fragment {
 
     WifiAdmin wifiAdmin;
 
+    //判断课程是否显示
+    boolean isCourseShow = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         rootView = inflater.inflate(R.layout.sign_fragment_teacher_sign, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         initData();
         initListener();
-
-        // getFragmentManager().beginTransaction().add(R.id.cl_fragment_container, new HelloFragment()).commit();
-
         return rootView;
     }
 
@@ -198,6 +200,7 @@ public class TeacherSignFragment extends Fragment {
             @Override
             public void onNext(List<Classes> classes) {
                 initClassesAdapter(classes);
+                isCourseShow = false;
                 courseRecyclerView.setAdapter(classesCommonAdapter);
             }
 
@@ -212,7 +215,11 @@ public class TeacherSignFragment extends Fragment {
                         rxPermissions.setLogging(true);
                         rxPermissions.request(Manifest.permission.CHANGE_NETWORK_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.WRITE_SETTINGS).subscribe(granted -> {
                             if (granted) {
-                                signApi.selectClassToSign(new ProgressSubscriber<String>(selectClassSignListener, getActivity()), courseStartSignId, classArray);
+                                if (classSet.size() == 0) {
+                                    Toast.makeText(getActivity(), R.string.must_choose_class, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    signApi.selectClassToSign(new ProgressSubscriber<String>(selectClassSignListener, getActivity()), courseStartSignId, classArray);
+                                }
                             } else {
                                 Toast.makeText(getActivity(), R.string.if_denied_you_will_cant_use_wifi_sign_feature, Toast.LENGTH_SHORT).show();
                             }
@@ -246,9 +253,14 @@ public class TeacherSignFragment extends Fragment {
                 if (s != null) {
                     selectClassSignId = s;
                     String wifiName = "MD" + wifiAdmin.getLastThreMac() + courseStartSignId;
-                    //  APUtil.setApEnabled(getActivity(), wifiName, Constants.WIFI_PASSWORD, true);
                     WifiUtil.openWifi(getActivity(), wifiName, Constants.WIFI_PASSWORD);
                     WifiUtil.isWifiApEnabled(getActivity());
+
+                    Intent intent = new Intent(getActivity(), TeacherSignResultActivity.class);
+                    intent.putExtra("courseSignId", courseStartSignId);
+                    intent.putExtra("hiddenStopBtn", false);
+                    startActivity(intent);
+
                 }
             }
 
@@ -281,6 +293,9 @@ public class TeacherSignFragment extends Fragment {
 
 
     public void initClassesAdapter(final List<Classes> classesList) {
+        for (int i = 0; i < classesList.size(); i++) {
+            classSet.add(classesList.get(i).getId());
+        }
         classesCommonAdapter = new CommonAdapter<Classes>(getActivity(), R.layout.classes_item, classesList) {
             @Override
             protected void convert(ViewHolder holder, Classes classes, int position) {
@@ -294,12 +309,22 @@ public class TeacherSignFragment extends Fragment {
                         } else {
                             classSet.add(classes.getId());
                         }
-
                     }
                 });
             }
         };
     }
 
+
+    @Override
+    public boolean onBackPressed(int keyCode, KeyEvent event) {
+        if (!isCourseShow) {
+            courseRecyclerView.setAdapter(courseCommonAdapter);
+            isCourseShow = true;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 

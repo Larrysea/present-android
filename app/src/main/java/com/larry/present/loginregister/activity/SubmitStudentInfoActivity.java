@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +19,7 @@ import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.CheckETEmptyUtil;
 import com.larry.present.config.Constants;
+import com.larry.present.loginregister.dto.StudentLoginSuccessDto;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.classes.ClassApi;
 import com.larry.present.network.student.StudentApi;
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 /*
 *    
 * 项目名称：present-android      
-* 类描述：  学生提交个个人信息接口
+* 类描述：  学生提交个个人信息接口，和展现信息个人activity
 * 创建人：Larry-sea   
 * 创建时间：2017/4/19 14:48   
 * 修改人：Larry-sea  
@@ -83,6 +83,17 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
 
 
     /**
+     * 获取学生个人信息的dto
+     */
+    SubscriberOnNextListener<StudentLoginSuccessDto> getStudentInfoListener;
+
+    /**
+     * 获取学生个人信息的订阅者
+     */
+    ProgressSubscriber<StudentLoginSuccessDto> getStudentInfoSubscriber;
+
+
+    /**
      * 获取班级的idsubscriber
      */
     ProgressSubscriber<String> getClassIdSubscriber;
@@ -131,12 +142,42 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
      */
     private String schoolId;
 
+
+    /*
+    * 学生id
+    *
+    * */
+    private String studentId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_student_info);
         ButterKnife.bind(this);
+        studentId = getIntent().getStringExtra("studentId");
+        initToolBar();
+        initData();
+
+        //如果学生id不为空代表是展示学生的个人信息
+        initListener();
+        if (studentId != null) {
+            mStudentApi.getStudentInfo(new ProgressSubscriber<StudentLoginSuccessDto>(getStudentInfoListener, this), studentId);
+        }
+        //代表提交个人信息或者是修改个人信息
+        else {
+            schoolName = getIntent().getStringExtra(Constants.SCHOOLE_NAME);
+            schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
+        }
+        initView();
+    }
+
+    private void initToolBar() {
         toolbarStudentInfo.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
+        if (studentId != null) {
+            toolbarStudentInfo.setTitle(R.string.student_info);
+        } else {
+            toolbarStudentInfo.setTitle(R.string.edit_student_info);
+        }
         setSupportActionBar(toolbarStudentInfo);
         toolbarStudentInfo.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,21 +185,14 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        initData();
-        schoolName = getIntent().getStringExtra(Constants.SCHOOLE_NAME);
-        schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
-        Log.e(TAG, "启动 onCreate SubmitStudentInfoActivity");
-        initView();
     }
 
 
     public void initData() {
         if (getIntent() != null && getIntent().getStringExtra(Constants.SCHOOL_ID) != null) {
             mSchoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
-            mStudentApi = new StudentApi(ApiService.getInstance(SubmitStudentInfoActivity.this).getmRetrofit());
-            initListener();
         }
-
+        mStudentApi = new StudentApi(ApiService.getInstance(SubmitStudentInfoActivity.this).getmRetrofit());
 
     }
 
@@ -207,59 +241,76 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
      * 初始化Retrofit 回调监听器
      */
     public void initListener() {
+        //当是展示学生信息时初始化
+        if (studentId != null) {
+            getStudentInfoListener = new SubscriberOnNextListener<StudentLoginSuccessDto>() {
+                @Override
+                public void onNext(StudentLoginSuccessDto studentLoginSuccessDto) {
+                    initStudentInfo(studentLoginSuccessDto);
+                }
 
+                @Override
+                public void onCompleted() {
+
+                }
+            };
+        }
         //初始化提交信息的监听器
-        mSubmitInfoNextListener = new SubscriberOnNextListener() {
-            @Override
-            public void onNext(Object o) {
-                Toast.makeText(SubmitStudentInfoActivity.this, R.string.submit_info_succeed, Toast.LENGTH_SHORT).show();
-            }
+        else {
+            mSubmitInfoNextListener = new SubscriberOnNextListener() {
+                @Override
+                public void onNext(Object o) {
+                    Toast.makeText(SubmitStudentInfoActivity.this, R.string.submit_info_succeed, Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onCompleted() {
+                @Override
+                public void onCompleted() {
 
-            }
-        };
+                }
+            };
 
-        //初始化获取班级id的回调监听器
-        getClassIdOnNextListener = new SubscriberOnNextListener<String>() {
-            @Override
-            public void onNext(String classId) {
-                //班级存在的情况下
-                if (classId != null) {
-                    SubmitStudentInfoActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(SubmitStudentInfoActivity.this, "测试toast", Toast.LENGTH_SHORT).show();
-                            mStudent = initStudentInfo(classId);
-                            submitInfoSubscriber = new ProgressSubscriber<String>(mSubmitInfoNextListener, SubmitStudentInfoActivity.this);
-                            if (mStudent != null) {
-                                mStudentApi.submitStudentInfo(submitInfoSubscriber, mStudent);
+            //初始化获取班级id的回调监听器
+            getClassIdOnNextListener = new SubscriberOnNextListener<String>() {
+                @Override
+                public void onNext(String classId) {
+                    //班级存在的情况下
+                    if (classId != null) {
+                        SubmitStudentInfoActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SubmitStudentInfoActivity.this, "测试toast", Toast.LENGTH_SHORT).show();
+                                mStudent = initStudentInfo(classId);
+                                submitInfoSubscriber = new ProgressSubscriber<String>(mSubmitInfoNextListener, SubmitStudentInfoActivity.this);
+                                if (mStudent != null) {
+                                    mStudentApi.submitStudentInfo(submitInfoSubscriber, mStudent);
+                                }
                             }
-                        }
-                    });
+                        });
+
+                    }
+                    //班级不存在，添加班级信息
+                    else {
+                        addClassSubscriber = new ProgressSubscriber<>(null, SubmitStudentInfoActivity.this);
+                        mClassApi.addClasses(addClassSubscriber, etStudentClass.getText().toString(), mSchoolId);
+                    }
 
                 }
-                //班级不存在，添加班级信息
-                else {
-                    addClassSubscriber = new ProgressSubscriber<>(null, SubmitStudentInfoActivity.this);
-                    mClassApi.addClasses(addClassSubscriber, etStudentClass.getText().toString(), mSchoolId);
+
+                @Override
+                public void onCompleted() {
+
                 }
+            };
 
-            }
 
-            @Override
-            public void onCompleted() {
-
-            }
-        };
-
+        }
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.storage_menu, menu);
+        if (studentId == null)
+            getMenuInflater().inflate(R.menu.storage_menu, menu);
         return true;
     }
 
@@ -274,10 +325,8 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
                     .addView(etStudentPosition).addTip(R.string.position_cant_empty)
                     .addView(etStudentMail).addTip(R.string.mail_cant_empty)
                     .addView(etStudentPhone).addTip(R.string.smssdk_write_mobile_phone).isEmpty();
-
             if (!result) {
                 getClassId(etStudentClass.getText().toString(), schoolId);
-
             }
 
         }
@@ -289,8 +338,33 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
      * 初始化view
      */
     public void initView() {
-
         etStudentSchool.setText(schoolName);
+    }
+
+
+    public void initStudentInfo(StudentLoginSuccessDto studentLoginSuccessDto) {
+        etStudentName.setText(studentLoginSuccessDto.getName());
+        if (studentLoginSuccessDto.getSexual() == "男") {
+            cbStudentMale.setChecked(true);
+        } else {
+            cbStudentFemale.setChecked(true);
+        }
+        etStudentStudentNumber.setText(studentLoginSuccessDto.getStudentNumber());
+        etStudentPosition.setText(studentLoginSuccessDto.getClassPosition());
+        etStudentSchool.setText(studentLoginSuccessDto.getSchoolId());
+        etStudentMail.setText(studentLoginSuccessDto.getMail());
+        etStudentPhone.setText(studentLoginSuccessDto.getPhone());
+
+        //设置不可编辑
+        etStudentName.setEnabled(false);
+        cbStudentFemale.setEnabled(false);
+        cbStudentMale.setEnabled(false);
+        etStudentStudentNumber.setEnabled(false);
+        etStudentPosition.setEnabled(false);
+        etStudentSchool.setEnabled(false);
+        etStudentMail.setEnabled(false);
+        etStudentPhone.setEnabled(false);
+        etStudentClass.setEnabled(false);
     }
 
 

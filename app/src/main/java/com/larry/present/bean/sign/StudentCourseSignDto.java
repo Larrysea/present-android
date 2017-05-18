@@ -19,11 +19,23 @@ public class StudentCourseSignDto {
      */
     String name;
 
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
     /**
      * 签到状态
      */
     String signState;
 
+    //学生id
+    String studentId;
 
     public String getStudentNumber() {
         return studentNumber;

@@ -62,5 +62,10 @@
     <string name="sure_password">确认密码</string>
     <string name="input_password_again">请再次输入密码</string>
     <string name="input_password">输入密码</string>
+    <string name="student_info">学生信息</string>
+    <string name="edit_student_info">编辑学生信息</string>
+    <string name="must_choose_class">必须选择班级</string>
+    <string name="setting">设置</string>
+    <string name="course_cant_empty">课程不能为空</string>
 
 </resources>

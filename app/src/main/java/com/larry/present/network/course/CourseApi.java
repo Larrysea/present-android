@@ -75,13 +75,13 @@ public class CourseApi {
      * @param courseName 课程名
      * @return
      */
-    public Subscription addCourse(Observer<String> observer, String teacherId, String courseName) {
+    public Subscription addCourse(Observer<Course> observer, String teacherId, String courseName) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("teacherId", teacherId);
         jsonObject.put("courseName", courseName);
         return RxjavaUtil.subscribe(mRetrofit.create(Icourse.class)
                 .addCourse(JsonUtil.convertObjectToRequestBody(jsonObject))
-                .map(new ApiService.HttpResultFunc<String>()), observer);
+                .map(new ApiService.HttpResultFunc<Course>()), observer);
     }
 
 

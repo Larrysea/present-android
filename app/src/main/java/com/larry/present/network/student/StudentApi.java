@@ -2,6 +2,7 @@ package com.larry.present.network.student;
 
 import com.alibaba.fastjson.JSONObject;
 import com.larry.present.bean.student.Student;
+import com.larry.present.loginregister.dto.StudentLoginSuccessDto;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.base.RxjavaUtil;
@@ -56,6 +57,23 @@ public class StudentApi {
         return RxjavaUtil.subscribe(mRetrofit.create(Istudent.class)
                 .studentUploadPortrait(portraitPart, requestBody)
                 .map(new ApiService.HttpResultFunc<String>()), observer);
+    }
+
+
+    /**
+     * 获取学生个人信息
+     *
+     * @param observer
+     * @param studentId
+     * @return
+     */
+    public Subscription getStudentInfo(Observer<StudentLoginSuccessDto> observer, String studentId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("studentId", studentId);
+        return RxjavaUtil.subscribe(mRetrofit.create(Istudent.class)
+                .getStudentInfo(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<StudentLoginSuccessDto>()), observer);
+
     }
 
 

@@ -15,6 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
         android:textSize="28sp"
         tools:text="1" />
 
@@ -31,6 +32,7 @@
         android:id="@+id/tv_course_sign_detail_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/tv_course_sign_detail_name"
         android:layout_below="@id/tv_course_sign_detail_name"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"

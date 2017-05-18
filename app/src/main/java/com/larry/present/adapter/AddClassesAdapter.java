@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.larry.present.R;
@@ -47,7 +48,12 @@ public class AddClassesAdapter extends RecyclerView.Adapter<AddClassesViewHolder
     public void onBindViewHolder(AddClassesViewHolder holder, int position) {
         if (holder != null) {
             holder.className.setText(classesList.get(position).getClassName());
-            mrecyclerClickInterface.onClick(holder.courseDelte, position);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mrecyclerClickInterface.onClick(holder.courseDelte, position);
+                }
+            });
         }
 
     }

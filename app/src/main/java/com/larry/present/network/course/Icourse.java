@@ -59,7 +59,7 @@ public interface Icourse {
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("addCourse")
-    Observable<BaseCallModeal<String>> addCourse(@Body RequestBody body);
+    Observable<BaseCallModeal<Course>> addCourse(@Body RequestBody body);
 
 
     /**

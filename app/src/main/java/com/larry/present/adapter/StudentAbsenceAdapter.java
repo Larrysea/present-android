@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
@@ -45,7 +46,12 @@ public class StudentAbsenceAdapter extends RecyclerView.Adapter<StudentCourseSig
             holder.name.setText(studentCourseSignDtoList.get(position).getName());
             holder.number.setText(studentCourseSignDtoList.get(position).getStudentNumber());
             Glide.with(mcontext).load(initStateDrawable(studentCourseSignDtoList.get(position).getSignState())).into(holder.stateIv);
-
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mrecyclerClickInterface.onClick(v, position);
+                }
+            });
         }
 
     }

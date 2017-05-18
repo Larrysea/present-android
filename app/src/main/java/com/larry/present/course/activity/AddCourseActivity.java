@@ -1,23 +1,25 @@
 package com.larry.present.course.activity;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.larry.present.R;
 import com.larry.present.account.AccountManager;
 import com.larry.present.adapter.AddClassesAdapter;
 import com.larry.present.bean.classes.Classes;
+import com.larry.present.bean.course.Course;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
+import com.larry.present.common.util.CheckETEmptyUtil;
 import com.larry.present.common.util.DividerItemDecoration;
 import com.larry.present.listener.RecyclerviewClickInterface;
 import com.larry.present.network.base.ApiService;
@@ -50,7 +52,7 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
     @BindView(R.id.toolbar_course_info)
     Toolbar toolbarSelectIdentity;
     @BindView(R.id.tv_add_course_name)
-    EditText tvAddCourseName;
+    EditText etAddCourseName;
     @BindView(R.id.btn_add_course_submit)
     Button btnAddCourseSubmit;
     @BindView(R.id.et_add_course_class_name)
@@ -67,11 +69,26 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
 
     SubscriberOnNextListener<String> addClassToCourseListener;
 
+    SubscriberOnNextListener<Course> addCourseListener;
+
     String courseId;
+    @BindView(R.id.tv_add_course_add_btn)
+    TextView tvAddCourseAddBtn;
+
+    String courseName;
+
+    CheckETEmptyUtil checkETEmptyUtil;
 
     @OnClick(R.id.btn_add_course_submit)
     public void onClick(View view) {
-        courseApi.addClassesToCourse(new ProgressSubscriber<String>(addClassToCourseListener, AddCourseActivity.this), courseId, classesList);
+        checkETEmptyUtil = new CheckETEmptyUtil(AddCourseActivity.this);
+        boolean isEmpty = checkETEmptyUtil.addView(etAddCourseName).addTip(R.string.course_cant_empty)
+                .addView(etAddCourseClassName).addTip(R.string.class_cant_empty).isEmpty();
+        if (!isEmpty) {
+            courseName = etAddCourseName.getText().toString().trim();
+            courseApi.addCourse(new ProgressSubscriber<Course>(addCourseListener, AddCourseActivity.this), AccountManager.getTeacher().getId(), courseName);
+        }
+
     }
 
     @Override
@@ -88,28 +105,21 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
     public void initData() {
         courseApi = new CourseApi(ApiService.getInstance(AddCourseActivity.this).getmRetrofit());
         classApi = new ClassApi(ApiService.getInstance(AddCourseActivity.this).getmRetrofit());
-        etAddCourseClassName.setOnTouchListener(new View.OnTouchListener() {
+        tvAddCourseAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Drawable[] drawables = etAddCourseClassName.getCompoundDrawables();
-
-                Drawable drawable = drawables[2];  //
-                if (drawable == null) {
-                    return false;
+            public void onClick(View v) {
+                //班级为空
+                if (etAddCourseClassName.getText().toString().isEmpty()) {
+                    Toast.makeText(AddCourseActivity.this, R.string.class_cant_empty, Toast.LENGTH_SHORT).show();
+                } else {
+                    classApi.getClassesInfo(
+                            new ProgressSubscriber<Classes>(classInfoListener, AddCourseActivity.this),
+                            etAddCourseClassName.getText().toString().trim(),
+                            AccountManager.getTeacher().getSchoolId());
                 }
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if ((event.getX() > etAddCourseClassName.getWidth() - drawable.getIntrinsicWidth() - etAddCourseClassName.getPaddingRight()) && (event.getX() < etAddCourseClassName.getWidth() - etAddCourseClassName.getPaddingRight())) {
-                        classApi.getClassesInfo(
-                                new ProgressSubscriber<Classes>(classInfoListener, AddCourseActivity.this),
-                                etAddCourseClassName.getText().toString().trim(),
-                                AccountManager.getTeacher().getSchoolId());
-                    }
-                }
-                return true;
             }
         });
     }
-
 
     public void initListener() {
         classInfoListener = new SubscriberOnNextListener<Classes>() {
@@ -119,16 +129,19 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
                 if (s != null) {
                     if (classesList == null) {
                         classesList = new ArrayList<>();
+                        classesList.add(s);
                         addClassesAdapter = new AddClassesAdapter(AddCourseActivity.this, classesList);
                         rvAddCourseClass.setLayoutManager(new LinearLayoutManager(AddCourseActivity.this));
                         rvAddCourseClass.addItemDecoration(new DividerItemDecoration(AddCourseActivity.this, DividerItemDecoration.VERTICAL_LIST));
                         rvAddCourseClass.setAdapter(addClassesAdapter);
                     } else {
                         classesList.add(s);
+                        addClassesAdapter.setData(classesList);
                         addClassesAdapter.notifyDataSetChanged();
                     }
 
                 }
+                addClassesAdapter.setOnClickListener((RecyclerviewClickInterface) AddCourseActivity.this);
             }
 
             @Override
@@ -136,6 +149,7 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
 
             }
         };
+
 
         addClassToCourseListener = new SubscriberOnNextListener<String>() {
             @Override
@@ -149,10 +163,24 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
             }
         };
 
+        addCourseListener = new SubscriberOnNextListener<Course>() {
+            @Override
+            public void onNext(Course s) {
+                courseId = s.getId();
+                courseApi.addClassesToCourse(new ProgressSubscriber<String>(addClassToCourseListener, AddCourseActivity.this), courseId, classesList);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        };
+
+
     }
 
     public void initView() {
-        toolbarSelectIdentity.setTitle(R.string.check_sign_result);
+        toolbarSelectIdentity.setTitle(R.string.add_course);
         toolbarSelectIdentity.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
         setSupportActionBar(toolbarSelectIdentity);
         toolbarSelectIdentity.setNavigationOnClickListener(new View.OnClickListener() {

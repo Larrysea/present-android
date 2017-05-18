@@ -50,7 +50,6 @@ public class CheckCourseSignInfoOnTermActivity extends AppCompatActivity {
     String classId;
 
 
-
     StringBuilder stringBuilder;
     @BindView(R.id.toolbar_course_sign_count)
     Toolbar toolbarCourseSignCount;
