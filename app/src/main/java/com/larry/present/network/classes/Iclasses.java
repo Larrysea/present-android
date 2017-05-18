@@ -43,7 +43,7 @@ public interface Iclasses {
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("addClasses")
-    Observable<BaseCallModeal<String>> addClasses(@Body RequestBody body);
+    Observable<BaseCallModeal<Classes>> addClasses(@Body RequestBody body);
 
 
     /**

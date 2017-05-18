@@ -19,6 +19,7 @@ import com.larry.present.account.AccountManager;
 import com.larry.present.boot.adapter.BaseFragmentPagerAdapter;
 import com.larry.present.course.activity.AddCourseActivity;
 import com.larry.present.listener.onBackPressedClickListener;
+import com.larry.present.sign.fragment.StudentCheckCourseFragment;
 import com.larry.present.sign.fragment.StudentSigntFragment;
 import com.larry.present.sign.fragment.TeacherCheckSignFragment;
 import com.larry.present.sign.fragment.TeacherSignFragment;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         //如果当前是学生实例登录存在
         if (AccountManager.getStudent() != null) {
             mFragmentList.add(new StudentSigntFragment());
+            mFragmentList.add(new StudentCheckCourseFragment());
         }
         //如果当前是老师实例登录则添加老师的fragment
         else {
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (AccountManager.getTeacher() != null) {
             getMenuInflater().inflate(R.menu.teacher_menu, menu);
-        } else {
+        } else if (AccountManager.getStudent() != null) {
             getMenuInflater().inflate(R.menu.student_menu, menu);
         }
         return true;

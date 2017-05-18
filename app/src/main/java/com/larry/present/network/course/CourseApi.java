@@ -60,7 +60,7 @@ public class CourseApi {
      */
     public Subscription studentGetAllCourse(Observer<List<Course>> observer, String studentId) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("studentId", studentId);
+        jsonObject.put("classId", studentId);
         return RxjavaUtil.subscribe(mRetrofit.create(Icourse.class)
                 .studentGetAllCourse(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<List<Course>>()), observer);

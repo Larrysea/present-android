@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.larry.present.R;
+import com.larry.present.bean.classes.Classes;
 import com.larry.present.bean.student.Student;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
@@ -102,7 +103,7 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     /**
      * 添加班级的订阅者
      */
-    ProgressSubscriber<String> addClassSubscriber;
+    ProgressSubscriber<Classes> addClassSubscriber;
 
 
     /**

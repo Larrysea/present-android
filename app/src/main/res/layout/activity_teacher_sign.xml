@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_teacher_sign"
+        android:id="@+id/toolbar_student_sign"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentTop="true"
@@ -16,15 +16,28 @@
 
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/sr_teacher_sign"
+        android:id="@+id/sr_student_sign"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_teacher_sign">
+        android:layout_below="@id/toolbar_student_sign">
 
-        <include layout="@layout/attendance_infor_header" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include layout="@layout/base_recyclerview" />
+            <include
+                layout="@layout/attendance_infor_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <include
+                layout="@layout/base_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <Button

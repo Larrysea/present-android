@@ -63,13 +63,13 @@ public class ClassApi {
      * @param schoolId  学校id
      * @return
      */
-    public Subscription addClasses(Observer<String> observer, String className, String schoolId) {
+    public Subscription addClasses(Observer<Classes> observer, String className, String schoolId) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("className", className);
         jsonObject.put("schoolId", schoolId);
         return RxjavaUtil.subscribe(mRetrofit.create(Iclasses.class)
                 .addClasses(JsonUtil.convertObjectToRequestBody(jsonObject))
-                .map(new ApiService.HttpResultFunc<String>()), observer);
+                .map(new ApiService.HttpResultFunc<Classes>()), observer);
     }
 
 

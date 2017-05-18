@@ -71,7 +71,7 @@ public class StudentAbsenceAdapter extends RecyclerView.Adapter<StudentCourseSig
         this.mrecyclerClickInterface = recyclerviewClickInterface;
     }
 
-    public int initStateDrawable(String state) {
+    public static int initStateDrawable(String state) {
         int drawableId = R.drawable.ic_fork_48;
         switch (state) {
             case Constants.ABSENCE:

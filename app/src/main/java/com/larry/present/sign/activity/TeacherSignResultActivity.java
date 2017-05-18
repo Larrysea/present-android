@@ -16,6 +16,7 @@ import com.larry.present.adapter.StudentAbsenceAdapter;
 import com.larry.present.bean.sign.StudentCourseSignDto;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
+import com.larry.present.common.util.APUtil;
 import com.larry.present.common.util.DividerItemDecoration;
 import com.larry.present.listener.RecyclerviewClickInterface;
 import com.larry.present.loginregister.activity.SubmitStudentInfoActivity;
@@ -43,11 +44,11 @@ import butterknife.OnClick;
 public class TeacherSignResultActivity extends AppCompatActivity implements RecyclerviewClickInterface {
 
 
-    @BindView(R.id.sr_teacher_sign)
+    @BindView(R.id.sr_student_sign)
     SwipeRefreshLayout srTeacherSign;
 
     SignApi signApi;
-    @BindView(R.id.toolbar_teacher_sign)
+    @BindView(R.id.toolbar_student_sign)
     Toolbar toolbarTeacherSign;
     @BindView(R.id.rv_bases)
     RecyclerView rvBases;
@@ -78,7 +79,8 @@ public class TeacherSignResultActivity extends AppCompatActivity implements Recy
 
     @OnClick(R.id.btn_teacher_stop_and__start_sign)
     public void stopSign(View view) {
-        // APUtil.setApEnabled(this, "fasdfasdfasd", "fasfasdfasdf", false);
+        //关闭wifi热点，停止签到
+        APUtil.setApEnabled(this, "fasdfasdfasd", "fasfasdfasdf", false);
         //查看签到的汇总信息
         signApi.getAbsenceStudentInfo(new ProgressSubscriber<List<StudentCourseSignDto>>(studentAbsenceListener, TeacherSignResultActivity.this), courseSignId);
         stopSignBtn.setVisibility(View.GONE);

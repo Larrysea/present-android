@@ -85,6 +85,14 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize|adjustPan" />
 
+        <activity
+            android:name=".sign.activity.StudentCheckCourseSignInfoActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".sign.activity.StudentCheckDetailSignInfoActivity"
+            android:exported="true" />
+
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />

@@ -1,6 +1,8 @@
 
 package com.larry.present.bean.sign;
 
+import java.io.Serializable;
+
 /**
  * Created by Larry-sea on 2017/3/24.
  *
@@ -9,7 +11,7 @@ package com.larry.present.bean.sign;
  * 代表的是学生某次课程的签到记录信息
  *
  */
-public class CourseSignInfoDto {
+public class CourseSignInfoDto  implements Serializable{
 
     /**
      * 学生的签到状态
