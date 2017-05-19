@@ -145,9 +145,9 @@ public class StudentCheckCourseSignInfoActivity extends AppCompatActivity {
 
 
     public void initTimes(List<Integer> signTimesList) {
-        tvCourseSignSignTimes.setText(signTimesList.get(0));
-        tvCourseSignSickTimes.setText(signTimesList.get(1));
-        tvCourseSignAbsenceTimes.setText(signTimesList.get(2));
+        tvCourseSignSignTimes.setText("你已签到" + String.valueOf(signTimesList.get(0)) + "次");
+        tvCourseSignSickTimes.setText("你已请假" + String.valueOf(signTimesList.get(1)) + "次");
+        tvCourseSignAbsenceTimes.setText("你已缺勤" + String.valueOf(signTimesList.get(2)) + "次");
 
 
     }

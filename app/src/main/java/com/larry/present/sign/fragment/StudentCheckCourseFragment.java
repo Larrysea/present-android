@@ -16,6 +16,7 @@ import com.larry.present.bean.course.Course;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.DividerItemDecoration;
+import com.larry.present.course.activity.CheckCourseActivity;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.course.CourseApi;
 import com.larry.present.sign.activity.StudentCheckCourseSignInfoActivity;
@@ -52,7 +53,11 @@ public class StudentCheckCourseFragment extends Fragment {
 
     SubscriberOnNextListener<List<Course>> getCourseListener;
 
+    //查看签到信息intent
     Intent checkCourseSignInfo;
+
+    //查看课程信息intent
+    Intent checkCourseInfo;
 
     @Nullable
     @Override
@@ -90,6 +95,15 @@ public class StudentCheckCourseFragment extends Fragment {
                                 checkCourseSignInfo = new Intent(getActivity(), StudentCheckCourseSignInfoActivity.class);
                                 checkCourseSignInfo.putExtra("courseId", o.getId());
                                 startActivity(checkCourseSignInfo);
+                            }
+                        });
+                        holder.setOnLongClickListener(R.id.ll_course_item, new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+                                checkCourseInfo = new Intent(getActivity(), CheckCourseActivity.class);
+                                checkCourseInfo.putExtra("courseId", o.getId());
+                                startActivity(checkCourseInfo);
+                                return true;
                             }
                         });
                     }

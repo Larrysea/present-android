@@ -1,5 +1,6 @@
 package com.larry.present.network.teacher;
 
+import com.larry.present.loginregister.dto.TeacherLoginSuccessDto;
 import com.larry.present.network.base.BaseCallModeal;
 
 import okhttp3.RequestBody;
@@ -29,4 +30,17 @@ public interface Iteacher {
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("submitTeacherInfo")
     Observable<BaseCallModeal<String>> submitStudentInfo(@Body RequestBody teacher);
+
+
+    /**
+     * 获取老师信息
+     *
+     * @param teacher 老师
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("getTeacherInfo")
+    Observable<BaseCallModeal<TeacherLoginSuccessDto>> getTeacherInfo(@Body RequestBody teacher);
+
+
 }

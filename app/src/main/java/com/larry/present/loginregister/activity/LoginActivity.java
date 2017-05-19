@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.larry.present.R;
 import com.larry.present.account.AccountManager;
 import com.larry.present.bean.student.Student;
@@ -48,10 +50,6 @@ import cn.smssdk.gui.RegisterPage;
 public class LoginActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.et_login_name)
-    EditText etLoginName;
-    @BindView(R.id.et_login_password)
-    EditText etLoginPassword;
     CheckETEmptyUtil mCheckEmptyUtil;
 
     /**
@@ -73,15 +71,30 @@ public class LoginActivity extends AppCompatActivity {
 
     SubscriberOnNextListener<StudentLoginSuccessDto> studentLoginListener;
 
-    @BindView(R.id.sw_is_teacher)
-    Switch isTeacherSwitch;
+
+    @BindView(R.id.et_login_phone)
+    EditText etLoginPhone;
+    @BindView(R.id.iv_login_type)
+    ImageView ivLoginType;
+
+    @BindView(R.id.btn_login_forget_pwd)
+    Button btnLoginForgetPwd;
+
+    @BindView(R.id.et_login_password)
+    EditText etLoginPassword;
+    @BindView(R.id.toolbar_login)
+    Toolbar toolbarLogin;
+
 
     @OnClick(R.id.btn_login_login)
     void loginClick(View view) {
-        login(etLoginName.getText().toString().trim(), etLoginPassword.getText().toString().trim());
+        login(etLoginPhone.getText().toString().trim(), etLoginPassword.getText().toString().trim());
     }
 
-    @OnClick(R.id.tv_login_register)
+    @BindView(R.id.btn_login_login)
+    Button loginBtn;
+
+    @OnClick(R.id.btn_login_register)
     void registerClick(View view) {
         openRegisterActivity();
     }
@@ -95,10 +108,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login1);
         ButterKnife.bind(this);
+        initToolbar();
         initListener();
         initSbuscriber();
+
 
     }
 
@@ -186,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
         } else if (mCheckEmptyUtil.isRecycler()) {
             mCheckEmptyUtil = new CheckETEmptyUtil(LoginActivity.this);
         }
-        boolean isEmpty = mCheckEmptyUtil.addView(etLoginName).addTip(R.string.userName_cant_empty).addView(etLoginPassword).addTip(R.string.password_cant_empty).isEmpty();
+        boolean isEmpty = mCheckEmptyUtil.addView(etLoginPhone).addTip(R.string.phone_cant_empty).addView(etLoginPassword).addTip(R.string.password_cant_empty).isEmpty();
         if (!isEmpty) {
             LoginApi loginApi = new LoginApi(ApiService.getInstance(LoginActivity.this).getmRetrofit());
 
@@ -199,14 +214,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void initListener() {
-        isTeacherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ivLoginType.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isTeacher = isChecked;
-                if (isChecked) {
-                    buttonView.setText("是");
+            public void onClick(View v) {
+                isTeacher = !isTeacher;
+                if (isTeacher) {
+                    Glide.with(LoginActivity.this).load(R.drawable.ic_teacher).into(ivLoginType);
+                    loginBtn.setText(R.string.teacher_login);
                 } else {
-                    buttonView.setText("否");
+                    Glide.with(LoginActivity.this).load(R.drawable.ic_student).into(ivLoginType);
+                    loginBtn.setText(R.string.student_login);
                 }
             }
         });
@@ -253,5 +270,10 @@ public class LoginActivity extends AppCompatActivity {
         return teacher;
     }
 
+
+    public void initToolbar() {
+        toolbarLogin.setTitle("");
+        setSupportActionBar(toolbarLogin);
+    }
 
 }

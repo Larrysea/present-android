@@ -1,101 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/tv_teacher_mail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_marginRight="7dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="41dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        android:layout_marginEnd="16dp" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="89dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:gravity="center_vertical|center"
-        android:text="@string/mail"
-        android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_teacher_mail"
-        app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_submit_teacher"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@color/colorPrimary"
-        android:theme="@style/ActionMenuWhiteTitle"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginTop="-3dp" />
+        android:theme="@style/ActionMenuWhiteTitle" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="89dp"
-        android:layout_height="29dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:gravity="center_vertical|center"
-        android:text="@string/name"
-        android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_teacher_info_name"
-        app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <EditText
-        android:id="@+id/tv_teacher_info_name"
-        android:layout_width="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="165dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:baselineAligned="true">
 
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline4"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="20dp" />
+        <EditText
+            android:id="@+id/tv_teacher_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:ems="10"
+            android:hint="@string/input_name"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintRight_toRightOf="parent" />
+    </android.support.design.widget.TextInputLayout>
 
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline5"
-        app:layout_constraintGuide_begin="20dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteY="20dp"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:baselineAligned="true">
 
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
+
+        <EditText
+            android:id="@+id/tv_teacher_info_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:ems="10"
+            android:hint="@string/input_mail"
+            android:inputType="textPersonName" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline6"
-        app:layout_constraintGuide_begin="329dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteY="329dp"
-        tools:layout_editor_absoluteX="0dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:baselineAligned="true">
+
+
+        <EditText
+            android:id="@+id/tv_teacher_info_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:ems="10"
+            android:hint="@string/input_phone"
+            android:inputType="textPersonName" />
+    </android.support.design.widget.TextInputLayout>
+
+
+</LinearLayout>

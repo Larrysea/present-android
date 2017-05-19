@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="58dp"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="1">
 
     <TextView
         android:id="@+id/tv_student_state_number"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.33"
         android:gravity="center"
         android:text="132056201"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.33"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_student_state_name"
-        android:gravity="center"
-        android:text="刘正海"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_weight="0.33"
+        android:gravity="center"
+        android:text="2017-05-11 00:00:00"
         android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_student_state"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.33"
         android:gravity="center"
         android:src="@drawable/ic_check"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.33"
+        android:scaleType="center"
         android:textSize="18sp" />
 
 </LinearLayout>

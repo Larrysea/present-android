@@ -28,7 +28,7 @@ public class RxjavaUtil {
      * @param observer   消费者
      * @param <T>
      */
-    public static <T> Subscription subscribe(Observable<T> observable, Observer<T> observer) {
+    public static <T> Subscription subscribe(final Observable<T> observable, final Observer<T> observer) {
         return observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

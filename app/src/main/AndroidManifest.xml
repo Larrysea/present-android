@@ -93,6 +93,13 @@
             android:name=".sign.activity.StudentCheckDetailSignInfoActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".test.TestAnimationActivity"
+            android:exported="true" />
+
+        <activity android:name=".course.activity.CheckCourseActivity"
+            android:exported="true"/>
+
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />

@@ -59,6 +59,7 @@ public class CheckCourseActivity extends AppCompatActivity {
 
 
     public void initView() {
+        courseId=getIntent().getStringExtra("courseId");
         getCourseTeacherListener = new SubscriberOnNextListener<CourseAndTeacherDto>() {
             @Override
             public void onNext(CourseAndTeacherDto courseAndTeacherDto) {

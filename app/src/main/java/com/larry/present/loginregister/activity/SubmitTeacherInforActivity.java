@@ -2,7 +2,6 @@ package com.larry.present.loginregister.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.Guideline;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,6 +16,7 @@ import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.CheckETEmptyUtil;
 import com.larry.present.config.Constants;
+import com.larry.present.loginregister.dto.TeacherLoginSuccessDto;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.teacher.TeacherApi;
 
@@ -30,7 +30,7 @@ import rx.Observer;
 /*
 *    
 * 项目名称：present      
-* 类描述： 老师提交个人信息的fragment
+* 类描述： 老师提交个人信息的fragment,查看个人信息，修改个人信息
 * 创建人：Larry-sea   
 * 创建时间：2017/4/16 22:10   
 * 修改人：Larry-sea  
@@ -41,9 +41,9 @@ import rx.Observer;
 */
 public class SubmitTeacherInforActivity extends AppCompatActivity {
     @BindView(R.id.tv_teacher_mail)
-    EditText tvTeacherMail;
+    EditText etTeacherMail;
     @BindView(R.id.tv_teacher_info_name)
-    EditText tvTeacherInfoName;
+    EditText etTeacherInfoName;
 
 
     CheckETEmptyUtil checkETEmptyUtil = new CheckETEmptyUtil(SubmitTeacherInforActivity.this);
@@ -69,13 +69,16 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
     @BindView(R.id.toolbar_submit_teacher)
     Toolbar toolbarSubmitTeacher;
 
-    @BindView(R.id.guideline4)
-    Guideline guideline4;
-    @BindView(R.id.guideline5)
-    Guideline guideline5;
-    @BindView(R.id.guideline6)
-    Guideline guideline6;
 
+    //获取老师信息的listener
+    SubscriberOnNextListener<TeacherLoginSuccessDto> getTeacherInfoListener;
+
+    //是提交信息吗
+    boolean isSubmitInfo;
+
+    String teacherId;
+    @BindView(R.id.tv_teacher_info_phone)
+    EditText etTeacherInfoPhone;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +107,20 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
             }
         };
         submitTeacherObserver = new ProgressSubscriber<>(subscriberOnNextListener, SubmitTeacherInforActivity.this);
+
+        getTeacherInfoListener = new SubscriberOnNextListener<TeacherLoginSuccessDto>() {
+            @Override
+            public void onNext(TeacherLoginSuccessDto teacherLoginSuccessDto) {
+                initTeacherInfo(teacherLoginSuccessDto);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        };
+
+
     }
 
 
@@ -113,6 +130,13 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
     public void initIntentData() {
         schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
         phone = getIntent().getStringExtra(Constants.PHONE);
+
+        if (schoolId == null || phone == null) {
+            isSubmitInfo = false;
+            teacherId = getIntent().getStringExtra("teacherId");
+            mTeacherApi.getTeacherInfo(new ProgressSubscriber<>(getTeacherInfoListener, this), teacherId);
+        }
+
     }
 
 
@@ -123,10 +147,10 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
      */
     public Teacher initTeacher() {
         Teacher teacher = new Teacher();
-        teacher.setName(tvTeacherInfoName.getText().toString().trim());
+        teacher.setName(etTeacherInfoName.getText().toString().trim());
         teacher.setSchoolId(schoolId);
         teacher.setPhone(phone);
-        teacher.setMail(tvTeacherMail.getText().toString().trim());
+        teacher.setMail(etTeacherMail.getText().toString().trim());
         return teacher;
     }
 
@@ -148,7 +172,9 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.storage_menu, menu);
+        if (isSubmitInfo) {
+            getMenuInflater().inflate(R.menu.storage_menu, menu);
+        }
         return true;
     }
 
@@ -168,12 +194,19 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
      */
     public void submitTeacherInfo(Teacher teacher) {
         mTeacherApi = new TeacherApi(ApiService.getInstance(SubmitTeacherInforActivity.this).getmRetrofit());
-        boolean isEmpty = checkETEmptyUtil.addView(tvTeacherInfoName).addTip(R.string.name_cant_empty)
-                .addView(tvTeacherMail).addTip(R.string.mail_cant_empty).isEmpty();
+        boolean isEmpty = checkETEmptyUtil.addView(etTeacherInfoName).addTip(R.string.name_cant_empty)
+                .addView(etTeacherMail).addTip(R.string.mail_cant_empty).isEmpty();
         //内容不为空
         if (!isEmpty) {
             mTeacherApi.submitTeacherInfo(submitTeacherObserver, teacher);
         }
 
     }
+
+    public void initTeacherInfo(TeacherLoginSuccessDto teacherLoginSuccessDto) {
+        etTeacherInfoName.setText(teacherLoginSuccessDto.getName());
+        etTeacherMail.setText(teacherLoginSuccessDto.getMail());
+        etTeacherInfoPhone.setText(teacherLoginSuccessDto.getPhone());
+    }
+
 }

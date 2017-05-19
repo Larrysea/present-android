@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.larry.present.common.util.LocationUtil;
 import com.larry.present.common.util.WifiSignUtil;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.sign.SignApi;
+import com.larry.present.test.MyAnimation;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.List;
@@ -60,6 +62,18 @@ public class StudentSigntFragment extends Fragment {
 
     @OnClick(R.id.btn_student_sign)
     void onClick(View view) {
+
+        startSearchAnimation();
+
+
+
+    }
+
+    /**
+     * 扫描wifi信号和签到
+     */
+    private void scanWifiAndSign() {
+
         //如果操作系统大于android 6.0
         if (Build.VERSION.SDK_INT >= 23) {
             boolean isOpened = LocationUtil.isOPen(getActivity());
@@ -67,7 +81,6 @@ public class StudentSigntFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.pleast_opne_location, Toast.LENGTH_SHORT).show();
             }
         }
-
         rxPermissions = new RxPermissions(getActivity());
         rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_WIFI_STATE).subscribe(grant -> {
@@ -85,8 +98,6 @@ public class StudentSigntFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.if_denied_you_will_cant_use_wifi_sign_feature, Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
 
@@ -107,6 +118,31 @@ public class StudentSigntFragment extends Fragment {
 
     public void initData() {
         signApi = new SignApi(ApiService.getInstance(getActivity()).getmRetrofit());
+    }
+
+
+    public void startSearchAnimation() {
+        Animation anim = new MyAnimation(ivSignDefaullt, 150);
+        anim.setDuration(3000);
+        ivSignDefaullt.startAnimation(anim);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                scanWifiAndSign();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+
     }
 
 
