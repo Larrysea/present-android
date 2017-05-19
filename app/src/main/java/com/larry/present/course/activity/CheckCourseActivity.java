@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.larry.present.R;
@@ -31,11 +32,12 @@ import butterknife.ButterKnife;
 public class CheckCourseActivity extends AppCompatActivity {
 
     //课程id
+
     String courseId;
     @BindView(R.id.tv_course_info_name)
     TextView tvCourseInfoName;
-    @BindView(R.id.toolbar_course_info)
-    Toolbar toolbarSelectIdentity;
+    @BindView(R.id.toolbar_check_course_info)
+    Toolbar toolbarCheckCourseinfo;
     @BindView(R.id.tv_course_info_teacher_name)
     TextView tvCourseInfoTeacherName;
     @BindView(R.id.tv_course_info_phone)
@@ -53,13 +55,14 @@ public class CheckCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_info);
         ButterKnife.bind(this);
+        initToolbar();
         initView();
 
     }
 
 
     public void initView() {
-        courseId=getIntent().getStringExtra("courseId");
+        courseId = getIntent().getStringExtra("courseId");
         getCourseTeacherListener = new SubscriberOnNextListener<CourseAndTeacherDto>() {
             @Override
             public void onNext(CourseAndTeacherDto courseAndTeacherDto) {
@@ -89,6 +92,19 @@ public class CheckCourseActivity extends AppCompatActivity {
         tvCourseInfoTeacherName.setText(courseAndTeacherDto.getTeacherName());
         tvCourseInfoMail.setText(courseAndTeacherDto.getTeacherMail());
         tvCourseInfoPhone.setText(courseAndTeacherDto.getTeacherPhone());
+    }
+
+
+    public void initToolbar() {
+        toolbarCheckCourseinfo.setTitle(R.string.course_detail_info);
+        toolbarCheckCourseinfo.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
+        setSupportActionBar(toolbarCheckCourseinfo);
+        toolbarCheckCourseinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 }

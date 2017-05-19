@@ -26,7 +26,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:background="@null"
         android:hint="@string/input_phone"
-        android:inputType="text"
+        android:inputType="phone"
         android:singleLine="true"
         android:textColor="#2d2d2d"
         android:textColorHint="#8d8d8d"

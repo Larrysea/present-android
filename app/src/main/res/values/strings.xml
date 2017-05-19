@@ -15,7 +15,7 @@
     <string name="input_class_name">输入班级名称</string>
     <string name="school_name">学校名</string>
     <string name="teacher_name">老师名</string>
-    <string name="phone">电话</string>
+    <string name="phone">电话  </string>
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="student_nubmer">学号</string>
@@ -79,4 +79,5 @@
     <string name="teacher_login">老师登录</string>
     <string name="input_mail">输入邮箱</string>
     <string name="input_name">输入姓名</string>
+    <string name="course_detail_info">课程信息</string>
 </resources>

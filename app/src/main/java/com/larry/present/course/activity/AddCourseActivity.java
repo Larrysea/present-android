@@ -216,7 +216,6 @@ public class AddCourseActivity extends AppCompatActivity implements Recyclerview
         toolbarSelectIdentity.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onBackPressed();
             }
         });
