@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.larry.present.R;
 import com.larry.present.adapter.StudentAbsenceAdapter;
@@ -22,6 +23,7 @@ import com.larry.present.listener.RecyclerviewClickInterface;
 import com.larry.present.loginregister.activity.SubmitStudentInfoActivity;
 import com.larry.present.network.base.ApiService;
 import com.larry.present.network.sign.SignApi;
+import com.larry.present.sign.fragment.ChangeStudentSignStateDialog;
 
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class TeacherSignResultActivity extends AppCompatActivity implements Recy
 
     SubscriberOnNextListener<List<StudentCourseSignDto>> studentAbsenceListener;
 
+
     /**
      * 课程签到id
      */
@@ -75,7 +78,14 @@ public class TeacherSignResultActivity extends AppCompatActivity implements Recy
     Button stopSignBtn;
 
 
+    //是否隐藏停止签到按钮
     boolean hiddenStopBtn;
+
+    //修改过的学生状态数据位置，为了在修改学生状态以后刷新这个学生签到状态的图标
+    int changeStudentPosition = -1;
+
+    //修改学生状态的bundle
+    Bundle changeStudengSignStateBundle;
 
     @OnClick(R.id.btn_teacher_stop_and__start_sign)
     public void stopSign(View view) {
@@ -132,7 +142,7 @@ public class TeacherSignResultActivity extends AppCompatActivity implements Recy
                     //刷新数据
                     studentSignAdapter.notifyDataSetChanged();
                 } else {
-                    studentSignAdapter = new StudentAbsenceAdapter(TeacherSignResultActivity.this, studentCourseSignDtoList);
+                    studentSignAdapter = new StudentAbsenceAdapter(TeacherSignResultActivity.this, studentCourseSignDtoList, !hiddenStopBtn);
                     studentSignAdapter.setOnClickListener((RecyclerviewClickInterface) TeacherSignResultActivity.this);
                     //初始化数据
                     // initAdapter(studentCourseSignDtoList);
@@ -174,7 +184,6 @@ public class TeacherSignResultActivity extends AppCompatActivity implements Recy
         toolbarTeacherSign.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 onBackPressed();
             }
         });
@@ -183,13 +192,42 @@ public class TeacherSignResultActivity extends AppCompatActivity implements Recy
 
     @Override
     public void onClick(View view, int position) {
-        Intent intent = new Intent(this, SubmitStudentInfoActivity.class);
-        intent.putExtra("studentId", studentCourseSignDtoList.get(position).getStudentId());
-        startActivity(intent);
+        //如果是老师点击学生签到装态的按钮，则修改该学生的签到状态
+        if (view instanceof ImageView) {
+            //记录修改学生状态的下标
+            changeStudengSignStateBundle = new Bundle();
+            changeStudengSignStateBundle.putString("courseSignId", courseSignId);
+            changeStudengSignStateBundle.putString("studentId", studentCourseSignDtoList.get(position).getStudentId());
+
+            changeStudentPosition = position;
+            ChangeStudentSignStateDialog changeStudentSignStateDialog = new ChangeStudentSignStateDialog();
+            changeStudentSignStateDialog.setArguments(changeStudengSignStateBundle);
+            changeStudentSignStateDialog.show(getSupportFragmentManager(), "changeStudentSignDialog");
+
+        }
+        //如果是老师点击整个大的itemView则是查看学生信息
+        else {
+            Intent intent = new Intent(this, SubmitStudentInfoActivity.class);
+            intent.putExtra("studentId", studentCourseSignDtoList.get(position).getStudentId());
+            startActivity(intent);
+        }
+
+
     }
 
     @Override
     public void onItemLongClick(View view, int position) {
 
+    }
+
+
+    //修改学生签到，dialogFragment回调这个方法
+    public void changeStudentSignState(String signState) {
+        if (changeStudentPosition != -1) {
+            //修改学生转态，并且刷新视图
+            studentCourseSignDtoList.get(changeStudentPosition).setSignState(signState);
+            studentSignAdapter.setData(studentCourseSignDtoList);
+            studentSignAdapter.notifyDataSetChanged();
+        }
     }
 }

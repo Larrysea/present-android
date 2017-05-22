@@ -62,12 +62,12 @@ public class Constants {
     public final static String STUDENT_SIGN = "1";
 
     //学生病假
-    public final static String SICK_LEAVE = "2";
+    public final static String STUDENT_SICK_LEAVE = "2";
 
     /*
    * 学生缺勤
    * */
-    public final static String ABSENCE = "3";
+    public final static String STUDENT_ABSENCE = "3";
 
 
 }

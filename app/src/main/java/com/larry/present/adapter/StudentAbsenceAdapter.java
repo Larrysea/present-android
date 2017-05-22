@@ -29,9 +29,18 @@ public class StudentAbsenceAdapter extends RecyclerView.Adapter<StudentCourseSig
     RecyclerviewClickInterface mrecyclerClickInterface;
 
 
-    public StudentAbsenceAdapter(Context context, List<StudentCourseSignDto> creditCards) {
+    //是否是签到状态
+    boolean isSigning;
+
+    /**
+     * @param context
+     * @param studentCourseSignDtoList 学生签到记录
+     * @param isSigning                是否是签到中查看结果还是，查看历史记录，如果是签到过程中查看，则isSigning为true,否则为false
+     */
+    public StudentAbsenceAdapter(Context context, List<StudentCourseSignDto> studentCourseSignDtoList, boolean isSigning) {
         this.mcontext = context;
-        this.studentCourseSignDtoList = creditCards;
+        this.studentCourseSignDtoList = studentCourseSignDtoList;
+        this.isSigning = isSigning;
 
     }
 
@@ -49,9 +58,21 @@ public class StudentAbsenceAdapter extends RecyclerView.Adapter<StudentCourseSig
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //查看这个学生信息
                     mrecyclerClickInterface.onClick(v, position);
                 }
             });
+            //如果是老师签到的情形
+            if (isSigning) {
+                holder.stateIv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //将改变状态的imageView作为参数传输过去
+                        mrecyclerClickInterface.onClick(v, position);
+                    }
+                });
+            }
+
         }
 
     }
@@ -74,10 +95,10 @@ public class StudentAbsenceAdapter extends RecyclerView.Adapter<StudentCourseSig
     public static int initStateDrawable(String state) {
         int drawableId = R.drawable.ic_fork_48;
         switch (state) {
-            case Constants.ABSENCE:
+            case Constants.STUDENT_ABSENCE:
                 drawableId = R.drawable.ic_fork_48;
                 break;
-            case Constants.SICK_LEAVE:
+            case Constants.STUDENT_SICK_LEAVE:
                 drawableId = R.drawable.ic_circle_48;
                 break;
             case Constants.STUDENT_SIGN:

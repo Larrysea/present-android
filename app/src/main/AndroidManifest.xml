@@ -97,8 +97,14 @@
             android:name=".test.TestAnimationActivity"
             android:exported="true" />
 
-        <activity android:name=".course.activity.CheckCourseActivity"
-            android:exported="true"/>
+        <activity
+            android:name=".course.activity.CheckCourseActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".loginregister.activity.StudentUploadPortraitActivity"
+            android:exported="true" />
+
 
     </application>
 

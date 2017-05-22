@@ -44,16 +44,14 @@ public class SignApi {
      * @param courseSignId 所有发现的课程签到id
      * @param studentId    学生id
      * @param date         日期
-     * @param classId      学生所在的班级id
      * @return
      */
 
-    public Subscription studentSign(Observer<String> observer, List<String> courseSignId, String studentId, String date, String classId) {
+    public Subscription studentSign(Observer<String> observer, List<String> courseSignId, String studentId, String date) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("courseSignIdList", courseSignId);
         jsonObject.put("studentId", studentId);
         jsonObject.put("signTime", date);
-        jsonObject.put("classId", classId);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
                 .studentSign(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
@@ -225,6 +223,26 @@ public class SignApi {
         jsonObject.put("courseId", courseId);
         return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
                 .getCourseAllSignInfo(JsonUtil.convertObjectToRequestBody(jsonObject)).map(new ApiService.HttpResultFunc<List<CourseSign>>()), observer);
+    }
+
+
+    /**
+     * 老师修改学生签到状态
+     *
+     * @param observer
+     * @param courseSignId 课程签到id
+     * @param studentId    学生id
+     * @param signType     学生签到状态，具体的学生签到状态，有三种状态，签到，缺勤，病假
+     * @return
+     */
+    public Subscription changeStudentSign(Observer<String> observer, String courseSignId, String studentId, String signType) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("courseSignId", courseSignId);
+        jsonObject.put("studentId", studentId);
+        jsonObject.put("signType", signType);
+        return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
+                .studentSign(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 
 

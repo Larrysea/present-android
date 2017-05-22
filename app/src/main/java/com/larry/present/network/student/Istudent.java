@@ -54,4 +54,6 @@ public interface Istudent {
     Observable<BaseCallModeal<StudentLoginSuccessDto>> getStudentInfo(@Body RequestBody student);
 
 
+
+
 }

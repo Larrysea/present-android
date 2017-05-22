@@ -25,4 +25,8 @@ public class ApiConfig {
     public static String MY_DORMITORY_URL = "http://192.168.1.106:8080/present/externalservice/";
 
 
+    //实验室wifi地址
+    public static String TIT_LIB_URL = "http://192.168.1.102:8080/present/externalservice/";
+
+
 }
