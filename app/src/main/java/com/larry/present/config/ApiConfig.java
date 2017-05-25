@@ -28,5 +28,7 @@ public class ApiConfig {
     //实验室wifi地址
     public static String TIT_LIB_URL = "http://192.168.1.102:8080/present/externalservice/";
 
+    //上传头像的服务器接口地址（因为这个上传头像使用的的是单独的servlet，所有不能使用统一的接口）
+    public static String UPLOAD_PORTRAIT_PATH="http://192.168.1.102:8080/present/";
 
 }

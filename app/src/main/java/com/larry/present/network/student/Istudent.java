@@ -40,7 +40,7 @@ public interface Istudent {
      * @return
      */
     @Multipart
-    @POST("studentUploadPortrait")
+    @POST("upload")
     Observable<BaseCallModeal<String>> studentUploadPortrait(@Part MultipartBody.Part portrait, @Part("studentId") RequestBody studentId);
 
     /**

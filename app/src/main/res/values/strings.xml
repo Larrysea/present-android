@@ -91,4 +91,5 @@
     <string name="share_app">分享应用</string>
     <string name="check_version">检查版本</string>
     <string name="unbind_device">解绑设备</string>
+    <string name="please_set_portrait">请设置头像</string>
 </resources>

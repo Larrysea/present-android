@@ -25,7 +25,7 @@ public class RxjavaUtil {
      * 绑定事件的静态方法，省去重复代码
      *
      * @param observable 生产者
-     * @param observer   消费者
+     * @param observer   消费者ed
      * @param <T>
      */
     public static <T> Subscription subscribe(final Observable<T> observable, final Observer<T> observer) {

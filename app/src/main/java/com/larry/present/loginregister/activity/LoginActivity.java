@@ -38,7 +38,7 @@ import cn.smssdk.gui.RegisterPage;
 /*
 *    
 * 项目名称：present-android      
-* 类描述： 登录activity   此activity是老师端和学生端同时使用的activity
+* 类描述： 登录activity,此activity是老师端和学生端同时使用的activity
 * 创建人：Larry-sea   
 * 创建时间：2017/4/18 18:25   
 * 修改人：Larry-sea  
@@ -105,6 +105,9 @@ public class LoginActivity extends AppCompatActivity {
     boolean isTeacher;
 
 
+    //手机号
+    String phone;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,8 +166,9 @@ public class LoginActivity extends AppCompatActivity {
         registerOnNextListener = new SubscriberOnNextListener<String>() {
             @Override
             public void onNext(String s) {
-                //TODO  做一些保存用唯一id的操作，以后好使用
-                //startActivity(new Intent(LoginActivity.this,SelectSchoolActivity.class));
+                Intent intent = new Intent(LoginActivity.this, SelectSchoolActivity.class);
+                intent.putExtra(Constants.PHONE, phone);
+                startActivity(intent);
             }
 
             @Override
@@ -177,11 +181,13 @@ public class LoginActivity extends AppCompatActivity {
             public void afterEvent(int event, int result, Object data) {
                 // 解析注册结果
                 if (result == SMSSDK.RESULT_COMPLETE) {
-                    @SuppressWarnings("unchecked")
+
                     HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
-                    String phone = (String) phoneMap.get("phone");
+                    phone = (String) phoneMap.get("phone");
                     RegisterApi registerApi = new RegisterApi(ApiService.getInstance(LoginActivity.this).getmRetrofit());
-                    registerApi.register(new ProgressSubscriber<String>(registerOnNextListener, LoginActivity.this), phone);
+                    registerApi.registerVerfication(new ProgressSubscriber<String>(registerOnNextListener, LoginActivity.this), phone);
+
+
                 }
             }
         });

@@ -25,6 +25,9 @@ public class Constants {
     //老师用户类型
     public final static int TEACHER_TYPE = 0X2;
 
+    //学生头像
+    public final static String PORTRAITPATH = "portrait_path";
+
     /*
     * 手机号
     * */

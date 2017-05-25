@@ -44,12 +44,16 @@ public class SelectIdentityActivity extends AppCompatActivity {
     * */
     String schoolName;
 
+    //手机号
+    String phone;
+
 
     @OnClick(R.id.rb_identity_student)
     void studentOnClick(View view) {
         Intent intent = new Intent(SelectIdentityActivity.this, SubmitStudentInfoActivity.class);
         intent.putExtra(Constants.SCHOOL_ID, schoolId);
         intent.putExtra(Constants.SCHOOLE_NAME, schoolName);
+        intent.putExtra(Constants.PHONE, phone);
         startActivity(intent);
 
     }
@@ -59,6 +63,7 @@ public class SelectIdentityActivity extends AppCompatActivity {
         Intent intent = new Intent(SelectIdentityActivity.this, SubmitTeacherInforActivity.class);
         intent.putExtra(Constants.SCHOOL_ID, schoolId);
         intent.putExtra(Constants.SCHOOLE_NAME, schoolName);
+        intent.putExtra(Constants.PHONE, phone);
         startActivity(intent);
     }
 
@@ -70,6 +75,7 @@ public class SelectIdentityActivity extends AppCompatActivity {
         initToolbar();
         schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
         schoolName = getIntent().getStringExtra(Constants.SCHOOLE_NAME);
+        phone = getIntent().getStringExtra(Constants.PHONE);
         tvIdentitySchool.setText(schoolName + "的");
     }
 

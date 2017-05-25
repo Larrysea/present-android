@@ -1,5 +1,6 @@
 package com.larry.present.loginregister.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import com.larry.present.network.student.StudentApi;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /*
 *    
@@ -63,6 +65,15 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     EditText etStudentMail;
     @BindView(R.id.et_student_phone)
     EditText etStudentPhone;
+
+
+    @OnClick(R.id.iv_student_portrait)
+    void setPortrait(View view) {
+        Intent intent = new Intent(this, StudentSetPortraitActivity.class);
+        intent.putExtra(Constants.PHONE,phone);
+        startActivityForResult(intent, 1);
+
+    }
 
     final static String TAG = SubmitStudentInfoActivity.class.toString();
 
@@ -150,6 +161,28 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     * */
     private String studentId;
 
+
+    /*
+    *
+    * 学生头像地址
+    * */
+    private String portraitPath;
+
+
+    /*
+    *
+    * 手机号
+    * */
+    private String phone;
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == -1) {
+            portraitPath = data.getStringExtra(Constants.PORTRAITPATH);
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +201,7 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
         else {
             schoolName = getIntent().getStringExtra(Constants.SCHOOLE_NAME);
             schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
+            phone = getIntent().getStringExtra(Constants.PHONE);
         }
         initView();
     }
@@ -215,6 +249,8 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
         student.setMail(etStudentMail.getText().toString().trim());
         student.setPhone(etStudentPhone.getText().toString().trim());
         student.setSchoolId(schoolId);
+        student.setClassPosition(etStudentPosition.getText().toString().trim());
+        student.setPortraitUrl(portraitPath);
         if (cbStudentMale.isChecked()) {
             student.setSexual("男");
         } else {
@@ -326,6 +362,11 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
                     .addView(etStudentPosition).addTip(R.string.position_cant_empty)
                     .addView(etStudentMail).addTip(R.string.mail_cant_empty)
                     .addView(etStudentPhone).addTip(R.string.smssdk_write_mobile_phone).isEmpty();
+            //头像地址是否为空
+            if (portraitPath == null) {
+                result = true;
+                Toast.makeText(this, R.string.please_set_portrait, Toast.LENGTH_SHORT).show();
+            }
             if (!result) {
                 getClassId(etStudentClass.getText().toString(), schoolId);
             }
@@ -340,12 +381,15 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
      */
     public void initView() {
         etStudentSchool.setText(schoolName);
+        etStudentSchool.setEnabled(false);
+        etStudentPhone.setText(phone);
+        etStudentPhone.setEnabled(false);
     }
 
 
     public void initStudentInfo(StudentLoginSuccessDto studentLoginSuccessDto) {
         etStudentName.setText(studentLoginSuccessDto.getName());
-        if (studentLoginSuccessDto.getSexual() == "男") {
+        if (studentLoginSuccessDto.getSexual().equals("男")) {
             cbStudentMale.setChecked(true);
         } else {
             cbStudentFemale.setChecked(true);

@@ -2,7 +2,8 @@ package com.larry.present.network.register;
 
 import com.larry.present.network.base.BaseCallModeal;
 
-import retrofit2.http.Field;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -19,17 +20,17 @@ import rx.Observable;
 * @version    
 *    
 */
-public interface Iregister  {
+public interface Iregister {
 
     /**
-     *
      * 注册接口         主要是验证登录账号是否已经注册
-     * @param phone    手机号
-     * @return         返回用户的注册之后的唯一id
+     *
+     * @param phone 手机号
+     * @return 返回用户的注册之后的唯一id
      */
     @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("registerVerification")
-    Observable<BaseCallModeal<String>> register(@Field("phone") String phone);
+    Observable<BaseCallModeal<String>> register(@Body RequestBody  phone);
 
 
 }

@@ -80,10 +80,13 @@ public class SelectSchoolActivity extends AppCompatActivity {
                 atSlectSchoolName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Intent registerIntent = new Intent(SelectSchoolActivity.this, SelectIdentityActivity.class);
-                        registerIntent.putExtra(Constants.SCHOOLE_NAME, (String) mAdapter.getItem(position));
-                        registerIntent.putExtra(Constants.SCHOOL_ID, mSchooleNameMap.get(mAdapter.getItem(position)));
-                        startActivity(registerIntent);
+                        if (mSchooleNameMap != null) {
+                            Intent registerIntent = new Intent(SelectSchoolActivity.this, SelectIdentityActivity.class);
+                            registerIntent.putExtra(Constants.SCHOOLE_NAME, (String) mAdapter.getItem(position));
+                            registerIntent.putExtra(Constants.SCHOOL_ID, mSchooleNameMap.get(mAdapter.getItem(position)));
+                            registerIntent.putExtra(Constants.PHONE, phone);
+                            startActivity(registerIntent);
+                        }
                     }
                 });
 

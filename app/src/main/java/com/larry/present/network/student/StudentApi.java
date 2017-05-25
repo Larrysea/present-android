@@ -49,11 +49,18 @@ public class StudentApi {
     }
 
 
-    public Subscription studentUploadPortrait(Observer<String> observer, String studentId, File portrait) {
+    /**
+     * 学生上传头像
+     *
+     * @param observer
+     * @param phone    手机号
+     * @param portrait 头像
+     * @return
+     */
+    public Subscription studentUploadPortrait(Observer<String> observer, String phone, File portrait) {
         RequestBody headBody = RequestBody.create(MediaType.parse("multipart/form-data"), portrait);
-        MultipartBody.Part portraitPart = MultipartBody.Part.createFormData("portrait", portrait.getName(), headBody);
-        // MultipartBody.Part studentIdPat = MultipartBody.Part.createFormData("studentId", studentId);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), studentId);
+        MultipartBody.Part portraitPart = MultipartBody.Part.createFormData("file", portrait.getName(), headBody);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), phone);
         return RxjavaUtil.subscribe(mRetrofit.create(Istudent.class)
                 .studentUploadPortrait(portraitPart, requestBody)
                 .map(new ApiService.HttpResultFunc<String>()), observer);

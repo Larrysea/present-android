@@ -1,6 +1,8 @@
 package com.larry.present.network.register;
 
+import com.alibaba.fastjson.JSONObject;
 import com.larry.present.network.base.ApiService;
+import com.larry.present.network.base.JsonUtil;
 import com.larry.present.network.base.RxjavaUtil;
 
 import retrofit2.Retrofit;
@@ -29,14 +31,16 @@ public class RegisterApi {
 
 
     /**
-     * 用户注册方法，老师用户和学生用户都使用这个接口
+     * 用户注册验证接口，验证手机号是否已经注册
      *
      * @param observer 订阅者
      * @param phone    用户注册手机号
      */
-    public Subscription register(Observer<String> observer, String phone) {
+    public Subscription registerVerfication(Observer<String> observer, String phone) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("phone", phone);
         return RxjavaUtil.subscribe(mRetrofit.create(Iregister.class)
-                .register(phone)
+                .register(JsonUtil.convertObjectToRequestBody(jsonObject))
                 .map(new ApiService.HttpResultFunc<String>()), observer);
     }
 
