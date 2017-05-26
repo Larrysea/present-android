@@ -92,4 +92,15 @@
     <string name="check_version">检查版本</string>
     <string name="unbind_device">解绑设备</string>
     <string name="please_set_portrait">请设置头像</string>
+    <string name="feedback_hint">告诉我你在使用中不爽的地方，让我们把它变的更好!</string>
+    <string name="tip_input_email_ad">请输入邮箱</string>
+    <string name="password_not_same">两次密码不一致，请检查</string>
+    <string name="password_change_succeed">密码修改成功</string>
+    <string name="thanks_your_feedback">谢谢你的反馈</string>
+    <string name="feed_back_content_cant_empty">反馈内容不能为空</string>
+    <string name="this_is_nice_app_you_can_download">这个应用还不错，可以下载看看</string>
+    <string name="submit_teacher_info">提交老师信息</string>
+    <string name="teacher_info">老师信息</string>
+    <string name="do_you_want_send_sign_info_mail">你想发送考勤邮件到你的邮箱吗</string>
+    <string name="mail_attachment">邮箱附件</string>
 </resources>

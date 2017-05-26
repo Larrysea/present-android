@@ -246,4 +246,27 @@ public class SignApi {
     }
 
 
+    /**
+     * 发送某个课程的某个班级的这学期的所有考勤信息邮件
+     *
+     * @param observer    观察者回调
+     * @param teacherId   老师id
+     * @param courseId    课程id
+     * @param classId     班级id
+     * @param mailAddress 老师的邮件地址
+     * @return
+     */
+    public Subscription sendSignMail(final Observer<String> observer, final String teacherId, final String courseId, final String classId, final String mailAddress) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("teacherId", teacherId);
+        jsonObject.put("courseId", courseId);
+        jsonObject.put("classId", classId);
+        jsonObject.put("mailAddress", mailAddress);
+        return RxjavaUtil.subscribe(mRetrofit.create(IsignApi.class)
+                .sendSignMail(JsonUtil.convertObjectToRequestBody(jsonObject))
+                .map(new ApiService.HttpResultFunc<String>()), observer);
+
+    }
+
+
 }

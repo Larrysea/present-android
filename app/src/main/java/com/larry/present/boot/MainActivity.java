@@ -19,6 +19,7 @@ import com.larry.present.account.AccountManager;
 import com.larry.present.boot.adapter.BaseFragmentPagerAdapter;
 import com.larry.present.course.activity.AddCourseActivity;
 import com.larry.present.listener.onBackPressedClickListener;
+import com.larry.present.setting.activity.SettingActivity;
 import com.larry.present.sign.fragment.StudentCheckCourseFragment;
 import com.larry.present.sign.fragment.StudentSigntFragment;
 import com.larry.present.sign.fragment.TeacherCheckSignFragment;
@@ -132,11 +133,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            //老师添加课程
             case R.id.id_menu_teacher_add_course:
-                Intent intent = new Intent(this, AddCourseActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, AddCourseActivity.class));
                 break;
+            //打开设置
             case R.id.id_menu_teacher_setting:
+                startActivity(new Intent(this, SettingActivity.class));
+                break;
+            case R.id.id_menu_student_setting:
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

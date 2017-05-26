@@ -1,5 +1,6 @@
 package com.larry.present.exception;
 
+import static com.larry.present.config.ExceptionConfig.PASSWORD_WRONG;
 import static com.larry.present.config.ExceptionConfig.USER_ALREADY_EXIST;
 import static com.larry.present.config.ExceptionConfig.USER_NOT_EXIST;
 import static com.larry.present.config.ExceptionConfig.WRONG_PASSWORD;
@@ -40,6 +41,9 @@ public class ApiException extends RuntimeException {
                 break;
             case USER_ALREADY_EXIST:
                 message = "用户已经存在";
+                break;
+            case PASSWORD_WRONG:
+                message = "密码错误";
                 break;
 
 

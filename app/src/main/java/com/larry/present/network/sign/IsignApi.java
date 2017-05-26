@@ -137,7 +137,15 @@ public interface IsignApi {
     Observable<BaseCallModeal<List<CourseSign>>> getCourseAllSignInfo(@Body RequestBody body);
 
 
-
+    /**
+     * 发送某个课程下面的某个班级的这一学期的所有考勤记录
+     *
+     * @param body
+     * @return
+     */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("sendSignMailService")
+    Observable<BaseCallModeal<String>> sendSignMail(@Body RequestBody body);
 
 
 }

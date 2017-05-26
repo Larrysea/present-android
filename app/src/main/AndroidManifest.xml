@@ -105,6 +105,13 @@
             android:name=".loginregister.activity.StudentUploadPortraitActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".setting.activity.ChangePasswordActivity"
+            android:exported="true" />
+
+        <activity android:name=".setting.activity.FeedbackActivity" />
+
+        <activity android:name=".setting.activity.SettingActivity" />
 
     </application>
 

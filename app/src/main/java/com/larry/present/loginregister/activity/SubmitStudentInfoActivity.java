@@ -70,7 +70,7 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     @OnClick(R.id.iv_student_portrait)
     void setPortrait(View view) {
         Intent intent = new Intent(this, StudentSetPortraitActivity.class);
-        intent.putExtra(Constants.PHONE,phone);
+        intent.putExtra(Constants.PHONE, phone);
         startActivityForResult(intent, 1);
 
     }
@@ -283,6 +283,7 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
             getStudentInfoListener = new SubscriberOnNextListener<StudentLoginSuccessDto>() {
                 @Override
                 public void onNext(StudentLoginSuccessDto studentLoginSuccessDto) {
+                    phone = studentLoginSuccessDto.getPhone();
                     initStudentInfo(studentLoginSuccessDto);
                 }
 

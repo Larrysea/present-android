@@ -2,6 +2,7 @@ package com.larry.present.account;
 
 import com.larry.present.bean.student.Student;
 import com.larry.present.bean.teacher.Teacher;
+import com.larry.present.config.Constants;
 
 /*
 *    
@@ -34,5 +35,20 @@ public class AccountManager {
 
     public static void setStudent(Student student) {
         AccountManager.student = student;
+    }
+
+
+    /**
+     * 返回登录的用户类型
+     *
+     * @return
+     */
+    public static int returnLoginUserType() {
+        if (teacher == null) {
+            return Constants.STUDENT_TYPE;
+        } else if (student == null) {
+            return Constants.TEACHER_TYPE;
+        }
+        return -1;
     }
 }

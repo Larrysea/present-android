@@ -24,9 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observer;
 
-/**
- *
- */
 /*
 *    
 * 项目名称：present      
@@ -85,9 +82,10 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_teacher_info);
         ButterKnife.bind(this);
-        initIntentData();
-        initObserver();
+
         initToolbar();
+        initObserver();
+        initIntentData();
 
     }
 
@@ -128,9 +126,10 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
      * 初始化传递过来的数据
      */
     public void initIntentData() {
-        schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
-        phone = getIntent().getStringExtra(Constants.PHONE);
 
+        if (mTeacherApi == null) {
+            mTeacherApi = new TeacherApi(ApiService.getInstance(this).getmRetrofit());
+        }
         if (schoolId == null || phone == null) {
             isSubmitInfo = false;
             teacherId = getIntent().getStringExtra("teacherId");
@@ -156,7 +155,13 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
 
 
     public void initToolbar() {
-
+        schoolId = getIntent().getStringExtra(Constants.SCHOOL_ID);
+        phone = getIntent().getStringExtra(Constants.PHONE);
+        if (phone == null) {
+            toolbarSubmitTeacher.setTitle(R.string.submit_teacher_info);
+        } else {
+            toolbarSubmitTeacher.setTitle(R.string.teacher_info);
+        }
         toolbarSubmitTeacher.setNavigationIcon(R.drawable.ic_arrow_left_white_24dp);
         setSupportActionBar(toolbarSubmitTeacher);
         toolbarSubmitTeacher.setNavigationOnClickListener(new View.OnClickListener() {
@@ -207,6 +212,9 @@ public class SubmitTeacherInforActivity extends AppCompatActivity {
         etTeacherInfoName.setText(teacherLoginSuccessDto.getName());
         etTeacherMail.setText(teacherLoginSuccessDto.getMail());
         etTeacherInfoPhone.setText(teacherLoginSuccessDto.getPhone());
+        etTeacherMail.setEnabled(false);
+        etTeacherInfoName.setEnabled(false);
+        etTeacherInfoPhone.setEnabled(false);
     }
 
 }

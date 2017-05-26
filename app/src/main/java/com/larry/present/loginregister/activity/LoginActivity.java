@@ -19,6 +19,7 @@ import com.larry.present.boot.MainActivity;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.CheckETEmptyUtil;
+import com.larry.present.common.util.MD5EncipherUtil;
 import com.larry.present.config.Constants;
 import com.larry.present.loginregister.dto.StudentLoginSuccessDto;
 import com.larry.present.loginregister.dto.TeacherLoginSuccessDto;
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_login_login)
     void loginClick(View view) {
-        login(etLoginPhone.getText().toString().trim(), etLoginPassword.getText().toString().trim());
+        login(etLoginPhone.getText().toString().trim(), MD5EncipherUtil.md5(etLoginPassword.getText().toString().trim()));
     }
 
     @BindView(R.id.btn_login_login)

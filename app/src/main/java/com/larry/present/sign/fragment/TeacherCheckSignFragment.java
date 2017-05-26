@@ -52,7 +52,6 @@ public class TeacherCheckSignFragment extends Fragment implements onBackPressedC
 
     CourseApi courseApi;
 
-    SignApi signApi;
 
     //获取所有课程的监听回调
     SubscriberOnNextListener<List<Course>> teacherGetCourseListener;
@@ -73,6 +72,7 @@ public class TeacherCheckSignFragment extends Fragment implements onBackPressedC
 
     CommonAdapter<Course> courseCommonAdapter;
 
+    SignApi signApi;
 
     @Nullable
     @Override
@@ -160,6 +160,12 @@ public class TeacherCheckSignFragment extends Fragment implements onBackPressedC
                         signApi.getCourseAllSignInfo(new ProgressSubscriber<List<CourseSign>>(courseGetAllListener, getActivity()), course.getId());
                     }
                 });
+                holder.setOnLongClickListener(R.id.ll_course_item, new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        return true;
+                    }
+                });
             }
         };
 
@@ -186,6 +192,7 @@ public class TeacherCheckSignFragment extends Fragment implements onBackPressedC
         };
 
     }
+
 
 
 }
