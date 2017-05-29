@@ -163,6 +163,9 @@ public class TeacherCheckSignFragment extends Fragment implements onBackPressedC
                 holder.setOnLongClickListener(R.id.ll_course_item, new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
+                        Intent intent = new Intent(getActivity(), SelectClassActivity.class);
+                        intent.putExtra("courseId", course.getId());
+                        startActivity(intent);
                         return true;
                     }
                 });
@@ -190,9 +193,7 @@ public class TeacherCheckSignFragment extends Fragment implements onBackPressedC
                 });
             }
         };
-
     }
-
 
 
 }

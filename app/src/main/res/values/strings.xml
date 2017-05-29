@@ -103,4 +103,5 @@
     <string name="teacher_info">老师信息</string>
     <string name="do_you_want_send_sign_info_mail">你想发送考勤邮件到你的邮箱吗</string>
     <string name="mail_attachment">邮箱附件</string>
+    <string name="are_you_sure_send_email">确认发送邮件吗</string>
 </resources>

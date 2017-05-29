@@ -14,12 +14,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.larry.present.R;
 import com.larry.present.bean.classes.Classes;
 import com.larry.present.bean.student.Student;
 import com.larry.present.common.subscribers.ProgressSubscriber;
 import com.larry.present.common.subscribers.SubscriberOnNextListener;
 import com.larry.present.common.util.CheckETEmptyUtil;
+import com.larry.present.config.ApiConfig;
 import com.larry.present.config.Constants;
 import com.larry.present.loginregister.dto.StudentLoginSuccessDto;
 import com.larry.present.network.base.ApiService;
@@ -66,12 +68,20 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
     @BindView(R.id.et_student_phone)
     EditText etStudentPhone;
 
+    String netWorkPortraitPath;
 
     @OnClick(R.id.iv_student_portrait)
     void setPortrait(View view) {
-        Intent intent = new Intent(this, StudentSetPortraitActivity.class);
-        intent.putExtra(Constants.PHONE, phone);
-        startActivityForResult(intent, 1);
+        if (schoolId != null) {
+            Intent intent = new Intent(this, StudentSetPortraitActivity.class);
+            intent.putExtra(Constants.PHONE, phone);
+            startActivityForResult(intent, 1);
+        } else {
+            Intent intent = new Intent(this, CheckPortraitActivity.class);
+            intent.putExtra("portraitBmp", netWorkPortraitPath);
+            startActivity(intent);
+        }
+
 
     }
 
@@ -400,7 +410,11 @@ public class SubmitStudentInfoActivity extends AppCompatActivity {
         etStudentSchool.setText(studentLoginSuccessDto.getSchoolId());
         etStudentMail.setText(studentLoginSuccessDto.getMail());
         etStudentPhone.setText(studentLoginSuccessDto.getPhone());
-
+        //如果获取的头像路径不为空在显示头像
+        if (studentLoginSuccessDto.getPortraitUrl() != null) {
+            netWorkPortraitPath = ApiConfig.UPLOAD_PORTRAIT_PATH + studentLoginSuccessDto.getPortraitUrl();
+            Glide.with(this).load(netWorkPortraitPath).into(ivStudentPortrait);
+        }
         //设置不可编辑
         etStudentName.setEnabled(false);
         cbStudentFemale.setEnabled(false);

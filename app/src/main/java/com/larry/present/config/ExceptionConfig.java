@@ -22,4 +22,5 @@ public class ExceptionConfig {
     public static final int CHANGE_MAC_IN_TWO_HOUR = 461;           //更改两小时后生效
     public static final int UNBIND_MAC_FAIL = 462;                  //设别解绑失败
     public static final int USER_ALREADY_EXIST = -915;              //用户已经存在
+    public static final int SIGN_INFOR_DOSNT_EXIST = -918;            //考勤信息不存在
 }
